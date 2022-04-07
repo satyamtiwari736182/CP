@@ -1,37 +1,102 @@
+
 #include "../header.h"
 
-auto ncr_func(int n, int r)
+void sieve(vi &arr)
 {
-    static int ncr[N + 1][N + 1];
-    fill(&ncr[0][0], &ncr[0][0] + sizeof(ncr) / sizeof(ncr[0][0]), 0);
+    for (int i = 0; i < arr.size(); i++)
+        arr[i] = i;
 
-    for (int i = 0; i <= n; i++)
-        ncr[i][0] = 1;
-
-    for (int i = 1; i < n; i++)
-        for (int j = 1; j <= i && j < r; j++)
+    for (int i = 2; i * i < arr.size(); i++)
+        if (arr[i] == i)
         {
-            if (i == 1 && j == 1)
-                ncr[i][j] = 1;
-            else
-                ncr[i][j] = ((ncr[i - 1][j] + ncr[i - 1][j - 1]) % mod);
+            for (int j = i * i; j < arr.size(); j += i)
+                if (arr[j] == j)
+                    arr[j] = i;
         }
-    return ncr;
+}
+vi getPrimeFactors(vi &arr, int n)
+{
+    set<int> hashset;
+    while (n > 1)
+    {
+        hashset.insert(arr[n]);
+        n /= arr[n];
+    }
+    vi ans;
+    for (int prime : hashset)
+        ans.pb(prime);
+
+    return ans;
+}
+int countFactor(vi &primeFactor, int n)
+{
+    int count = 1;
+    for (int prime : primeFactor)
+    {
+        int cnt = 1;
+        while (n % prime == 0)
+        {
+            cnt++;
+            n /= prime;
+        }
+        count *= cnt;
+    }
+    return count;
+}
+
+int gcd(int a, int b)
+{
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+
+int sumOfFactor(vi &primeFactor, int n)
+{
+    int sumOfFactors = 1;
+    if (primeFactor.size() == 0)
+        return sumOfFactors;
+    for (int prime : primeFactor)
+    {
+        int cnt = 1;
+        while (n % prime == 0)
+        {
+            cnt++;
+            n /= prime;
+        }
+        sumOfFactors *= (pow(prime, cnt) - 1);
+        sumOfFactors /= (prime - 1);
+    }
+    return sumOfFactors;
 }
 
 int main()
 {
     cout << "\nHello world!" << endl;
-    auto ncr = ncr_func(50, 50);
-    int t;
-    // pmatrix(ncr, 10, 10);
+    int t = 1;
+    vi arr;
+    arr.resize(int(1e5 + 1));
+    sieve(arr);
     cin >> t;
     test(t)
     {
-        int n, r;
-        cin >> n >> r;
-        cout << ncr[n][r] << endl;
+        int n;
+
+        cout << "\n===========================================\n";
+        cin >> n;
+
+        vi ans = getPrimeFactors(arr, n);
+
+        int count_factor = sumOfFactor(ans, n);
+        cout << count_factor;
+        cout << "\n===========================================\n";
     }
 
     return 0;
 }
+
+// 3
+
+// 100000 100000
+// 12 24
+// 747794 238336

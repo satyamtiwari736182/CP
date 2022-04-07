@@ -1,3 +1,6 @@
+// You have been given two Integers a and b. you need to find an integral solution of x and y such that a*x + b*y= gcd(a,b).
+// It can be proven that solution always exist.
+
 #include "../header.h"
 
 class Pair
@@ -29,3 +32,6 @@ int main()
 
     return 0;
 }
+
+// 1
+// 34 24

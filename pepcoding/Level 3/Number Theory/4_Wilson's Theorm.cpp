@@ -1,3 +1,5 @@
+// you have been given number n and p, you need to find n! % p (n factorial mod p). p is a prime no.
+
 #include "../header.h"
 
 int pow(ll x, ll n, ll p)
@@ -43,3 +45,6 @@ int main()
 
     return 0;
 }
+
+// 1
+// 5 11

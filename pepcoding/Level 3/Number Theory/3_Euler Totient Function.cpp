@@ -1,3 +1,5 @@
+// you have been given a number n, count the number of integers between 1 to n inclusive, which are co-prime to n.
+
 #include "../header.h"
 
 int euler(int n)
@@ -31,3 +33,6 @@ int main()
 
     return 0;
 }
+
+// 1
+// 7

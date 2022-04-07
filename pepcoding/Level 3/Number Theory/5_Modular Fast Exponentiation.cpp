@@ -1,7 +1,11 @@
+// 1. You are given a number x.
+// 2. You are given another number n.
+// 3. You are required to calculate x raised to the power n mod 10^9 + 7 in logn complexity.
+
 #include "../header.h"
 
 int pow(ll x, ll n, ll p)
-// Modular Fast Exponentiation
+// Modular Fast Exponentiation/(Binary Exponentiation)
 {
     ll ans = 1;
     while (n > 0)
@@ -32,3 +36,6 @@ int main()
 
     return 0;
 }
+
+// 1
+// 10 5

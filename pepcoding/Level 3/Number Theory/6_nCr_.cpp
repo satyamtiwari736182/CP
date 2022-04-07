@@ -1,3 +1,5 @@
+// You have T test cases and for each test case you have been given n and r values and you need to find nCr mod 10^9+7.
+
 #include "../header.h"
 
 auto ncr_func(int n, int r)
@@ -35,3 +37,9 @@ int main()
 
     return 0;
 }
+
+// 3
+
+// 4 3
+// 5 2
+// 10 8

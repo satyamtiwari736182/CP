@@ -1,27 +1,21 @@
 #include "../header.h"
 
-bool solve(vi &arr)
+int solve(vector<vi> &arr, int target)
 {
-    set<int> hashset;
-    int mn = INT_MAX, mx = INT_MIN;
-    for (int val : arr)
-    {
-        mn = min(mn, val);
-        mx = max(mx, val);
-        hashset.insert(val);
-    }
-    // cout<<mx<<" "<<mn<<endl;
-    int common_diff = (mx - mn) / (arr.size() - 1);
-    int a = mn;
-    for (int i = 0; i < arr.size(); i++)
-    {
-        // cout << a << " ";
-        if (hashset.count(a) == 0)
-            return false;
-        a += common_diff;
-    }
-    cout << endl;
-    return true;
+    int count = 0;
+    map<int, int> hashmap;
+    vi A = arr[0];
+    vi B = arr[1];
+    for (int a : A)
+        for (int b : B)
+            hashmap[a + b] = 1;
+    A = arr[2];
+    B = arr[3];
+    for (int a : A)
+        for (int b : B)
+            if (hashmap.count(target - (a + b)) == 1)
+                count++;
+    return count;
 }
 
 int main()
@@ -32,24 +26,25 @@ int main()
     cin >> t;
     test(t)
     {
-        int n;
+        int n, sum;
+        vector<vi> arr(4);
         cin >> n;
-        vi arr;
-        rvarr(arr, 0, n);
+        rvmatrix(arr, 4, n);
+        cin >> sum;
 
         cout << "\n============================================\n";
-        cout << solve(arr);
-
+        cout << solve(arr, sum);
         cout << "\n============================================\n";
     }
 
     return 0;
 }
 
+// 1
+
 // 2
-
-// 3
-// 3 5 1
-
-// 10
-// 17 9 5 29 1 25 13 37 21 33
+// 1 2
+// -2 -1
+// -1 2
+// 0 2
+// 0

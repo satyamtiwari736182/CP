@@ -1,65 +1,57 @@
+#include "../header.h"
 
-#include <bits/stdc++.h>
-using namespace std;
+static ll dp[20][2][4];
+static string str = "";
 
-#define REP(a, b) for (int i = a; i <= b; i++)
-#define REP2(i, a, b) for (i = a; i <= b; i++)
+ll solver(int pos, bool bounded, ll count)
+{
+    if (pos == str.length())
+        return 1;
+    if (dp[pos][bounded][count] != -1)
+        return dp[pos][bounded][count];
+    int limit = 9;
+    if (bounded == true)
+        limit = str[pos] - '0';
 
-#define rarr(arr, l, r)         \
-    for (int i = l; i < r; i++) \
-        cin >> arr[i];
+    ll ans = 0;
 
-#define rvarr(arr, l, r)        \
-    for (int i = l; i < r; i++) \
-    {                           \
-        int val;                \
-        cin >> val;             \
-        arr.push_back(val);     \
+    for (int i = 0; i <= limit; i++)
+    {
+        int updated_cnt = count + (i > 0 ? 1 : 0);
+        if (updated_cnt <= 3)
+            ans += solver(pos + 1, bounded && (i == limit), updated_cnt);
     }
-
-#define parr(arr, n)            \
-    for (int i = 0; i < n; i++) \
-        cout << arr[i] << " ";
-
-#define rmatrix(arr, n, m)          \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-            cin >> arr[i][j];
-
-#define rvmatrix(arr, n, m)         \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-        {                           \
-            int val;                \
-            cin >> val;             \
-            arr[i].push_back(val);  \
-        }
-
-#define pmatrix(arr, n, m)            \
-    for (int i = 0; i < n; i++)       \
-    {                                 \
-        for (int j = 0; j < m; j++)   \
-            cout << arr[i][j] << " "; \
-        cout << endl;                 \
-    }
-
-#define vi vector<int>
-#define all(x) x.begin(), x.end()
-#define pi pair<int, int>
-#define ll long long
-#define fs first
-#define se second
-#define pb push_back
-#define mp make_pair
-#define endl '\n'
-#define mod 1000000007
-const int INF = 1e9 + 7;
-const double PI = 3.141592653589793238;
-const int M = 100, N = 100;
-
+    return dp[pos][bounded][count] = ans;
+}
+ll solve()
+{
+    ll l, r;
+    cin >> l >> r;
+    str = to_string(r);
+    memset(dp, -1, sizeof(dp));
+    ll rightCount = solver(0, true, 0);
+    str = to_string(l - 1);
+    memset(dp, -1, sizeof(dp));
+    ll leftCount = solver(0, true, 0);
+    return rightCount - leftCount;
+}
 int main()
 {
     cout << "\nHello world!" << endl;
-
+    int t = 1;
+    cin >> t;
+    while (t-- > 0)
+    {
+        cout << "\n=================================\n";
+        cout << solve();
+        cout << "\n=================================\n";
+    }
     return 0;
 }
+
+// 4
+
+// 1 100
+// 1 10
+// 100 777
+// 1 999
