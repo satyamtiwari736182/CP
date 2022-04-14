@@ -9,6 +9,79 @@
 // Expected Complexity : O(n+q)
 
 
+
+#include "../header.h"
+void prefixSum(vi &arr)
+{
+    for (int i = 1; i < arr.size(); i++)
+        arr[i] += arr[i - 1];
+}
+
+vi prefixCount(vi &arr, int val)
+{
+    int n = arr.size();
+    vi prefixcount(n);
+    prefixcount[0] = arr[0] == val ? 1 : 0;
+    for (int i = 1; i < arr.size(); i++)
+    {
+        if (arr[i] == val)
+            prefixcount[i] += prefixcount[i - 1] + 1;
+        else
+            prefixcount[i] = prefixcount[i - 1];
+    }
+    return prefixcount;
+}
+int solve()
+{
+    int n, q, m;
+    cin >> n >> q >> m;
+    vi arr(n + 1);
+    vector<pi> query;
+    test(q)
+    {
+        int left, right, val = 1;
+        cin >> left >> right;
+        query.pb({left, right});
+        arr[left] += val;
+        arr[right + 1] += -val;
+    }
+    prefixSum(arr);
+    vi m_count = prefixCount(arr, m);
+    vi m_1_count = prefixCount(arr, m + 1);
+
+    int maxMcount = m_count[n - 1];
+    int count = INT_MIN;
+
+    for (int i = 0; i < query.size(); i++)
+    {
+        int left = query[i].fs;
+        int right = query[i].se;
+        // total_cnt-loss+gain;
+        int new_m_cnt = maxMcount - (m_count[right] - m_count[left - 1]) + (m_1_count[right] - m_1_count[left - 1]);
+        count = max(count, new_m_cnt);
+    }
+    // parr(arr, arr.size());
+    // cout << endl;
+    // parr(m_count, arr.size());
+    // cout << endl;
+    // parr(m_1_count, arr.size());
+    return count;
+}
+
+int main()
+{
+    cout << "\nHello world!" << endl;
+    int t = 1;
+    // cin >> t;
+    test(t)
+    {
+        cout << solve();
+        cout << "\n------------------------------\n";
+    }
+
+    return 0;
+}
+
 // 10 3 2
 // 2 6
 // 4 9
