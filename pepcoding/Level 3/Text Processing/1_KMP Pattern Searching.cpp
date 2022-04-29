@@ -11,22 +11,13 @@ vi getLPS(string str) // longest prefix which is also suffix
     while (i < str.length())
     {
         if (str[i] == str[lenth])
-        {
-            lenth++;
-            LPS[i] = lenth;
-            i++;
-        }
-
+            LPS[i++] = ++lenth;
         else
         {
             if (lenth > 0)
                 lenth = LPS[lenth - 1];
-
             else
-            {
-                LPS[i] = 0;
-                i++;
-            }
+                LPS[i++] = 0;
         }
     }
     return LPS;

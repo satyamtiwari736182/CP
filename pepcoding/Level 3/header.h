@@ -44,6 +44,8 @@ using namespace std;
             cout << arr[i][j] << " "; \
         cout << endl;                 \
     }
+
+#define Fill(arr, val) fill(*arr, *arr + sizeof(arr) / sizeof(arr[0][0]), val);
 #define test(t) while (t-- > 0)
 #define vi vector<int>
 #define vs vector<string>

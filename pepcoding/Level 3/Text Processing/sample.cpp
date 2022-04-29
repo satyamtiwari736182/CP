@@ -1,199 +1,86 @@
-// // Given an integer n indicating the number of patterns.Then follow n lines, each containing non empty strings, representing patterns.
-// // Then comes a non empty string representing text.
-// // Output n lines where ith line contains the positions of all occurances of the ith pattern in text.
+// https://www.spoj.com/problems/NAJPF/
 
 #include "../header.h"
 
-// import jdk.internal.org.jline.terminal.impl.CursorSupport;
-// import jdk.internal.org.jline.utils.Curses;
-
-class node
+ll poly_hash(string str)
 {
-public:
-  map<char, node *> child;
-  node *suffix_link;
-  node *output_link;
-  int pattern_ind;
-
-  node()
+  ll p = 31, pow = 31;
+  ll hash_value = str[0] - 'a' + 1;
+  for (int i = 1; i < str.length(); i++)
   {
-    suffix_link = nullptr;
-    output_link = nullptr;
-    pattern_ind = -1;
+    hash_value = (hash_value + (str[i] - 'a' + 1) * pow) % mod;
+    pow = (pow * p) % mod;
   }
-};
-
-void build_trie(node *root, vs patterns)
-{
-  for (int i = 0; i < patterns.size(); i++)
-  {
-    node *curr = root;
-    for (int j = 0; j < patterns[i].length(); j++)
-    {
-      char c = patterns[i][j];
-      if (curr->child.count(c))
-        curr = curr->child[c];
-      else
-      {
-        node *nn = new node();
-        curr->child[c] = nn;
-        curr = nn;
-      }
-    }
-    curr->pattern_ind = i;
-  }
+  return hash_value;
 }
 
-void build_suffix_and_output_links(node *root)
+// void get_prefix_hash() {}
+
+vi rabin_karp_algo(string str, string patt)
 {
-  root->suffix_link = root; // root represents empty string
-  queue<node *> que;        // will use bfs to set links
+  ll patt_hash = poly_hash(patt);
 
-  for (auto rc : root->child)
+  // preprocessing
+  vector<ll> prefix_hash(str.length()), pow_i(str.length()); // for str, to get hash in O(1) time
+  prefix_hash[0] = str[0] - 'a' + 1;
+  pow_i[0] = 1;
+  int p = 31;
+  ll pow = p;
+
+  for (int i = 1; i < str.length(); i++)
   {
-    que.push(rc.se);
-    root->child[rc.fs]->suffix_link = root; // root's children suffixlink will point to root only
+    prefix_hash[i] = (prefix_hash[i - 1] + (str[i] - 'a' + 1) * pow) % mod;
+    pow_i[i] = pow;
+    pow = (pow * p) % mod;
   }
 
-  while (que.size() > 0)
+  // Rabin-karp
+  // finding patt in str using sliding window and hash string
+  vi ans;
+  int i = 0, j = patt.length() - 1;
+
+  while (j < str.length())
   {
-    node *curState = que.front();
-    que.pop();
+    ll window_hash = prefix_hash[j];
+    ll new_patt_hash = (patt_hash * pow_i[i]) % mod;
 
-    for (auto cc : curState->child)
-    {
-      node *cchild = curState->child[cc.fs]; // jiske liye suffix link dhund rhe hein
-      node *tmp = curState->suffix_link;     // parent suffix link
-      while (!tmp->child.count(cc.fs) && tmp != root)
-        tmp = tmp->suffix_link; // finding lps
+    if (i > 0)
+      window_hash = (prefix_hash[j] - prefix_hash[i - 1] + mod) % mod;
 
-      if (tmp->child.count(cc.fs))
-        cchild->suffix_link = tmp->child[cc.fs];
-      else
-        cchild->suffix_link = root;
-      que.push(cchild);
-    }
+    if (window_hash == new_patt_hash)
+      ans.pb(i);
 
-    // setting output link
-
-    if (curState->suffix_link->pattern_ind >= 0)
-      curState->output_link = curState->suffix_link;
-    else
-      curState->output_link = curState->suffix_link->output_link;
+    i++;
+    j++;
+    // cout << window_hash << " " << new_patt_hash << ",  ";
   }
-}
-
-void search2(node *root, string text, vector<vi> &searchResults)
-{
-  node *parent = root;
-
-  for (int i = 0; i < text.length(); i++)
-  {
-    char c = text[i];
-    if (parent->child.count(c))
-    { // if parent has a child node in trie, travel it
-      parent = parent->child[c];
-      if (parent->pattern_ind >= 0)
-      {
-        searchResults[parent->pattern_ind].pb(i); // reached a output node
-      }
-
-      node *myOutput = parent->output_link;
-      while (myOutput != nullptr)
-      {
-        searchResults[myOutput->pattern_ind].pb(i);
-        myOutput = myOutput->output_link;
-      }
-    }
-    else
-    {
-      while (parent != root && !parent->child.count(c))
-        parent = parent->suffix_link;
-      if (parent->child.count(c))
-        i--; // hold i and start traversing in next iteration
-    }
-  }
-}
-
-vector<vi> search(node *root, string s)
-{
-  vector<vi> res(s.length());
-
-  node *parent = root;
-
-  for (int i = 0; i < s.length(); i++)
-  {
-    char c = s[i];
-    if (parent->child.count(c))
-    {
-      parent = parent->child[c];
-      if (parent->pattern_ind >= 0)
-        res[parent->pattern_ind].pb(i);
-      node *myOutput = parent->output_link;
-      while (myOutput != nullptr)
-      {
-        res[myOutput->pattern_ind].pb(i);
-        myOutput = myOutput->output_link;
-      }
-    }
-    else
-    {
-      while (parent != root && !parent->child.count(c))
-        parent = parent->suffix_link;
-      if (parent->child.count(c))
-        i--;
-    }
-  }
-  return res;
+  cout << endl;
+  return ans;
 }
 
 void solve()
 {
-  int n;
-  cin >> n;
-  vs patterns(n);
-  rarr(patterns, 0, n);
-
-  string txt;
-  cin >> txt;
-
-  node *root = new node();
-
-  build_trie(root, patterns);
-  build_suffix_and_output_links(root);
-
-  vector<vi> res = search(root, txt);
-
-  cout << "\n----------------------------\n";
-
-  for (int i = 0; i < n; i++)
-  {
-    cout << patterns[i] << " -> ";
-    if (res[i].size() == 0)
-      cout << (-1);
-    for (int ep : res[i])
-      cout << (ep - patterns[i].length() + 1) << " ";
-    cout << endl;
-  }
+  string str, patt;
+  cin >> str >> patt;
+  vi ans = rabin_karp_algo(str, patt);
+  parr(ans, ans.size());
 }
 
 int main()
 {
-  cout << "\nhello world!\n";
+  cout << "\nHello world!" << endl;
   int t = 1;
-  // cin >> t;
+  cin >> t;
   test(t)
   {
     solve();
-    cout << "----------------------------\n";
+    cout << "\n------------------------------\n";
   }
+
+  return 0;
 }
 
-// 6
-// ACC
-// ATC
-// CAT
-// GCG
-// C
-// T
-// GCATCG
+// 3
+// ababab ab
+// aaaaa bbb
+// aafafaasf aaf

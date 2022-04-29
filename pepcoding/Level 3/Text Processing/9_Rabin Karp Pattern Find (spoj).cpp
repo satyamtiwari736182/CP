@@ -1,7 +1,5 @@
 // https://www.spoj.com/problems/NAJPF/
 
-
-
 #include "../header.h"
 
 ll poly_hash(string str)
@@ -50,7 +48,7 @@ vi rabin_karp_algo(string str, string patt)
       window_hash = (prefix_hash[j] - prefix_hash[i - 1] + mod) % mod;
 
     if (window_hash == new_patt_hash)
-      ans.pb(i + 1);
+      ans.pb(i);
 
     i++;
     j++;

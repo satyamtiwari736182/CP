@@ -1,171 +1,128 @@
 #include "../header.h"
 
-vi arr, segTree, lazySeg;
+vi arr;
+class Node
+{
+public:
+    Node *left, *right;
+    int sum;
+    Node(int sum)
+    {
+        this->sum = sum;
+        left = nullptr;
+        right = nullptr;
+    }
+    Node(Node *lft, Node *rht)
+    {
+        sum = lft->sum + rht->sum;
+        left = lft;
+        right = rht;
+    }
+};
 
-void buildSegTree(int node, int left, int right)
+Node *build(int left, int right)
 {
     if (left == right)
-        segTree[node] = arr[left];
+        return new Node(0);
     else
     {
         int mid = (left + right) / 2;
-        int left_node = 2 * node;
-        int right_node = 2 * node + 1;
-        buildSegTree(left_node, left, mid);
-        buildSegTree(right_node, mid + 1, right);
-
-        segTree[node] = segTree[left_node] + segTree[right_node];
+        return new Node(build(left, mid), build(mid + 1, right));
     }
 }
 
-void propagate(int node, int left, int right)
+Node *update(Node *node, int left, int right, int pos, int val)
 {
     if (left == right)
-    {
-        segTree[node] += lazySeg[node];
-        lazySeg[node] = 0;
-    }
-    else
-    {
-        int total_node_subtree = right - left + 1;
-        segTree[node] += total_node_subtree * lazySeg[node];
-
-        int left_node = 2 * node;
-        int right_node = 2 * node + 1;
-
-        lazySeg[left_node] += lazySeg[node];
-        lazySeg[right_node] += lazySeg[node];
-
-        lazySeg[node] = 0;
-    }
-}
-
-int query(int node, int left, int right, int start, int end)
-// left and right are pointer to segment Tree and
-// start and end is query range to get ans. asked by users.
-// here we reduce search space of searching.
-{
-
-    // 1. No overlap
-    if (right < start || left > end)
-        return 0;
-
-    // cout << " # " << left << " " << right << " #" << endl;
-
-    // 2. Leaf or single node
-    if (left == right)
-        return segTree[node];
-
-    // 3. Complete overlap of search-space with query range.
-    else if (start <= left && right <= end)
-        return segTree[node];
-
-    // 4. Partial overlap
+        return new Node(val);
     else
     {
         int mid = (left + right) / 2;
-        int left_node = 2 * node;
-        int right_node = 2 * node + 1;
-
-        int left_res = query(left_node, left, mid, start, end);
-        int right_res = query(right_node, mid + 1, right, start, end);
-
-        return left_res + right_res;
+        if (left <= pos && pos <= mid)
+            return new Node(update(node->left, left, mid, pos, val), node->right);
+        else
+            return new Node(node->left, update(node->right, mid + 1, right, pos, val));
     }
 }
 
-void update(int node, int left, int right, int pos, int val)
+int query(Node *past, Node *pres, int left, int right, int k)
 {
-    if (pos < left || pos > right)
-        return;
-
     if (left == right)
-    {
-        arr[pos] = val;
-        segTree[node] = val;
-    }
-
+        return left;
     else
     {
+        int mySegCount = pres->left->sum - past->left->sum;
         int mid = (left + right) / 2;
-        int left_node = 2 * node;
-        int right_node = 2 * node + 1;
-
-        if (pos >= left && pos <= mid)
-            update(left_node, left, mid, pos, val);
-        else if (pos >= mid + 1 && pos <= right)
-            update(right_node, mid + 1, right, pos, val);
-
-        segTree[node] = segTree[left_node] + segTree[right_node];
+        if (k <= mySegCount)
+            return query(past->left, pres->left, left, mid, k);
+        else
+            return query(past->right, pres->right, mid + 1, right, k - mySegCount);
     }
 }
 
-//!=========================================
-
-int Query(int left, int right)
-{
-    return query(1, 0, arr.size() - 1, left, right);
-}
-
-int Update(int left, int right, int val)
-{
-    // update(1, 0, arr.size() - 1, idx, val);
-}
-
-//!=========================================
 void solve()
 {
-    int n;
-    cin >> n;
+    int n = 0, q, pos = 0, val = 0;
+
+    cin >> n >> q;
     arr.resize(n);
-    segTree.resize(4 * n);
-    lazySeg.resize(4 * n);
     rarr(arr, 0, n);
 
-    buildSegTree(1, 0, arr.size() - 1);
+    vector<vi> sorted(n);
 
-    //-------Query-------
-    int q;
-    cin >> q;
+    for (int i = 0; i < n; i++)
+    {
+        sorted[i].resize(2);
+        sorted[i][0] = i;
+        sorted[i][1] = arr[i];
+    }
+
+    sort(all(sorted), [&](auto a, auto b)
+         { return a[1] < b[1]; });
+
+    int idxInTree[n];
+    for (int i = 0; i < n; i++)
+        idxInTree[sorted[i][0]] = i;
+
+    vector<Node *> states;
+    states.pb(build(0, n - 1));
+
+    for (int i = 0; i < n; i++)
+    {
+        Node *root = update(states[states.size() - 1], 0, n - 1, idxInTree[i], 1);
+        states.pb(root);
+    }
+
     test(q)
     {
-        int type;
-        cin >> type;
-        if (type == 0)
-        {
-            int left, right;
-            cin >> left >> right;
-            int ans = Query(left, right);
-            cout << ans << "  **\n";
-        }
-        else if (type == 1)
-        {
-            int left, right, val;
-            cin >> left >> right >> val;
-            Update(left, right, val);
-        }
+        int left, right, k;
+        cin >> left >> right >> k;
+        left--;
+        right--;
+
+        int ans = query(states[left], states[right + 1], 0, n - 1, k);
+        cout << sorted[ans][1] << "  **\n";
     }
+
+    // states.pb(update(states[states.size() - 1], 0, n - 1, pos, val));
 }
 
 int main()
 {
-    cout << "\nHello world!" << endl;
+    cout << "\nHello world!\n";
     int t = 1;
     // cin >> t;
     test(t)
     {
         solve();
-        cout << "\n------------------------------\n";
     }
-
     return 0;
 }
 
-// 8
-// 0 10 10 -1 5 8 10 2
-// 5
-// 0 7 7
-// 1 4 6 1
-// 0 2 4
-// 1 5 5 7
-// 0 3 7
+// 7 3
+// 1 5 2 6 3 7 4
+// 2 5 3
+// 4 4 1
+// 1 7 3
+
+//? 5 6 3
