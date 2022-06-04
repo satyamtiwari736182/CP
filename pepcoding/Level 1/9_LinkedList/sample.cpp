@@ -1,65 +1,89 @@
+#include "../header.h"
 
-#include <bits/stdc++.h>
-using namespace std;
+class Node
+{
+public:
+    int data;
+    Node *next;
+    Node(int data) : data(data), next(nullptr) {}
+};
 
-#define REP(a, b) for (int i = a; i <= b; i++)
-#define REP2(i, a, b) for (i = a; i <= b; i++)
+class LinkedList
+{
+public:
+    Node *head, *tail;
+    int size;
+    LinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
-#define rarr(arr, l, r)         \
-    for (int i = l; i < r; i++) \
-        cin >> arr[i];
-
-#define rvarr(arr, l, r)        \
-    for (int i = l; i < r; i++) \
-    {                           \
-        int val;                \
-        cin >> val;             \
-        arr.push_back(val);     \
+    void addFirst(int val)
+    {
+        Node *newNode = new Node(val);
+        if (size == 0)
+            head = tail = newNode;
+        else
+            newNode->next = head, head = newNode;
+        size++;
     }
 
-#define parr(arr, n)            \
-    for (int i = 0; i < n; i++) \
-        cout << arr[i] << " ";
+    void addLast(int val)
+    {
+        Node *newNode = new Node(val);
+        if (size == 0)
+            head = tail = newNode;
+        else
+            tail->next = newNode, tail = newNode;
+        size++;
+    }
 
-#define rmatrix(arr, n, m)          \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-            cin >> arr[i][j];
+    void removeFirst()
+    {
+        if (size == 0)
+            return;
+        if (size == 1)
+            tail = nullptr;
 
-#define rvmatrix(arr, n, m)         \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-        {                           \
-            int val;                \
-            cin >> val;             \
-            arr[i].push_back(val);  \
+        Node *temp = head->next;
+        delete (head);
+        head = temp;
+        size--;
+    }
+
+    void display()
+    {
+        Node *temp = head;
+        while (temp)
+        {
+            cout << temp->data << " ";
+            temp = temp->next;
         }
-
-#define pmatrix(arr, n, m)            \
-    for (int i = 0; i < n; i++)       \
-    {                                 \
-        for (int j = 0; j < m; j++)   \
-            cout << arr[i][j] << " "; \
-        cout << endl;                 \
     }
+};
 
-#define vi vector<int>
-#define all(x) x.begin(), x.end()
-#define pi pair<int, int>
-#define ll long long
-#define fs first
-#define se second
-#define pb push_back
-#define mp make_pair
-#define endl '\n'
-#define mod 1000000007
-const int INF = 1e9 + 7;
-const double PI = 3.141592653589793238;
-const int M = 100, N = 100;
+void solve()
+{
+    string inputData;
+    fflush(stdin);
+    getline(cin, inputData);
+
+    int val = 0;
+    vi data;
+    str_to_tok(inputData, ' ', data, val);
+    LinkedList *lst = new LinkedList();
+
+    for (int vl : data)
+        lst->addFirst(vl);
+    lst->removeFirst();
+    lst->removeFirst();
+    lst->display();
+}
 
 int main()
 {
-    cout << "\nHello world!" << endl;
+    cout << "\nHello world\n";
+    int t = 1;
+    // cin >> t;
+    test(t)
+        solve();
 
     return 0;
 }

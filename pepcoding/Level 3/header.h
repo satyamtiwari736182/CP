@@ -1,4 +1,37 @@
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
+// C++
+#include <algorithm>
+#include <bitset>
+#include <complex>
+#include <deque>
+#include <exception>
+#include <fstream>
+#include <functional>
+#include <iomanip>
+#include <ios>
+#include <iosfwd>
+#include <iostream>
+#include <istream>
+#include <iterator>
+#include <limits>
+#include <list>
+#include <locale>
+#include <map>
+#include <memory>
+#include <new>
+#include <numeric>
+#include <ostream>
+#include <queue>
+#include <set>
+#include <sstream>
+#include <stack>
+#include <stdexcept>
+#include <streambuf>
+#include <string>
+#include <typeinfo>
+#include <utility>
+#include <valarray>
+#include <vector>
 using namespace std;
 #define debug(x) cout << #x << " = " << x << endl;
 // #define REP(a, b) for (int i = a; i < b; i++)
@@ -45,6 +78,25 @@ using namespace std;
         cout << endl;                 \
     }
 
+#define convert(tok, val)       \
+    {                           \
+        stringstream strm(tok); \
+        strm >> val;            \
+    }
+
+#define str_to_tok(str, deli, arr, val)         \
+    {                                           \
+                                                \
+        stringstream strtokenize(str);          \
+        string tok;                             \
+        while (getline(strtokenize, tok, deli)) \
+        {                                       \
+            stringstream strm(tok);             \
+            strm >> val;                        \
+            arr.pb(val);                        \
+        }                                       \
+    }
+
 #define Fill(arr, val) fill(*arr, *arr + sizeof(arr) / sizeof(arr[0][0]), val);
 #define test(t) while (t-- > 0)
 #define vi vector<int>
@@ -52,6 +104,7 @@ using namespace std;
 #define all(x) x.begin(), x.end()
 #define pi pair<int, int>
 #define vii vector<pi>
+#define vvi vector<vi>
 #define ll long long int
 #define lld long double
 #define fs first
@@ -79,6 +132,47 @@ string Substr(string str, int i, int j)
 //=================================================
 //! Number Theory
 //=================================================
+vi sieve(int n)
+{
+    vi isPrime(n + 1, 1), prime;
+
+    for (int i = 2; i * i <= isPrime.size(); i++)
+        for (int j = i * i; j < isPrime.size(); j += i)
+            isPrime[j] = false;
+
+    for (int i = 2; i <= isPrime.size(); i++)
+        if (isPrime[i] == true)
+            prime.pb(i);
+
+    return prime;
+}
+
+vi segSieve(int a, int b)
+{
+    int b_sqrt = sqrt(b);
+    vi primes = sieve(b_sqrt);
+
+    vi arr(b - a, 1);
+
+    for (int prime : primes)
+    {
+        int multiple = ceil(a * 1.0 / prime);
+        if (multiple == 1)
+            multiple++;
+
+        int idx = multiple * prime - a;
+        for (int j = idx; j < arr.size(); j += prime)
+            arr[j] = false;
+    }
+
+    vi ans;
+
+    for (int i = 0; i < arr.size(); i++)
+        if (arr[i])
+            ans.pb(a + i);
+
+    return ans;
+}
 
 //=================================================
 //! Text Processing
@@ -89,6 +183,7 @@ string Substr(string str, int i, int j)
 
 //=================================================
 //! Geometry
+
 class Point
 {
 public:

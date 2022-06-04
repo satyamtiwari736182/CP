@@ -1,65 +1,90 @@
+#include "../header.h"
+vvi twoSum(vi &arr, int left, int target)
+{
+    vvi ans;
+    int right = arr.size();
+    // if (right - left + 1 < 2)
+    //     return ans;
 
-#include <bits/stdc++.h>
-using namespace std;
-
-#define REP(a, b) for (int i = a; i <= b; i++)
-#define REP2(i, a, b) for (i = a; i <= b; i++)
-
-#define rarr(arr, l, r)         \
-    for (int i = l; i < r; i++) \
-        cin >> arr[i];
-
-#define rvarr(arr, l, r)        \
-    for (int i = l; i < r; i++) \
-    {                           \
-        int val;                \
-        cin >> val;             \
-        arr.push_back(val);     \
-    }
-
-#define parr(arr, n)            \
-    for (int i = 0; i < n; i++) \
-        cout << arr[i] << " ";
-
-#define rmatrix(arr, n, m)          \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-            cin >> arr[i][j];
-
-#define rvmatrix(arr, n, m)         \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-        {                           \
-            int val;                \
-            cin >> val;             \
-            arr[i].push_back(val);  \
+    while (left < right)
+    {
+        if (left != 0 && arr[left] == arr[left - 1])
+        {
+            left++;
+            continue;
         }
 
-#define pmatrix(arr, n, m)            \
-    for (int i = 0; i < n; i++)       \
-    {                                 \
-        for (int j = 0; j < m; j++)   \
-            cout << arr[i][j] << " "; \
-        cout << endl;                 \
+        int sum = arr[left] + arr[right];
+        if (sum == target)
+            ans.pb({arr[left], arr[right]}), left++, right--;
+
+        else if (sum > target)
+            right--;
+        else
+            left++;
+    }
+    return ans;
+}
+
+vvi kSum(vi &arr, int left, int target, int k)
+{
+    if (k == 2)
+        return twoSum(arr, left, target);
+        
+    int n = arr.size();
+    vvi res;
+    if (n - k < 0)
+        return res;
+
+    for (int i = left; i <= n - k; i++)
+    {
+        if (i != left && arr[i] == arr[i - 1])
+            continue;
+
+        int val1 = arr[i];
+        vvi subRes = kSum(arr, i + 1, target - val1, k - 1);
+
+        for (auto lst : subRes)
+            lst.pb(val1), res.pb(lst);
     }
 
-#define vi vector<int>
-#define all(x) x.begin(), x.end()
-#define pi pair<int, int>
-#define ll long long
-#define fs first
-#define se second
-#define pb push_back
-#define mp make_pair
-#define endl '\n'
-#define mod 1000000007
-const int INF = 1e9 + 7;
-const double PI = 3.141592653589793238;
-const int M = 100, N = 100;
+    return res;
+}
+
+void solve()
+{
+    int n, target, k;
+    cin >> n;
+    vi arr(n);
+    rarr(arr, 0, n);
+    cin >> target >> k;
+    sort(all(arr));
+    int left = 0, right = n - 1;
+    vvi res = kSum(arr, 0, target, k);
+
+    for (int i = 0; i < res.size(); i++)
+    {
+        for (int val : res[i])
+            cout << val << " ";
+        cout << endl;
+    }
+}
 
 int main()
 {
-    cout << "\nHello world!" << endl;
+    cout << "\nHello world\n";
+    int t = 1;
+    // cin >> t;
+    test(t)
+        solve();
 
     return 0;
 }
+
+/*
+6
+-1 0 1 2 -1 -4
+0
+3
+
+*/

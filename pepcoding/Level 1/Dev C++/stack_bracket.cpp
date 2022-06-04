@@ -17,6 +17,20 @@ const int INF = 1e9 + 7;
 const double PI=3.141592653589793238;
 const int M=100,N=100;
 
+int *nse(int *arr,int n){
+	stack<int> st;
+	int *gre=new int[n+1];
+	gre[n]=-1;
+	st.push(n);
+	for(int i=n-1;i>=0;i--){
+		while(st.size() && arr[st.top()]>=arr[i]) st.pop();
+		if(st.empty()) gre[i]=-1;
+		else gre[i]=st.top();
+		st.push(i);
+	}
+	return gre;	
+}
+
 //((a+b)+(c+d)) -> false
 //((a+b))+(c+d) -> true
 bool hasRedundant(string str){
@@ -114,8 +128,8 @@ int main(){
 //	NGE(arr,n-1);
 //	stockSpan(arr,n-1);
 	
-	int *tem=nge();
-	cout<<tem[0];
+	// int *tem=nge();
+	// cout<<tem[0];
 	
 	cout<<"\nhello!"<<endl;
 	return 0;
