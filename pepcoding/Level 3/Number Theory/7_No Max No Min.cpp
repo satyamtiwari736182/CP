@@ -37,7 +37,7 @@ int main()
         cout << "\n============================================\n"
              << endl;
         // solution
-        ll count[n];
+        ll count[INF];
         memset(count, 0, sizeof(count));
         sort(all(arr));
         ll total = ncr[n - 1][k - 1];

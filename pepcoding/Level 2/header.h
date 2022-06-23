@@ -14,6 +14,7 @@
 #include <istream>
 #include <iterator>
 #include <limits>
+#include <climits>
 #include <list>
 #include <locale>
 #include <map>
