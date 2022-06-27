@@ -1,161 +1,163 @@
 #include "../header.h"
-
-class Node
+class LRUCache
 {
 public:
-    int data;
-    Node *next, *prev;
-    Node(int data) : data(data), next(nullptr), prev(nullptr) {}
-};
+    LRUCache(int capacity)
+    {
+        cap = capacity;
+        head = new Node(-1, -1);
+        tail = new Node(-1, -1);
+        head->next = tail;
+        tail->prev = head;
+    }
 
-class LinkedList
-{
 private:
-    Node *head, *tail;
-    int size;
+    class Node
+    {
+    public:
+        int key, data;
+        Node *next, *prev;
+        Node(int key, int data) : key(key), data(data), next(nullptr), prev(nullptr) {}
+    };
+
+    Node *head = nullptr, *tail = nullptr;
+    int cap;
+    map<int, Node *> cache;
+
+    void addNode(Node *node) // addFirst
+    {
+        Node *temp = head->next;
+        head->next = node;
+        node->prev = head;
+        node->next = temp;
+        temp->prev = node;
+    }
+
+    void removeNode(Node *node)
+    {
+        Node *nextNbr = node->next;
+        Node *prevNbr = node->prev;
+
+        prevNbr->next = nextNbr;
+        nextNbr->prev = prevNbr;
+
+        node->prev = nullptr;
+        node->next = nullptr;
+    }
+
+    void moveToFirst(Node *node)
+    {
+        removeNode(node);
+        addNode(node);
+    }
 
 public:
-    LinkedList() : head(nullptr), tail(nullptr), size(0) {}
-
-    void addFirst(int val)
+    int get(int key)
     {
-        Node *newNode = new Node(val);
-        if (size == 0)
-            head = tail = newNode;
-        else
+        Node *node = cache.count(key) == 0 ? nullptr : cache[key];
+        if (node == nullptr)
+            return -1;
+        int val = node->data;
+        moveToFirst(node);
+
+        return val;
+    }
+
+    void put(int key, int value)
+    {
+        Node *node = cache.count(key) == 0 ? nullptr : cache[key];
+        if (node == nullptr)
         {
-            newNode->next = head;
-            head->prev = newNode;
-            head = newNode;
+            node = new Node(key, value);
+            cache[key] = node;
+            addNode(node);
+            if (cache.size() > cap)
+            {
+                Node *LRU_node = tail->prev;
+                Node *temp = LRU_node->prev;
+                cache.erase(LRU_node->key);
+                removeNode(LRU_node);
+                temp->next = tail;
+                tail->prev = temp;
+            }
         }
-        size++;
-    }
-
-    void addLast(int val)
-    {
-        Node *newNode = new Node(val);
-        if (size == 0)
-            head = tail = newNode;
         else
-            tail->next = newNode, newNode->prev = tail, tail = newNode;
-        size++;
+            node->data = value, moveToFirst(node);
     }
 
-    void removeFirst()
+    void displayCache()
     {
-        if (size == 0)
-            return;
-        if (size == 1)
-            tail = nullptr;
-
         Node *temp = head->next;
-        temp->prev = nullptr;
-        delete (head);
-        head = temp;
-        size--;
-    }
-
-    void removeLast()
-    {
-        if (size == 0)
-            return;
-        if (size == 1)
-            head = tail = nullptr;
-
-        Node *temp = tail->prev;
-        temp->next = nullptr;
-        delete (tail);
-        tail = temp;
-        size--;
-    }
-
-    void removeAt(int idx)
-    {
-        if (size == 0 || size < idx)
-            return;
-        Node *node = head;
-        while (idx-- > 0)
-            node = node->next;
-
-        Node *prevNode = node->prev;
-        Node *nextNode = node->next;
-        prevNode->next = nextNode;
-        nextNode->prev = prevNode;
-
-        delete (node);
-        size--;
-    }
-
-    Node *getAt(int idx)
-    {
-        if (size == 0 || size < idx)
-            return new Node(INF);
-        Node *node = head;
-        while (idx-- > 0)
-            node = node->next;
-        return node;
-    }
-
-    Node *getFirst()
-    {
-        return tail;
-    }
-
-    Node *getlast()
-    {
-        return head;
-    }
-
-    int getSize()
-    {
-        return size;
-    }
-
-    void displayForward()
-    {
-        Node *temp = head;
-        while (temp)
+        while (temp != tail)
         {
-            cout << temp->data << " ";
+            cout << "[ " << temp->key << " " << temp->data << " ], ";
             temp = temp->next;
-        }
-    }
-
-    void displayBackward()
-    {
-        Node *temp = tail;
-        while (temp)
-        {
-            cout << temp->data << " ";
-            temp = temp->prev;
         }
     }
 };
 
 void solve()
 {
-    string inputData;
-    fflush(stdin);
-    getline(cin, inputData);
+    string command;
+    LRUCache *obj = nullptr;
+    while (getline(cin, command))
+    {
+        fflush(stdin);
+        fflush(stdout);
+        vs arr;
+        string str;
+        str_to_tok(command, ' ', arr, str);
 
-    int val = 0;
-    vi data;
-    str_to_tok(inputData, ' ', data, val);
-    LinkedList *lst = new LinkedList();
+        if (arr[0] == "Start")
+        {
+            int cap;
+            convert(arr[1], cap);
+            obj = new LRUCache(cap);
+        }
 
-    for (int vl : data)
-        lst->addFirst(vl);
-    lst->removeFirst();
-    lst->removeLast();
-    lst->displayForward();
-    cout << "\n*******\n";
-    lst->displayBackward();
+        else if (arr[0] == "get")
+        {
+            int key, val;
+            convert(arr[1], key);
+            // cout << "\t" << key << endl;
+
+            cout << "\t" << obj->get(key) << endl;
+        }
+
+        else if (arr[0] == "put")
+        {
+            int key, val;
+            convert(arr[1], key);
+            convert(arr[2], val);
+            // cout << "\t" << key << " " << val << endl;
+
+            obj->put(key, val);
+        }
+
+        else if (arr[0] == "Stop")
+            break;
+
+        cout << "\n****  ";
+        obj->displayCache();
+        cout << "  ****\n";
+    }
 }
+
+/*
+class Node
+{
+public:
+    int key, data;
+    Node *next, *prev;
+    Node(int key, int data) : key(key), data(data), next(nullptr), prev(nullptr) {}
+};*/
 
 int main()
 {
     cout << "\nHello world\n";
     int t = 1;
+    // map<int, Node *> hashmap;
+    // cout << (hashmap[1] == 0) << endl;
     // cin >> t;
     test(t)
         solve();
@@ -164,5 +166,18 @@ int main()
 }
 
 /*
-10 20 30 40 50 60 70 80 90 96
+
+Start 3
+put 1 10
+put 2 20
+put 3 30
+get 1
+put 1 15
+get 1
+get 2
+put 4 40
+get 3
+get 4
+Stop
+
 */
