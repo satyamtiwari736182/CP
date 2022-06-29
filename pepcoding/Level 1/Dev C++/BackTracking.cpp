@@ -94,12 +94,12 @@ int main(){
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr); cout.tie(nullptr);
 	
-//	int i=0,j=0,n,m;cin>>n>>m;
-//	int arr[N][M],visited[N][M];
-//	REP2(i,0,n-1) REP2(j,0,m-1) cin>>arr[i][j];
-//	
-//	memset(visited,0,sizeof(visited));
-//	floodfill(arr,visited,0,0,n,m,"");
+	// int i=0,j=0,n,m;cin>>n>>m;
+	// int arr[N][M],visited[N][M];
+	// REP2(i,0,n-1) REP2(j,0,m-1) cin>>arr[i][j];
+	
+	// memset(visited,0,sizeof(visited));
+	// floodfill(arr,visited,0,0,n,m,"");
 
 
 //	int tar=0,n; cin>>n;

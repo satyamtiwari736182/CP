@@ -127,7 +127,7 @@ int main(){
 	
 //	NGE(arr,n-1);
 //	stockSpan(arr,n-1);
-	
+	l
 	// int *tem=nge();
 	// cout<<tem[0];
 	

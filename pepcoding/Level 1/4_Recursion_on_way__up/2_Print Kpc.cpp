@@ -13,4 +13,26 @@
 // 3. Complete the body of printKPC function - without changing signature - to print the list of all words that could be produced by the keys in str.
 // Use sample input and output to take idea about output.
 
+#include "../header.h"
+
+void printkpc(string *keypad, string str, string ans)
+{
+    if (str.length() == 0)
+    {
+        cout << ans << " ";
+        return;
+    }
+    int n = str[0] - '0';
+    for (auto ch : keypad[n])
+        printkpc(keypad, str.substr(1), ans + ch);
+}
+
+int main()
+{
+    cout << "hello!" << endl;
+    string keypad[] = {".", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tu", "vwx", "yz"};
+    printkpc(keypad, "567", "");
+    return 0;
+}
+
 // 78

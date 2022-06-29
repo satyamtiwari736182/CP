@@ -32,6 +32,9 @@
 #include <utility>
 #include <valarray>
 #include <vector>
+#include <cstring>
+#include <climits>
+
 using namespace std;
 #define debug(x) cout << #x << " = " << x << endl;
 // #define REP(a, b) for (int i = a; i < b; i++)

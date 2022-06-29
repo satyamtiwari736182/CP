@@ -1,65 +1,80 @@
+#include "../header.h"
 
-#include <bits/stdc++.h>
-using namespace std;
-
-#define REP(a, b) for (int i = a; i <= b; i++)
-#define REP2(i, a, b) for (i = a; i <= b; i++)
-
-#define rarr(arr, l, r)         \
-    for (int i = l; i < r; i++) \
-        cin >> arr[i];
-
-#define rvarr(arr, l, r)        \
-    for (int i = l; i < r; i++) \
-    {                           \
-        int val;                \
-        cin >> val;             \
-        arr.push_back(val);     \
+int *nse(int *arr, int n)
+{
+    stack<int> st;
+    int *gre = new int[n + 1];
+    gre[n] = -1;
+    st.push(n);
+    for (int i = n - 1; i >= 0; i--)
+    {
+        while (st.size() && arr[st.top()] >= arr[i])
+            st.pop();
+        if (st.empty())
+            gre[i] = -1;
+        else
+            gre[i] = st.top();
+        st.push(i);
     }
+    return gre;
+}
 
-#define parr(arr, n)            \
-    for (int i = 0; i < n; i++) \
-        cout << arr[i] << " ";
-
-#define rmatrix(arr, n, m)          \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-            cin >> arr[i][j];
-
-#define rvmatrix(arr, n, m)         \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-        {                           \
-            int val;                \
-            cin >> val;             \
-            arr[i].push_back(val);  \
-        }
-
-#define pmatrix(arr, n, m)            \
-    for (int i = 0; i < n; i++)       \
-    {                                 \
-        for (int j = 0; j < m; j++)   \
-            cout << arr[i][j] << " "; \
-        cout << endl;                 \
+int *pse(int *arr, int n)
+{
+    stack<int> st;
+    int *gre = new int[n + 1];
+    gre[0] = -1;
+    st.push(0);
+    for (int i = 1; i <= n; i++)
+    {
+        while (st.size() && arr[st.top()] >= arr[i])
+            st.pop();
+        if (st.empty())
+            gre[i] = -1;
+        else
+            gre[i] = st.top();
+        st.push(i);
     }
+    return gre;
+}
 
-#define vi vector<int>
-#define all(x) x.begin(), x.end()
-#define pi pair<int, int>
-#define ll long long
-#define fs first
-#define se second
-#define pb push_back
-#define mp make_pair
-#define endl '\n'
-#define mod 1000000007
-const int INF = 1e9 + 7;
-const double PI = 3.141592653589793238;
-const int M = 100, N = 100;
+int MAH(int *arr, int n)
+{
+    int *ns_idx = nse(arr, n);
+    int *ps_idx = pse(arr, n);
+    int area = 0;
+    for (int i = 0; i <= n; i++)
+    {
+        int r = ns_idx[i];
+        int l = ps_idx[i];
+        int tempArea = arr[i] * (r - l - 1);
+        if (tempArea > area)
+            area = tempArea;
+        cout << tempArea << " ";
+    }
+    cout << endl;
+    return area;
+}
+
+void solve()
+{
+    int n;
+    cin >> n;
+    int arr[100];
+    rarr(arr, 0, n);
+    cout << MAH(arr, n - 1);
+}
 
 int main()
 {
-    cout << "\nHello world!" << endl;
-
+    cout << "Hello world!\n";
+    int t = 1;
+    // cin >> t;
+    test(t)
+        solve();
     return 0;
 }
+/*
+7
+6 2 5 4 5 1 6
+*/

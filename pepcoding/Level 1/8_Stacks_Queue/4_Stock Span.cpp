@@ -15,5 +15,49 @@
 // span for 8 is 2
 // span for 7 is 1
 
+#include "../header.h"
 
+void stockSpan(int *arr, int n)
+{
+    stack<int> st;
+    int nge[100];
+    nge[0] = 1;
+    st.push(0);
 
+    for (int i = 1; i <= n; i++)
+    {
+        while (st.size() && arr[st.top()] < arr[i])
+            st.pop();
+        if (st.empty())
+            nge[i] = i + 1;
+        else
+            nge[i] = i - st.top();
+        st.push(i);
+    }
+
+    for (int i = 0; i <= n; i++)
+        cout << nge[i] << " ";
+}
+
+void solve()
+{
+    int n;
+    cin >> n;
+    int arr[100];
+    rarr(arr, 0, n);
+    stockSpan(arr, n - 1);
+}
+
+int main()
+{
+    cout << "Hello world!\n";
+    int t = 1;
+    // cin >> t;
+    test(t)
+        solve();
+    return 0;
+}
+/*
+9
+2 5 9 3 1 12 6 8 7
+*/

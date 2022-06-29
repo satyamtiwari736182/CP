@@ -74,6 +74,8 @@
     "stack": "cpp",
     "xhash": "cpp",
     "xtree": "cpp",
-    "xutility": "cpp"
+    "xutility": "cpp",
+    "climits": "cpp",
+    "xiosbase": "cpp"
   }
 }

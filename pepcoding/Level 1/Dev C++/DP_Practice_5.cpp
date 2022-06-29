@@ -151,7 +151,7 @@ int main(){
 //	auto seq=getdownmazefreemove(3,2);
 //	REP(0,seq.size()-1) cout<<seq[i]<<", ";
 
-//	printseq("abc","");
+//	printseq("abc","")
 
 //	string keypad[]={".","abc","def","ghi","jkl","mno","pqrs","tu","vwx","yz"};
 //	printkpc(keypad,"567","");

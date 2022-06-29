@@ -1,65 +1,79 @@
+#include "../header.h"
+void prefixSum(vi &arr)
+{
+    for (int i = 1; i < arr.size(); i++)
+        arr[i] += arr[i - 1];
+}
 
-#include <bits/stdc++.h>
-using namespace std;
+void countSort(vi &arr, int exp, int div, int range)
+{
+    // int mx = 9;
+    int mn = 0;
+    // int range = mx - mn + 1;
+    vi freq(range);
+    for (int i = 0; i < arr.size(); i++)
+        freq[((arr[i] - mn) / exp) % div]++;
 
-#define REP(a, b) for (int i = a; i <= b; i++)
-#define REP2(i, a, b) for (i = a; i <= b; i++)
+    prefixSum(freq);
 
-#define rarr(arr, l, r)         \
-    for (int i = l; i < r; i++) \
-        cin >> arr[i];
+    for (int i = 0; i < freq.size(); i++)
+        freq[i]--;
 
-#define rvarr(arr, l, r)        \
-    for (int i = l; i < r; i++) \
-    {                           \
-        int val;                \
-        cin >> val;             \
-        arr.push_back(val);     \
-    }
+    vi narr(arr.size());
+    for (int i = arr.size() - 1; i >= 0; i--)
+        narr[freq[((arr[i] - mn) / exp) % div]] = arr[i], freq[((arr[i] - mn) / exp) % div]--;
 
-#define parr(arr, n)            \
-    for (int i = 0; i < n; i++) \
-        cout << arr[i] << " ";
+    arr = narr;
+}
 
-#define rmatrix(arr, n, m)          \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-            cin >> arr[i][j];
+void dateSort(vi &arr)
+{
+    int mx = *max_element(all(arr));
 
-#define rvmatrix(arr, n, m)         \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-        {                           \
-            int val;                \
-            cin >> val;             \
-            arr[i].push_back(val);  \
-        }
+    int exp = 1e6, div = 100; // for days
+    countSort(arr, exp, div, 32);
 
-#define pmatrix(arr, n, m)            \
-    for (int i = 0; i < n; i++)       \
-    {                                 \
-        for (int j = 0; j < m; j++)   \
-            cout << arr[i][j] << " "; \
-        cout << endl;                 \
-    }
+    exp = 1e4, div = 100; // for months
+    countSort(arr, exp, div, 13);
 
-#define vi vector<int>
-#define all(x) x.begin(), x.end()
-#define pi pair<int, int>
-#define ll long long
-#define fs first
-#define se second
-#define pb push_back
-#define mp make_pair
-#define endl '\n'
-#define mod 1000000007
-const int INF = 1e9 + 7;
-const double PI = 3.141592653589793238;
-const int M = 100, N = 100;
+    exp = 1, div = 10000; // for years
+    countSort(arr, exp, div, 2501);
+}
+
+void solve()
+{
+    int n;
+    cin >> n;
+    vi arr(n);
+    rarr(arr, 0, n);
+    dateSort(arr);
+    parr(arr, arr.size());
+    cout << endl;
+}
 
 int main()
 {
-    cout << "\nHello world!" << endl;
-
+    cout << "Hello world!\n";
+    int t = 1;
+    // cin >> t;
+    test(t)
+        solve();
     return 0;
 }
+
+/*
+5
+12041996
+20101996
+05061997
+12041989
+11081987
+
+
+5
+7 2 4 1 3
+
+6
+1 2 3 4 5 6
+
+*/

@@ -118,8 +118,8 @@ int main(){
 //	REP(0,seq.size()-1) cout<<seq[i]<<", ";
 
 	
-//	string keypad[]={".","abc","def","ghi","jkl","mno","pqrs","tu","vwx","yz"};
-//	seq=kpc(keypad,"5670");
+	// string keypad[]={".","abc","def","ghi","jkl","mno","pqrs","tu","vwx","yz"};
+	// seq=kpc(keypad,"5670");
 
 //	seq=getdownstair(3);
 //	REP(0,seq.size()-1) cout<<seq[i]<<", ";

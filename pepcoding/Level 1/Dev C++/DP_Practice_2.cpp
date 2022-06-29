@@ -98,11 +98,13 @@ int getstairV_U_T(int n,int *arr,int *dp)
 	return dp[1];
 }
 
+1
+
 //-------------------------------------------------------
 
 
-//10
-//3 2 4 2 0 2 3 1 2 2
+// 10
+// 3 2 4 2 0 2 3 1 2 2
 
 int getstairminV_U_R(int n,int *arr,int idx)
 {

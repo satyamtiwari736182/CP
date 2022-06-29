@@ -1,65 +1,47 @@
+#include "../header.h"
 
-#include <bits/stdc++.h>
-using namespace std;
+vector<string> allSubseq(string str)
+{
+    vector<string> samm;
+    samm.pb("");
+    if (str.length() == 0)
+        return samm;
+    char ch = str[0];
 
-#define REP(a, b) for (int i = a; i <= b; i++)
-#define REP2(i, a, b) for (i = a; i <= b; i++)
+    auto rres = allSubseq(str.substr(1));
 
-#define rarr(arr, l, r)         \
-    for (int i = l; i < r; i++) \
-        cin >> arr[i];
+    vector<string> sam;
+    for (auto i : rres)
+        sam.pb(ch + i);
+    for (auto i : rres)
+        sam.pb("" + i);
 
-#define rvarr(arr, l, r)        \
-    for (int i = l; i < r; i++) \
-    {                           \
-        int val;                \
-        cin >> val;             \
-        arr.push_back(val);     \
-    }
-
-#define parr(arr, n)            \
-    for (int i = 0; i < n; i++) \
-        cout << arr[i] << " ";
-
-#define rmatrix(arr, n, m)          \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-            cin >> arr[i][j];
-
-#define rvmatrix(arr, n, m)         \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-        {                           \
-            int val;                \
-            cin >> val;             \
-            arr[i].push_back(val);  \
-        }
-
-#define pmatrix(arr, n, m)            \
-    for (int i = 0; i < n; i++)       \
-    {                                 \
-        for (int j = 0; j < m; j++)   \
-            cout << arr[i][j] << " "; \
-        cout << endl;                 \
-    }
-
-#define vi vector<int>
-#define all(x) x.begin(), x.end()
-#define pi pair<int, int>
-#define ll long long
-#define fs first
-#define se second
-#define pb push_back
-#define mp make_pair
-#define endl '\n'
-#define mod 1000000007
-const int INF = 1e9 + 7;
-const double PI = 3.141592653589793238;
-const int M = 100, N = 100;
+    return sam;
+}
 
 int main()
 {
-    cout << "\nHello world!" << endl;
-
+    cout << "hello!" << endl;
+    int n, arr[100];
+    cin >> n;
+    rarr(arr, 0, n);
+    auto res = allSubseq("abc");
+    parr(res, res.size());
     return 0;
 }
+
+/*
+6
+3 2 5 9 2 4
+*/
+
+/*
+6
+6
+0 1 4 2 8 2
+4 3 6 5 0 4
+1 2 4 1 4 6
+2 0 7 3 2 2
+3 1 5 9 2 4
+2 7 0 8 5 1
+*/
