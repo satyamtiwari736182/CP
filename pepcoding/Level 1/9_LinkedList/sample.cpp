@@ -13,17 +13,6 @@ class LinkedList
 public:
     Node *head, *tail;
     int size;
-    LinkedList() : head(nullptr), tail(nullptr), size(0) {}
-
-    void addFirst(int val)
-    {
-        Node *newNode = new Node(val);
-        if (size == 0)
-            head = tail = newNode;
-        else
-            newNode->next = head, head = newNode;
-        size++;
-    }
 
     void addLast(int val)
     {
@@ -33,6 +22,14 @@ public:
         else
             tail->next = newNode, tail = newNode;
         size++;
+    }
+
+    int getFirst()
+    {
+        if (size == 0)
+            return -1;
+        else
+            return head->data;
     }
 
     void removeFirst()
@@ -47,6 +44,21 @@ public:
         head = temp;
         size--;
     }
+    void addFirst(int val)
+    {
+        Node *newNode = new Node(val);
+        if (size == 0)
+            head = tail = newNode;
+        else
+            newNode->next = head, head = newNode;
+        size++;
+    }
+    void add(int val)
+    {
+        addLast(val);
+    }
+
+    LinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
     void display()
     {
@@ -55,6 +67,18 @@ public:
         {
             cout << temp->data << " ";
             temp = temp->next;
+        }
+    }
+
+    //?==============================================
+    //*==============================================
+
+    void displayR(Node *root)
+    {
+        if (root)
+        {
+            displayR(root->next);
+            cout << root->data << " ";
         }
     }
 };
@@ -68,13 +92,12 @@ void solve()
     int val = 0;
     vi data;
     str_to_tok(inputData, ' ', data, val);
-    LinkedList *lst = new LinkedList();
-
+    LinkedList *lst1 = new LinkedList();
     for (int vl : data)
-        lst->addFirst(vl);
-    lst->removeFirst();
-    lst->removeFirst();
-    lst->display();
+        lst1->add(vl);
+    lst1->display();
+    cout << endl;
+    lst1->displayR(lst1->head);
 }
 
 int main()

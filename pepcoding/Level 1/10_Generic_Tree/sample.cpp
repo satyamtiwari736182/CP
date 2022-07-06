@@ -9,17 +9,14 @@ struct Node
 void display(Node *node)
 {
     string str = to_string(node->data) + " -> ";
+
     for (auto child : node->children)
-    {
         str += to_string(child->data) + " ";
-    }
 
     cout << str << endl;
 
     for (auto child : node->children)
-    {
         display(child);
-    }
 }
 
 Node *insert(int *arr, int n)
@@ -29,7 +26,7 @@ Node *insert(int *arr, int n)
     stack<Node *> st;
     st.push(root);
 
-    for(int i=1;i<n;i++)
+    for (int i = 1; i < n; i++)
     {
         struct Node *t = new Node;
         if (arr[i] == -1)
@@ -45,100 +42,49 @@ Node *insert(int *arr, int n)
     return root;
 }
 
-int countNode(Node *root)
+//?=========================================================================
+//*=========================================================================
+int maxSum = INT_MIN, maxSumNode = INT_MIN;
+int maxSubTreeSum(Node *root)
 {
-    //	if(!root) return 0;
-    int sum = 1;
-    for (auto child : root->children)
-        sum += countNode(child);
-    return sum;
-}
-
-int findMax(Node *root)
-{
-    //	if(!root) return 0;
-    int mx = root->data;
-    for (auto child : root->children)
+    for (auto chld : root->children)
     {
-        int temp = findMax(child);
-        if (mx < temp)
-            mx = temp;
+        int val = maxSubTreeSum(chld);
+        maxSum = max(maxSum, val);
+        maxSumNode += val;
     }
-    return mx;
+    return root->data + maxSumNode;
 }
-
-int getHeight(Node *root)
-{
-    //	if(!root) return 1;
-
-    int ht = -1;
-    for (auto child : root->children)
-    {
-        int temp = getHeight(child);
-        ht = max(ht, temp);
-    }
-    return ht + 1;
-}
-
-int getSum(Node *root)
-{
-    //	if(!root) return 0;
-    int sum = 0;
-    for (auto child : root->children)
-    {
-        sum += getSum(child);
-    }
-    return sum + root->data;
-}
-
-void preOrder(Node *root)
-{
-    //	cout<<root->data<<" ";
-    queue<Node *> q;
-    //	q.push(root);
-    for (auto child : root->children)
-    {
-        cout << child->data << " ";
-        q.push(child);
-    }
-    cout << endl;
-    while (!q.empty())
-    {
-        preOrder(q.front());
-        q.pop();
-    }
-}
-
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
-
     int arr[] = {10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1};
     //	int arr[] = {10 ,20, -1, 30, 50, -1, 60, -1, -1, 40, -1, -1};
     int n = sizeof(arr) / sizeof(*arr);
 
     Node *root = insert(arr, n);
     display(root);
-
-    int size = countNode(root);
-    int mx = findMax(root);
-    int ht = getHeight(root);
-    int sum = getSum(root);
-    cout << endl;
-    preOrder(root);
-    cout << endl;
-
-    cout << endl
-         << "Size of tree = " << size << endl;
-    cout << endl
-         << "Max vlaue in tree = " << mx << endl;
-    cout << endl
-         << "Height of tree = " << ht << endl;
-    cout << endl
-         << "Sum of tree nodes= " << sum << endl;
-    cout << "hello! " << n << endl;
-
+    cout << "\n**************\n";
+    //*===============================================
+    maxSubTreeSum(root);
+    cout << maxSum << "\t" << maxSumNode << endl;
     return 0;
 }
+
+
+  static int mSum = Integer.MIN_VALUE;
+  static int mSumNode = Integer.MIN_VALUE;
+  public static int nodeWithMaximumSubtreeSum(Node node) {
+    int sum = node.data;
+
+    for (Node child : node.children) {
+      int cstSum = nodeWithMaximumSubtreeSum(child);
+      sum += cstSum;
+    }
+
+    if (sum > mSum) {
+      mSum = sum;
+      mSumNode = node.data;
+    }
+
+    return sum;
+  }
