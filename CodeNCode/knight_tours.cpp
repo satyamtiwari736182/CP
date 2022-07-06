@@ -18,6 +18,7 @@ using namespace std;
 const int INF = 1e9 + 7;
 const double PI = 3.141592653589793238;
 const int M = 100, N = 100;
+
 void display(int arr[N][N], int n)
 {
     for (int i = 0; i < n; i++)
