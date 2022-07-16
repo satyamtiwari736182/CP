@@ -180,7 +180,7 @@ void setSuffixIndexByDFS(Node *n, int labelHeight)
   }
   if (leaf == 1)
   {
-    n->suffixIndex = size - labelHeight;
+    n->suffixIndex = ::size - labelHeight;
     cout << "  " << n->suffixIndex << endl;
   }
 }
@@ -202,7 +202,7 @@ void freeSuffixTreeByPostOrder(Node *n)
 
 void buildSuffixTree()
 {
-  size = text.length();
+  ::size = text.length();
   int i;
   rootEnd = (int *)malloc(sizeof(int));
   *rootEnd = -1;
@@ -210,7 +210,7 @@ void buildSuffixTree()
   root = newNode(-1, rootEnd);
 
   activeNode = root; // First activeNode will be root
-  for (i = 0; i < size; i++)
+  for (i = 0; i < ::size; i++)
     extendSuffixTree(i);
   int labelHeight = 0;
   setSuffixIndexByDFS(root, labelHeight);

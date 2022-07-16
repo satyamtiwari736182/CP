@@ -6,9 +6,66 @@
 
 // Note -> There can be only one celebrity. Think why?
 
+#include "../header.h"
 
-// 4
-// 0000
-// 1011
-// 1101
-// 1110
+void solve()
+{
+    int n;
+    cin >> n;
+    int **arr = new int *[n];
+    for (int i = 0; i < n; i++)
+        arr[i] = new int[n];
+
+    rmatrix(arr, n, n);
+    cout << "\n**************\n";
+
+    stack<int> stk;
+    for (int i = 0; i < n; i++)
+        stk.push(i);
+    while (stk.size() > 1)
+    {
+        int val1 = stk.top();
+        stk.pop();
+        int val2 = stk.top();
+        stk.pop();
+        if (arr[val1][val2])
+            stk.push(val2);
+        else
+            stk.push(val1);
+    }
+
+    int celi = stk.top();
+    int celib = stk.top() + 1;
+    for (int i = 0; i < n; i++)
+    {
+        if (i != celi && arr[i][celi] == 0)
+        {
+            celib = -1;
+            break;
+        }
+
+        if (i != celi && arr[celi][i] == 1)
+        {
+            celib = -1;
+            break;
+        }
+    }
+    cout << celib << endl;
+}
+
+int main()
+{
+    cout << "Hello world!\n";
+    int t = 1;
+    // cin >> t;
+    test(t)
+        solve();
+    return 0;
+}
+/*
+4
+0 0 0 0
+1 0 1 1
+1 1 0 1
+1 1 1 0
+*/

@@ -59,3 +59,26 @@ string str;
     strm >> val;
     cout<<val*4<<endl;
 */
+
+/*
+
+#include <stdio.h>
+int main()
+{
+    char character;
+    char string[500];
+    char sentence[500];
+    scanf("%c", &character);
+    scanf("%s", string);
+
+    fflush(stdin);
+
+    scanf("%[^\n]s", sentence);
+
+    // fgets(sentence, 500, stdin);
+
+    printf("Your character: %c\n", character);
+    printf("Your string: %s\n", string);
+    printf("Your sentence: %s\n", sentence);
+}
+*/

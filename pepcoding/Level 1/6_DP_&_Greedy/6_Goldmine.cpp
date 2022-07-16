@@ -15,7 +15,8 @@ int maxgold(int gold[N][M], int i, int j, int n, int m)
         return 0;
     if (j == m)
         return gold[i][j];
-    return gold[i][j] + max(maxgold(gold, i - 1, j + 1, n, m), max(maxgold(gold, i, j + 1, n, m), maxgold(gold, i + 1, j + 1, n, m)));
+    return gold[i][j] + max(maxgold(gold, i - 1, j + 1, n, m),
+                            max(maxgold(gold, i, j + 1, n, m), maxgold(gold, i + 1, j + 1, n, m)));
 }
 
 int main()

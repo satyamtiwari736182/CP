@@ -18,11 +18,63 @@
 
 // Note -> The given input maynot be sorted by start-time.
 
+#include "../header.h"
 
-// 6
-// 22 28
-// 1 8
-// 25 27
-// 14 19
-// 27 30
-// 5 12
+void solve()
+{
+    int n;
+    cin >> n;
+    vector<pi> vec, res;
+
+    while (n-- > 0)
+    {
+        int st, en;
+        cin >> st >> en;
+        vec.pb({st, en});
+    }
+
+    sort(all(vec), [=](const pi a, const pi b)
+         { return a.fs < b.fs; });
+
+    stack<pi> stk;
+    stk.push(vec[0]);
+    for (int i = 1; i < vec.size(); i++)
+    {
+        if (vec[i].fs >= stk.top().fs && vec[i].fs <= stk.top().se)
+        {
+            pi temp = stk.top();
+            stk.pop();
+            temp.se = max(vec[i].se, temp.se);
+            stk.push(temp);
+        }
+        else
+            stk.push(vec[i]);
+    }
+
+    while (!stk.empty())
+        res.pb(stk.top()), stk.pop();
+    cout << endl;
+
+    for (int i = res.size() - 1; i >= 0; i--)
+        cout << res[i].fs << " " << res[i].se << endl;
+}
+
+int main()
+{
+    cout << "Hello world!\n";
+    int t = 1;
+    // cin >> t;
+    test(t)
+        solve();
+    return 0;
+}
+
+/*
+6
+1 8
+5 12
+14 19
+22 28
+25 27
+27 30
+*/
