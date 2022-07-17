@@ -1,12 +1,37 @@
+// 1. You are given a string str.
+// 2. Complete the body of getSS function - without changing signature - to calculate all subsequences of str.
+// Use sample input and output to take idea about subsequences.
+
 #include "../header.h"
 
-void solve() {}
+vector<string> getseq(string str)
+{
+    vector<string> temp, res;
+    if (str.length() == 0)
+    {
+        temp.pb("");
+        return temp;
+    }
+
+    temp = getseq(str.substr(1));
+
+    for (auto item : temp)
+        res.pb("" + item);
+    for (auto item : temp)
+        res.pb(str[0] + item);
+
+    return res;
+}
 
 int main()
 {
-    int t = 1;
-    // cin>>t;
-    test(t)
-        solve();
+    cout << "hello!" << endl;
+
+    vector<string> seqs;
+    seqs = getseq("abc");
+    parr(seqs, seqs.size());
+
     return 0;
 }
+
+// abc
