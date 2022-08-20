@@ -1,31 +1,55 @@
 #include "../header.h"
 
-int calculator(string str)
+int largestRectangleArea(vi &heights)
 {
     stack<int> stk;
-    int sum = 0, sign = 1;
-
-    for (char ch : str)
+    stk.push(-1);
+    int maxArea = 0;
+    for (int i = 0; i <= heights.size(); i++)
     {
-        if (isdigit(ch) == true)
+        int val = (i == heights.size() ? 0 : heights[i]);
+        while (stk.top() != -1 && heights[stk.top()] >= val)
         {
-            int val = 0;
-            while (1)
-                ;
+            int rightMin = i;
+            int height = heights[stk.top()];
+            stk.pop();
+            int leftMin = stk.top();
+            maxArea = max(maxArea, (rightMin - leftMin - 1) * height);
         }
+        stk.push(i);
     }
+    return maxArea;
+}
 
-    return sum;
+int maximalRectangle(vvi &arr)
+{
+    vi heights(arr[0].size());
+    for (int i = 0; i < heights.size(); i++)
+        heights[i] = arr[0][i];
+    int area = largestRectangleArea(heights);
+
+    for (int i = 1; i < arr.size(); i++)
+    {
+        for (int j = 0; j < arr[0].size(); j++)
+        {
+            if (arr[i][j] == 1)
+                heights[j]++;
+            else
+                heights[j] = 0;
+        }
+        area = max(area, largestRectangleArea(heights));
+    }
+    return area;
 }
 
 void solve()
 {
-    string str;
-    cin >> str;
-
-    fflush(stdin);
-    int res = calculator(str);
-    cout << res << endl;
+    int n, m;
+    cin >> n >> m;
+    vvi arr(n, vi(m));
+    rmatrix(arr, n, m);
+    cout << "\n------------\n";
+    cout << maximalRectangle(arr);
 }
 
 int main()
@@ -38,3 +62,12 @@ int main()
 
     return 0;
 }
+
+/*
+
+2
+5
+1 0 1 0 0
+1 0 1 1 1
+
+*/

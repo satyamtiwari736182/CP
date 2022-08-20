@@ -6,7 +6,42 @@
 
 // It is guaranteed that every call to ping uses a strictly larger value of t than the previous call.
 
-// 1
-// 100
-// 3001
-// 3002
+#include "../header.h"
+
+queue<int> que;
+
+int ping(int timeAt)
+{
+    que.push(timeAt);
+    int strtTime = timeAt - 300;
+    while (que.front() < strtTime)
+        que.pop();
+    return que.size();
+}
+
+void solve()
+{
+    while (1)
+    {
+        int pingTime;
+        cin >> pingTime;
+        cout << "total Ping: " << ping(pingTime) << endl;
+    }
+}
+
+int main()
+{
+    cout << "\nHello world\n";
+    int t = 1;
+    // cin >> t;
+    test(t)
+        solve();
+
+    return 0;
+}
+/*
+1
+100
+3001
+3002
+*/

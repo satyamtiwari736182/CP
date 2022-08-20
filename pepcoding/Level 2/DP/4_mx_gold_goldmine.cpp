@@ -1,37 +1,4 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define REP(a, b) for (int i = a; i <= b; i++)
-#define REP2(i, a, b) for (i = a; i <= b; i++)
-#define rarr(arr, l, r)          \
-    for (int i = l; i <= r; i++) \
-        cin >> arr[i];
-#define parr(arr, l, r)          \
-    for (int i = l; i <= r; i++) \
-        cout << arr[i] << " ";
-#define rmatrix(arr, n, m)          \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-            cin >> arr[i][j];
-#define pmatrix(arr, n, m)            \
-    for (int i = 0; i < n; i++)       \
-    {                                 \
-        for (int j = 0; j < m; j++)   \
-            cout << arr[i][j] << " "; \
-        cout << endl;                 \
-    }
-#define vi vector<int>
-#define all(x) x.begin(), x.end()
-#define pi pair<int, int>
-#define ll long long
-#define fs first
-#define se second
-#define pb push_back
-#define mp make_pair
-#define endl '\n'
-#define mod 1000000007
-const int INF = 1e9 + 7;
-const double PI = 3.141592653589793238;
-const int M = 100, N = 100;
+#include "../header.h"
 
 class Pair
 {
@@ -50,8 +17,8 @@ int main()
 {
     int n, m;
     cin >> n >> m;
-    
-    int arr[n + 1][m + 1], dp[n + 1][m + 1];
+
+    int arr[100][100], dp[100][100];
 
     fill(*dp, *dp + (n + 1) * (m + 1), 0);
     rmatrix(arr, n, m);
@@ -101,20 +68,18 @@ int main()
 
             if (g == dp[temp.i + 1][temp.j + 1])
                 que.push(Pair(temp.i + 1, temp.j + 1, temp.path + " d3"));
-
         }
 
         else if (temp.i == n - 1)
         {
 
             int g = max(dp[temp.i][temp.j + 1], dp[temp.i - 1][temp.j + 1]);
-            
+
             if (g == dp[temp.i - 1][temp.j + 1])
                 que.push(Pair(temp.i - 1, temp.j + 1, temp.path + " d1"));
 
             if (g == dp[temp.i][temp.j + 1])
                 que.push(Pair(temp.i, temp.j + 1, temp.path + " d2"));
-
         }
 
         else
@@ -129,7 +94,6 @@ int main()
 
             if (g == dp[temp.i + 1][temp.j + 1])
                 que.push(Pair(temp.i + 1, temp.j + 1, temp.path + " d3"));
-
         }
 
         que.pop();

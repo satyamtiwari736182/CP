@@ -1,11 +1,26 @@
 #include "../header.h"
 
+int solver(int *arr, int i, int j, vvi &dp)
+{
+    int ans = INT_MAX;
+    if (i >= j)
+        return 0;
+    if (dp[i][j])
+        return dp[i][j];
+    for (int k = i; k < j; k++)
+    {
+        int tempAns = solver(arr, i, k, dp) + solver(arr, k + 1, j, dp);
+        ans = min(ans, tempAns + arr[i - 1] * arr[k] * arr[j]);
+    }
+    return dp[i][j] = ans;
+}
+
 int main()
 {
     int n;
     cin >> n;
 
-    int arr[n + 1], dp[n][n];
+    int arr[N], dp[N][N];
     fill(*dp, *dp + n * n, 0);
     rarr(arr, 0, n + 1);
 

@@ -1,65 +1,30 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define REP(a, b) for (int i = a; i <= b; i++)
-#define REP2(i, a, b) for (i = a; i <= b; i++)
-#define rarr(arr, l, r)         \
-    for (int i = l; i < r; i++) \
-        cin >> arr[i];
-#define parr(arr, n)            \
-    for (int i = 0; i < n; i++) \
-        cout << arr[i] << " ";
-#define rmatrix(arr, n, m)          \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-            cin >> arr[i][j];
-#define pmatrix(arr, n, m)            \
-    for (int i = 0; i < n; i++)       \
-    {                                 \
-        for (int j = 0; j < m; j++)   \
-            cout << arr[i][j] << " "; \
-        cout << endl;                 \
+#include "../header.h"
+
+int *catalanNumber(int n)
+{
+    int *catlan = new int[n + 1];
+    catlan[0] = catlan[1] = 1;
+    for (int num = 2; num <= n; num++)
+    {
+        int sum = 0;
+        for (int i = 0, j = num - 1; i < num; i++, j--)
+            sum += catlan[i] * catlan[j];
+        catlan[num] = sum;
     }
-#define vi vector<int>
-#define all(x) x.begin(), x.end()
-#define pi pair<int, int>
-#define ll long long
-#define fs first
-#define se second
-#define pb push_back
-#define mp make_pair
-#define endl '\n'
-#define mod 1000000007
-const int INF = 1e9 + 7;
-const double PI = 3.141592653589793238;
-const int M = 80, N = 80;
+    return catlan;
+}
 
 int main()
 {
+    cout << "\nHello world!\n";
     int n;
     cin >> n;
-    int arr[n];
-    rarr(arr, 0, n);
-    int k;
-    cin >> k;
-    int dp[n] = {0};
-    //-----------------------------------------------------
+    int *catlan = catalanNumber(n);
+    parr(catlan, n + 1);
+    //------------------------------------------------------
 
-    int mx = 0, temp = k;
-
-    for (int i = 0; i < n; i++)
-    {
-        
-    }
-
-    //-----------------------------------------------------
-    cout << "\nHello world!\n";
     return 0;
 }
 
-// 18
-// 4 3 -2 6 -14 7 -1 4 5 7 -10 2 9 -10 -5 -9 6 1
-// 4
+// 10
 
-// 5
-// 3 -2 -3 1 2
-// 4

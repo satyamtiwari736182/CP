@@ -5,7 +5,7 @@ int main()
     int n;
     cin >> n;
 
-    int arr[n], dp[n][n];
+    int arr[N], dp[N][N];
     fill(*dp, *dp + n * n, 0);
     rarr(arr, 0, n);
 

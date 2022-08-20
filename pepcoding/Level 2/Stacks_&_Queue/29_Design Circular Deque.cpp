@@ -11,6 +11,72 @@
 // 7. getRear(): Gets the last item from Deque. If the deque is empty, return null.
 // 8. isEmpty(): Checks whether Deque is empty or not.
 
+#include "../header.h"
+
+template <class T>
+class DeQueue
+{
+public:
+    class Node
+    {
+        T data;
+        Node *next = nullptr, *prev = nullptr;
+        // Node() : data(null) = default;
+        Node(T val) : data(val) {}
+    };
+
+private:
+    Node *front, *rear, *tail;
+    int size = 0;
+
+public:
+    DeQueue()
+    {
+        front = rear = nullptr;
+        front->next = tail;
+        tail->prev = front;
+    }
+
+    void insertFront(T val)
+    {
+        Node *node = new Node(val);
+        node->next = rear;
+        node->prev = rear->prev;
+        // node->prev = node->next;
+        rear->prev = node;
+        size++;
+    }
+
+    void insertLast(T val) {}
+
+    void deleteLast() {}
+
+    void deleteFront() {}
+};
+
+void solve()
+{
+    int n;
+    cin >> n;
+
+    string str = "start";
+    cin >> str;
+    while (str != "exit")
+    {
+    }
+}
+
+int main()
+{
+    cout << "\nHello world\n";
+    int t = 1;
+    // cin >> t;
+    test(t)
+        solve();
+
+    return 0;
+}
+
 /*
 
 insertLast 1

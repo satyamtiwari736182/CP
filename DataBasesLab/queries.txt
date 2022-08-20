@@ -1,0 +1,24 @@
+CREATE table students_repo(
+uid int(10) PRIMARY KEY,
+name char(30),
+marks INTEGER
+);
+
+
+INSERT into students_repo VALUES(123,"satyam",99);
+INSERT into students_repo VALUES(1203,"rahul",85);
+INSERT into students_repo VALUES(1223,"ram",49);
+INSERT into students_repo VALUES(1253,"sam",69);
+
+
+SELECT count(*)from students_repo
+SELECT *from students_repo
+SELECT name from students_repo WHERE marks > 85;
+UPDATE students_repo SET name="Anubhav kashyap" WHERE marks=85;
+
+SELECT *FROM students_repo ORDER by marks DESC
+
+SELECT sum(marks) from students_repo;
+
+DROP table students_repo
+

@@ -17,6 +17,7 @@
 #include <climits>
 #include <list>
 #include <locale>
+#include <unordered_map>
 #include <map>
 #include <memory>
 #include <new>
@@ -24,6 +25,7 @@
 #include <ostream>
 #include <queue>
 #include <set>
+#include <unordered_set>
 #include <sstream>
 #include <stack>
 #include <stdexcept>
@@ -122,7 +124,7 @@ string Substr(string str, int i, int j)
 {
     int len = j - i;
     if (j <= i)
-        return "-1";
+        return "\0";
     return str.substr(i, len);
 }
 

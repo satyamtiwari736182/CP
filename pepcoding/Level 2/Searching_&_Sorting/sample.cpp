@@ -1,77 +1,52 @@
-// 1. A conveyor belt has packages that must be shipped from one port to another within D days.
-// 2. The ith package on the conveyor belt has a weight of weights[i]. Each day, we load the ship with packages on the conveyor belt (in the order given by weights). We may not load more weight than the maximum weight capacity of the ship.
-// 3. Return the least weight capacity of the ship that will result in all the packages on the conveyor belt being shipped within D days.
 
 #include "../header.h"
-bool check(vi &arr, int weight, int days)
+bool shouldYouPunish(vi &roll, vi &marks, double avg)
 {
-    int cnt_day = 1, temp_wt = 0;
-    for (int wt : arr)
-    {
-        temp_wt += wt;
-        if (temp_wt > weight)
-        {
-            temp_wt = wt;
-            cnt_day++;
-        }
-    }
+    int swap_cnt = 0;
+    int n = roll.size();
 
-    return cnt_day <= days;
-}
+    for (int pass = 0; pass <= n - 2; pass++)
+        for (int i = 0; i <= n - pass - 1; i++)
+            if (roll[i] > roll[i + 1])
+                swap(roll[i], roll[i + 1]), swap_cnt += 2;
 
-int solve(vi &arr, int m)
-{
-    int low = 0, high = 0, weight = 0;
-    for (int i : arr)
-    {
-        low = max(low, i);
-        high += i;
-    }
+    int totalOldMarks = 0;
+    for (int val : marks)
+        totalOldMarks += val;
 
-    while (low <= high)
-    {
-        int mid = (low + high) / 2;
-        if (check(arr, mid, m) == 1)
-        {
-            weight = mid;
-            high = mid - 1;
-        }
-        else
-            low = mid + 1;
-    }
+    int newTotalMarks = totalOldMarks - swap_cnt;
+    double navg = (newTotalMarks * 1.0) / n;
 
-    return weight;
+    return navg > avg;
 }
 
 int main()
 {
     cout << "\nHello world!" << endl;
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t--)
     {
-        int n, d;
+        int n;
         cin >> n;
-        vi arr;
-        rvarr(arr, 0, n);
-        cin >> d;
+        vi roll(n), marks(n);
+        rarr(roll, 0, n);
+        rarr(marks, 0, n);
+
+        double avg;
+        cin >> avg;
 
         cout << "\n============================================\n";
-
-        cout << solve(arr, d);
-
+        cout << shouldYouPunish(roll, marks, avg);
         cout << "\n============================================\n";
     }
     return 0;
 }
 
-// 2
-
-// 10
-// 2 3 4 1 5 6 7 9 8 10
-// 5
-
-// 5
-// 7 2 5 10 8
-// 2
+/*
+5
+3 2 4 1 5
+50 67 89 79 58
+68
+*/

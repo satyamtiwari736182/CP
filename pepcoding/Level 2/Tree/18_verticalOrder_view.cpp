@@ -34,7 +34,7 @@ void verticalOrder(Node *root)
         }
     }
 
-        cout << "\n"
+    cout << "\n"
          << hashmap.size() << endl
          << mnhd << " " << mxhd << endl;
     for (int i = mnhd; i <= mxhd; i++)

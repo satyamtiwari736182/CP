@@ -1,2 +1,0 @@
-// 1. Given the root of a binary tree and an integer targetSum, return the number of paths where the sum of the values along the path equals targetSum.
-// 2. The path does not need to start or end at the root or a leaf,path can start from any where but it must go downwards

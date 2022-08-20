@@ -4,7 +4,8 @@ int main()
 {
     int n, k;
     cin >> n >> k;
-    int dp[n + 1][k + 1];
+    // int dp[n + 1][k + 1];
+    int dp[N][N];
     memset(dp, 0, sizeof(dp));
 
     //---------------------------------------------
@@ -23,7 +24,7 @@ int main()
             else
             {
                 int minV = INT_MAX;
-                for (int rf1 = f - 1, rf2 = 0; rf1 > 0; rf1--, rf2++)
+                for (int rf1 = f - 1, rf2 = 0; rf1 > 0; rf1--, rf2++) // rf1 => reverse floor
                 {
                     int val = max(dp[e][rf1], dp[e - 1][rf2]);
                     minV = min(val, minV);

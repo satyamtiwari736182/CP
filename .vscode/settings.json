@@ -76,6 +76,8 @@
     "xtree": "cpp",
     "xutility": "cpp",
     "climits": "cpp",
-    "xiosbase": "cpp"
+    "xiosbase": "cpp",
+    "ios": "cpp",
+    "xstddef": "cpp"
   }
 }

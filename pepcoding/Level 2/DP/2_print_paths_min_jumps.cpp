@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+#include "../header.h"
 using namespace std;
 
 class Pair
@@ -19,7 +19,7 @@ int main()
 {
     int n;
     cin >> n;
-    int arr[n], dp[n];
+    int arr[100], dp[100];
 
     fill(dp, dp + n, -1);
     for (int i = 0; i < n; i++)

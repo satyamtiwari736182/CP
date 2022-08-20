@@ -1,30 +1,12 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define REP(a, b) for (int i = a; i <= b; i++)
-#define REP2(i, a, b) for (i = a; i <= b; i++)
-#define print(arr, l, r)         \
-    for (int i = l; i <= r; i++) \
-        cout << arr[i] << " ";
-#define vi vector<int>
-#define all(x) x.begin(), x.end()
-#define pi pair<int, int>
-#define ll long long
-#define fs first
-#define se second
-#define pb push_back
-#define mp make_pair
-#define endl '\n'
-#define mod 1000000007
-const int INF = 1e9 + 7;
-const double PI = 3.141592653589793238;
-const int M = 100, N = 100;
+#include "../header.h"
 
 int main()
 {
-    int n;
+    int n, i = 0;
     cin >> n;
-    int arr[n], dp[n][n];
-    REP(0, n - 1)
+    // int arr[n], dp[n][n];
+    int arr[N], dp[N][N];
+    REP(i, 0, n - 1)
     cin >> arr[i];
     for (int g = 0; g < n; g++)
     {
@@ -61,6 +43,5 @@ int main()
     return 0;
 }
 
-
-// 4 
+// 4
 // 20 30 2 10

@@ -98,7 +98,7 @@ BSTpair *checkBST(Node *root)
     BSTpair *nodePair = new BSTpair();
     nodePair->isBST = leftpair->isBST && rightpair->isBST && leftpair->maxi < root->data && rightpair->mini > root->data;
     nodePair->mini = min(root->data, min(leftpair->mini, rightpair->mini));
-    nodePair->maxi = min(root->data, min(leftpair->maxi, rightpair->maxi));
+    nodePair->maxi = max(root->data, max(leftpair->maxi, rightpair->maxi));
 
     return nodePair;
 }

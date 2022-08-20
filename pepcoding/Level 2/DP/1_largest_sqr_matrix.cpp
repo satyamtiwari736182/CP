@@ -1,11 +1,10 @@
-#include <iostream>
-#include <bits/stdc++.h>
+#include "../header.h"
 using namespace std;
 int main()
 {
     int n, m;
     cin >> n >> m;
-    int arr[n][m], dp[n][m];
+    int arr[100][100], dp[100][100];
 
     memset(dp, 0, sizeof(dp));
     for (int i = 0; i < n; i++)
@@ -41,4 +40,9 @@ int main()
     return 0;
 }
 
-5 6 0 1 0 1 0 1 1 0 1 0 1 0 0 1 1 1 1 0 0 0 1 1 1 0 1 1 1 1 1 1
+// 5 6
+// 0 1 0 1 0 1
+// 1 0 1 0 1 0
+// 0 1 1 1 1 0
+// 0 0 1 1 1 0
+// 1 1 1 1 1 1

@@ -1,20 +1,31 @@
 #include "../header.h"
 
-void dfs(int i, int n)
+string maximum;
+void findMaximum(string str, int k)
 {
-    if (i > n)
+    if (stoi(str) > stoi(maximum))
+        maximum = str;
+    if (k == 0)
         return;
-    cout << i << endl;
-    for (int j = 0; j < 10; j++)
-        dfs(10 * i + j, n);
+    for (int i = 0; i <= str.length() - 2; i++)
+        for (int j = i + 1; j < str.length(); j++)
+            if (str[j] > str[i])
+            {
+                swap(str[i], str[j]);
+                findMaximum(str, k - 1);
+                swap(str[i], str[j]);
+            }
 }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    for (int i = 1; i <= 9; i++)
-        dfs(i, n);
+    string str;
+    cin >> str;
+    int k;
+    cin >> k;
+    maximum = str;
+    findMaximum(str, k);
+    cout << maximum << endl;
 }
 
 int main()
@@ -27,6 +38,8 @@ int main()
 
     return 0;
 }
+
 /*
-14
+1234567
+2
 */

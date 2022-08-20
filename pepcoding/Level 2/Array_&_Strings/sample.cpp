@@ -1,14 +1,16 @@
 #include "../header.h"
-vvi twoSum(vi &arr, int left, int target)
+vvi twoSum(vi &arr, int si, int target)
 {
     vvi ans;
-    int right = arr.size();
-    // if (right - left + 1 < 2)
-    //     return ans;
-
+    int n = arr.size();
+    if (n - si < 2)
+        return ans;
+        
+    int right = arr.size() - 1;
+    int left = si;
     while (left < right)
     {
-        if (left != 0 && arr[left] == arr[left - 1])
+        if (left != si && arr[left] == arr[left - 1])
         {
             left++;
             continue;
@@ -30,10 +32,10 @@ vvi kSum(vi &arr, int left, int target, int k)
 {
     if (k == 2)
         return twoSum(arr, left, target);
-        
+
     int n = arr.size();
     vvi res;
-    if (n - k < 0)
+    if (n - left < 0)
         return res;
 
     for (int i = left; i <= n - k; i++)
@@ -60,6 +62,7 @@ void solve()
     cin >> target >> k;
     sort(all(arr));
     int left = 0, right = n - 1;
+
     vvi res = kSum(arr, 0, target, k);
 
     for (int i = 0; i < res.size(); i++)
