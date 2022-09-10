@@ -11,10 +11,59 @@
 // Input: points = [[1,1],[-1,-1]]
 // Output: false
 // Explanation: We can't choose a line.
-// 3
-// 1
-// 1
-// 9
-// 1
-// 8
-// 2
+
+#include "../header.h"
+
+bool isReflected(vvi &points)
+{
+    unordered_map<ll, ll> hashmap;
+    int xmin = INT_MAX, xmax = INT_MIN;
+    for (auto pt : points)
+    {
+        int x = pt[0], y = pt[1];
+        xmin = min(xmin, x), xmax = max(xmax, x);
+        ll hash = x * 10000000 + y;
+        hashmap[hash] = 1;
+    }
+
+    ll mirr = xmin + xmax;
+
+    for (auto pt : points)
+    {
+        int x = pt[0], y = pt[1];
+        ll ximg = mirr - x, yimg = y;
+        ll imghash = ximg * 10000000 + y;
+        if (hashmap.count(imghash) == false)
+            return false;
+    }
+
+    return true;
+}
+
+int main()
+{
+    cout << "\nHello world!" << endl;
+
+    int t = 1;
+    // cin >> t;
+    test(t)
+    {
+        int n;
+        cin >> n;
+        vvi points(n, vi(2));
+        rmatrix(points, n, 2);
+
+        cout << "\n============================================\n";
+        cout << isReflected(points);
+        cout << "\n============================================\n";
+    }
+
+    return 0;
+}
+
+/*
+3
+1 1
+9 1
+8 2
+*/

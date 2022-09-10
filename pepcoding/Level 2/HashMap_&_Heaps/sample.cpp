@@ -1,21 +1,18 @@
 #include "../header.h"
 
-int solve(vector<vi> &arr, int target)
+// typedef vector<string> vs;
+int group_Anagrams(vs &arr)
 {
-    int count = 0;
-    map<int, int> hashmap;
-    vi A = arr[0];
-    vi B = arr[1];
-    for (int a : A)
-        for (int b : B)
-            hashmap[a + b] = 1;
-    A = arr[2];
-    B = arr[3];
-    for (int a : A)
-        for (int b : B)
-            if (hashmap.count(target - (a + b)) == 1)
-                count++;
-    return count;
+    map<map<char, int>, vs> hashmap_B;
+    for (string str : arr)
+    {
+        map<char, int> hashmap;
+        for (char ch : str)
+            hashmap[ch]++;
+        hashmap_B[hashmap].pb(str);
+    }
+
+    return hashmap_B.size();
 }
 
 int main()
@@ -26,14 +23,15 @@ int main()
     cin >> t;
     test(t)
     {
-        int n, sum;
-        vector<vi> arr(4);
+        int n;
         cin >> n;
-        rvmatrix(arr, 4, n);
-        cin >> sum;
+        vs arr(n);
+        for (int i = 0; i < n; i++)
+            cin >> arr[i];
 
         cout << "\n============================================\n";
-        cout << solve(arr, sum);
+        group_Anagrams(arr);
+
         cout << "\n============================================\n";
     }
 
@@ -41,10 +39,11 @@ int main()
 }
 
 // 1
+// 5
+// pepcoding codingpep pepper rapper repepp
 
-// 2
-// 1 2
-// -2 -1
-// -1 2
-// 0 2
-// 0
+/*
+1
+5
+cat listen silent kitten salient
+*/

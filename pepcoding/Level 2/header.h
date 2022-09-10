@@ -31,6 +31,7 @@
 #include <stdexcept>
 #include <streambuf>
 #include <string>
+#include <cstring>
 #include <typeinfo>
 #include <utility>
 #include <valarray>
@@ -128,6 +129,15 @@ string Substr(string str, int i, int j)
     return str.substr(i, len);
 }
 
+vs split(string str, string deli)
+{
+    vs vec;
+    char *ptr = strtok((char *)str.c_str(), deli.c_str());
+    while (ptr)
+        vec.pb(ptr), ptr = strtok(NULL, deli.c_str());
+    return vec;
+}
+
 //=================================================
 //! Segment Tree
 //=================================================
@@ -175,6 +185,20 @@ vi segSieve(int a, int b)
             ans.pb(a + i);
 
     return ans;
+}
+
+int *catalanNumber(int n)
+{
+    int *catlan = new int[n + 1];
+    catlan[0] = catlan[1] = 1;
+    for (int num = 2; num <= n; num++)
+    {
+        int sum = 0;
+        for (int i = 0, j = num - 1; i < num; i++, j--)
+            sum += catlan[i] * catlan[j];
+        catlan[num] = sum;
+    }
+    return catlan;
 }
 
 //=================================================
