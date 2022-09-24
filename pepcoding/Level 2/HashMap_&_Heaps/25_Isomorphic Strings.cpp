@@ -1,3 +1,12 @@
+// 1. You are given two strings s1 and s2.
+// 2. You have to determine if they are isomorphic or not.
+// 3. Two strings are called isomorphic if -
+//    -> Every character of s1 can be mapped with characters of s2.
+//    -> A character of s1 can be mapped to only one character.
+//    -> All occurrences of a character must be replaced with another character while preserving the order of characters.
+
+// Note -> Length of s1 is equal to the length of s2.
+
 #include "../header.h"
 
 bool word_mapping(string str1, vs &arr)

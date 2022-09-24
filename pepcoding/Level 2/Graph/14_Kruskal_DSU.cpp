@@ -1,3 +1,5 @@
+// There are n vertices and there are edges in between some of the vertices. Find the sum  of edge weight of minimum spanning tree.
+
 #include "../header.h"
 
 class Pair

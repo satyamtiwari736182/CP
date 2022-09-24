@@ -1,3 +1,7 @@
+// 1. You are given two numbers which represent the numerator and denominator of a fraction.
+// 2. You have to convert this fraction into a decimal.
+// 3. If the decimals are repeating recursively, then you have to put the recurring sequence inside a bracket.
+
 #include "../header.h"
 
 string solve(int num, int den)

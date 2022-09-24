@@ -1,3 +1,5 @@
+// A vertex in an undirected graph is an articluation point iff removing it disconnects the graph. You have to find the number of articulation point in the given graph.
+
 #include "../header.h"
 
 int tim = 0;

@@ -16,21 +16,19 @@ public class Main {
     // }
     // }
 
-   
+    // public void maint(String[] args) {
+    //     System.out.println("Hello world!");
 
-    public static void maint(String[] args) {
-        System.out.println("Hello world!");
+    //     // ------------------------
+    //     // Example 4
+    //     // using lambda Expression
+    //     Runnable runnable = () -> {
+    //         System.out.println("MyThread running");
+    //         System.out.println("MyThread finished");
 
-        // ------------------------
-        // Example 4
-        // using lambda Expression
-        Runnable runnable = () -> {
-            System.out.println("MyThread running");
-            System.out.println("MyThread finished");
-
-        };
-        Thread thred = new Thread(runnable);
-        thred.start();
+    //     };
+    //     Thread thred = new Thread(runnable);
+    //     thred.start();
 
         // ------------------------
 
@@ -56,5 +54,5 @@ public class Main {
         // MyThread thred = new MyThread();
         // thred.start();
         // ------------------------
-    }
+    // }
 }

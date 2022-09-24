@@ -1,28 +1,45 @@
 
 #include "makeTree.h"
 
-Node *lca = nullptr;
-bool LCA_DFS(Node *node, int p, int q)
-{
-    if (!node)
-        return false;
-    bool self_check = (node->data == p || node->data == q);
-
-    bool left_res = LCA_DFS(node->left, p, q);
-    if (lca)
-        return true;
-
-    bool right_res = LCA_DFS(node->right, p, q);
-    if (lca)
-        return true;
-
-    if ((left_res && right_res) || (left_res && self_check) || (right_res && self_check))
-        lca = node;
-
-    return self_check || left_res || right_res;
-}
-
 //------------------------------------------------------------
+
+void Itaraversal(Node *root)
+{
+    stack<pair<Node *, int>> stk; //(Node,state)
+    stk.push({root, 1});
+    string pre = "", inord = "", post = "";
+    while (!stk.empty())
+    {
+        Node *node = stk.top().fs;
+        int state = stk.top().se;
+
+        if (state == 1) // inord,state++,left
+        {
+            pre += to_string(node->data) + " ";
+            stk.top().se++;
+            if (node->left)
+                stk.push({node->left, 1});
+        }
+
+        else if (state == 2) // inord, state++,right
+        {
+            inord += to_string(node->data) + " ";
+            stk.top().se++;
+            if (node->right)
+                stk.push({node->right, 1});
+        }
+
+        else if (state == 3) // post,pop
+        {
+            post += to_string(node->data) + " ";
+            stk.pop();
+        }
+    }
+
+    cout << pre << "\n"
+         << inord << "\n"
+         << post;
+}
 
 int main()
 {
@@ -35,16 +52,13 @@ int main()
         cin >> arr[i];
     Node *root = myTree(arr);
     cout << "\n-------------------------------------\n";
-    LCA_DFS(root, 70, 37);
-    if (lca)
-        cout << lca->data;
-    else
-        cout << "-1";
-    // cout << (lca?lca->data:"-1");
+    Itaraversal(root);
     cout << "\n-------------------------------------\n";
     preOrder(root);
     cout << endl;
     inOrder(root);
+    cout << endl;
+    postOrder(root);
 
     return 0;
 }

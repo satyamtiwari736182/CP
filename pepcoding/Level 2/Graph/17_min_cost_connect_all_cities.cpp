@@ -1,60 +1,7 @@
-#include <bits/stdc++.h>
-using namespace std;
+// There are n cities and there are roads in between some of the cities. Somehow all the roads are damaged simultaneously. We have to repair the roads to connect the cities again. There is a fixed cost to repair a particular road. Find out the minimum cost to connect all the cities by repairing roads.
 
-#define REP(a, b) for (int i = a; i <= b; i++)
-#define REP2(i, a, b) for (i = a; i <= b; i++)
+#include "../header.h"
 
-#define rarr(arr, l, r)         \
-    for (int i = l; i < r; i++) \
-        cin >> arr[i];
-
-#define rvarr(arr, l, r)        \
-    for (int i = l; i < r; i++) \
-    {                           \
-        int val;                \
-        cin >> val;             \
-        arr.push_back(val);     \
-    }
-
-#define parr(arr, n)            \
-    for (int i = 0; i < n; i++) \
-        cout << arr[i] << " ";
-
-#define rmatrix(arr, n, m)          \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-            cin >> arr[i][j];
-
-#define rvmatrix(arr, n, m)         \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-        {                           \
-            int val;                \
-            cin >> val;             \
-            mat[i].push_back(val);  \
-        }
-
-#define pmatrix(arr, n, m)            \
-    for (int i = 0; i < n; i++)       \
-    {                                 \
-        for (int j = 0; j < m; j++)   \
-            cout << arr[i][j] << " "; \
-        cout << endl;                 \
-    }
-
-#define vi vector<int>
-#define all(x) x.begin(), x.end()
-#define pi pair<int, int>
-#define ll long long
-#define fs first
-#define se second
-#define pb push_back
-#define mp make_pair
-#define endl '\n'
-#define mod 1000000007
-const int INF = 1e9 + 7;
-const double PI = 3.141592653589793238;
-const int M = 100, N = 100;
 
 class Pair
 {

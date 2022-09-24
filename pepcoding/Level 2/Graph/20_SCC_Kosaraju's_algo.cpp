@@ -1,3 +1,5 @@
+// You are given a graph with N nodes and M directed edges. Find the number of Strongly connected components in the graph.
+
 #include "../header.h"
 
 void dfs1(vector<vi> &graph, int src, bool *vis, stack<int> &stk)

@@ -1,3 +1,7 @@
+// 1. You are given an array of integers.
+// 2. You have to find the XOR of sum of all pairs in the array.
+
+
 #include "../header.h"
 
 int main()
@@ -19,3 +23,13 @@ int main()
 }
 // 4
 // 1 2 3 4
+
+
+/*
+5
+1
+5
+2
+1
+2
+*/

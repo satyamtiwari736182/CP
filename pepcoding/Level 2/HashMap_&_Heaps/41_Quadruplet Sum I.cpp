@@ -1,3 +1,8 @@
+// 1. You are given an array(arr) of N integers and an integer X.
+// 2. You have to find all unique quadruplets(a,b,c,d) which satisfies this condition - 
+//    a+b+c+d = X.
+
+
 #include "../header.h"
 
 vs findPair(vi &arr, int idx, int sum)

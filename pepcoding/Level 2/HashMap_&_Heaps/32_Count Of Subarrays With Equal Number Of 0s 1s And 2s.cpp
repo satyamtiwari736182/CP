@@ -1,3 +1,7 @@
+// 1. You are given an array that contains only 0s, 1s, and 2s.
+// 2. You have to find the count of subarrays with equal number of 0s, 1s, and 2s.
+
+
 #include "../header.h"
 
 int solve(vi &arr)

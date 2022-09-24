@@ -1,3 +1,10 @@
+// 1. You are given an array(arr) of integers.
+// 2. You have to find if the elements of the given array can be arranged to form an arithmetic progression.
+// 3. Arithmetic progression is defined as a sequence of numbers where the difference between any two consecutive numbers is the same. 
+
+// Note -> Try to solve this in linear time complexity.
+
+
 #include "../header.h"
 
 bool solve(vi &arr)

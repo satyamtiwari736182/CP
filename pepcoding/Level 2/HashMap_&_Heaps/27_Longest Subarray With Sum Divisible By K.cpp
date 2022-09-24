@@ -1,3 +1,8 @@
+// 1. You are given an array of integers(arr) and a number K.
+// 2. You have to find length of the longest subarray whose sum is divisible by K.
+
+
+
 #include "../header.h"
 
 int K_sum(vi &arr, int k)

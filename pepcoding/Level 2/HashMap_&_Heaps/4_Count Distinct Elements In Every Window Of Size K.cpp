@@ -1,3 +1,6 @@
+// 1. You are given an array(arr) of integers and a number K.
+// 2. You have to find the count of distinct numbers in all windows of size k.
+
 #include "../header.h"
 
 vi solution(vi &arr, int k)

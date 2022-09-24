@@ -1,3 +1,10 @@
+// 1. You are given a number N and two sorted matrices(A and B) of N*N dimensions.
+// 2. You are also given a number X.
+// 3. You have to find the count of all valid pairs from matrices whose sum is equal to X.
+// 4. A pair is called valid if one element of the pair is selected from A and the second element is selected from B.
+
+
+
 #include "../header.h"
 
 int solve(vector<vi> &matrix1, vector<vi> &matrix2, int x)

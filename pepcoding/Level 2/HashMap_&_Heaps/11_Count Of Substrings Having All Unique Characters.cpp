@@ -1,3 +1,8 @@
+// 1. You are given a string.
+// 2. You have to find the count of valid substrings of the given string.
+// 3. Valid substring is defined as a substring that has all unique characters.
+
+
 #include "../header.h"
 
 int solution(string str)

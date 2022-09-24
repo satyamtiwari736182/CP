@@ -1,3 +1,8 @@
+
+// 1. You are given a string(str) and a number K.
+// 2. You have to find the length of longest substring of the given string that contains at most K unique characters.
+
+
 #include "../header.h"
 
 int solution(string str, int k)

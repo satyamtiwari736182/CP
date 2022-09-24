@@ -1,3 +1,7 @@
+// 1. You are given an array(arr) which contains only 0's and 1's.
+// 2. You have to find the maximum number of consecutive 1's in the given array if you can flip at most one zero.
+
+
 #include "../header.h"
 
 int solution(vi &arr, int k)

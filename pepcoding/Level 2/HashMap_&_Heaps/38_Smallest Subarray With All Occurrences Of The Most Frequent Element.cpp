@@ -1,3 +1,10 @@
+// 1. You are given an array(arr) of integers.
+// 2. You have to find the element(x) with maximum frequency in the given array. 
+// 3. Also, you have to find the smallest subarray which has all occurrences of the most frequent element i.e x.
+
+// Note -> If there are two or more elements with maximum frequency and the same subarray size then print the subarray which occurs first in the given array.
+
+
 #include "../header.h"
 
 vi solve(vi &arr)

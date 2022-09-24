@@ -1,3 +1,8 @@
+// 1. You are given a string.
+// 2. You have to find the length of the longest substring of the given string that contains all non-repeating characters.
+
+
+
 #include "../header.h"
 
 string solution(string str)

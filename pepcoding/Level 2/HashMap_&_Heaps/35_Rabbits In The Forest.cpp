@@ -1,3 +1,8 @@
+// 1. There are some rabbits in the forest and each rabbit has some color.
+// 2. Some(possibly all) rabbits are selected from them and they tell you about the number of other rabbits having the same color as them.
+// 3. You are given an array(arr) that contains the answers of all selected rabbits.
+// 4. You have to find the minimum number of rabbits that could be in the forest.
+
 #include "../header.h"
 
 int solve(vi &arr)

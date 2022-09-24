@@ -1,3 +1,12 @@
+
+// 1. You are given an array of strings.
+// 2. You have to group the given strings in such a way that all strings in a group are shifted versions of each other. 
+// 3. Two strings s1 and s2 are shifted if -
+//    -> Length of both the strings is the same.
+//    -> The difference between ASCII values of every character of s1 and s2 is constant.
+
+// Note -> Every string consists of lower-case English letters only.
+
 #include "../header.h"
 
 void group_shifted_str(vs &arr)

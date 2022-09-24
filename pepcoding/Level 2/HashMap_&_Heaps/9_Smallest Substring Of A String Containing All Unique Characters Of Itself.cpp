@@ -1,3 +1,7 @@
+// 1. You are given a string str.
+// 2. You have to find the smallest window length that contains all the unique characters of the given string.
+
+
 #include "../header.h"
 
 string solution(string str)

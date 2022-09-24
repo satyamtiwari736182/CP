@@ -1,3 +1,6 @@
+// 1. You are given an array(arr) of integers.
+// 2. You have to find the length of the largest subarray with sum 0.
+
 #include "../header.h"
 
 int solution(vi &arr)

@@ -1,3 +1,9 @@
+// 1. You are given two strings s1 and s2.
+// 2. You have to find the count of s2's anagrams that are present in s1.
+// 3. Also, you have to print the start indices of such anagrams in s1.
+
+// Note -> Both s1 ad s2 consist of lowercase English letters only.
+
 #include "../header.h"
 bool compare(auto pat_hashmap, auto str_hashmap)
 {

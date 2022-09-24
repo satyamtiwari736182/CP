@@ -1,3 +1,7 @@
+// 1. You are given an array of integers(arr) and a number K.
+// 2. You have to find the count of subarrays whose sum equals k.
+
+
 #include "../header.h"
 
 int K_sum(vi &arr, int k)

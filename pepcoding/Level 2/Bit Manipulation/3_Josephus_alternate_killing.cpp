@@ -1,60 +1,14 @@
-#include <bits/stdc++.h>
-using namespace std;
+// 1. You are given an integer N which represents the total number of soldiers standing in a circle 
+//      having position marked from 1 to N.
+// 2. A cruel king wants to execute them but in a different way.
+// 3. He starts executing soldiers from 1st position and proceeds around the circle in clockwise 
+//      direction.
+// 4. In each step, every second soldier is executed.
+// 5. The elimination proceeds around the circle (which is becoming smaller and smaller as the 
+//      executed soldiers are removed), until only the last soldier remains, who is given freedom.
+// 6. You have to find the position of that lucky soldier.
 
-#define REP(a, b) for (int i = a; i <= b; i++)
-#define REP2(i, a, b) for (i = a; i <= b; i++)
-
-#define rarr(arr, l, r)         \
-    for (int i = l; i < r; i++) \
-        cin >> arr[i];
-
-#define rvarr(arr, l, r)        \
-    for (int i = l; i < r; i++) \
-    {                           \
-        int val;                \
-        cin >> val;             \
-        arr.push_back(val);     \
-    }
-
-#define parr(arr, n)            \
-    for (int i = 0; i < n; i++) \
-        cout << arr[i] << " ";
-
-#define rmatrix(arr, n, m)          \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-            cin >> arr[i][j];
-
-#define rvmatrix(arr, n, m)         \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-        {                           \
-            int val;                \
-            cin >> val;             \
-            arr[i].push_back(val);  \
-        }
-
-#define pmatrix(arr, n, m)            \
-    for (int i = 0; i < n; i++)       \
-    {                                 \
-        for (int j = 0; j < m; j++)   \
-            cout << arr[i][j] << " "; \
-        cout << endl;                 \
-    }
-
-#define vi vector<int>
-#define all(x) x.begin(), x.end()
-#define pi pair<int, int>
-#define ll long long
-#define fs first
-#define se second
-#define pb push_back
-#define mp make_pair
-#define endl '\n'
-#define mod 1000000007
-const int INF = 1e9 + 7;
-const double PI = 3.141592653589793238;
-const int M = 100, N = 100;
+#include "../header.h"
 
 int powerof_2(int n)
 {

@@ -33,8 +33,10 @@ Node *BSTtoDLL(Node *root)
     // head->left = prev, prev->right = head;
     return head;
 }
-/*
-! Method II
+
+
+//*******************************************
+//! Method II
 Node *prev = nullptr;
 void BSTtoDLL_(Node *curr)
 {
@@ -47,7 +49,7 @@ void BSTtoDLL_(Node *curr)
     BSTtoDLL_(curr->right);
 }
 
-Node *BSTtoDLL(Node *root)
+Node *BSTtoDLL_II(Node *root)
 {
     Node *dummy = new Node(-1, nullptr, nullptr);
     ::prev = dummy;
@@ -57,7 +59,7 @@ Node *BSTtoDLL(Node *root)
     // head->left = prev, prev->right = head;
     return head;
 }
-*/
+
 int main()
 {
     cout << "\nHello world!\n";

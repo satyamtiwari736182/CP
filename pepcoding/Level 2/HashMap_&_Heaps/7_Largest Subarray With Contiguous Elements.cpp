@@ -1,3 +1,10 @@
+// 1. You are given an array(arr) of integers. Values may be duplicated.
+// 2. You have to find the length of the largest subarray with contiguous elements.
+
+// Note -> The contiguous elements can be in any order(not necessarily in increasing order).
+
+
+
 #include "../header.h"
 
 int solution(vi &arr)

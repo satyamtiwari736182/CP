@@ -12,15 +12,18 @@ Node *getMidNode(Node *head)
     return slow;
 }
 
+// left:prev   next:right
 Node *SortedDLLtoBST(Node *head)
 {
     if (!head || !head->right)
         return head;
     Node *midNode = getMidNode(head);
-    Node *prev = midNode->right, *forw = midNode->left;
-    forw->left = midNode->right = midNode->right = nullptr;
+    Node *prev = midNode->left, *forw = midNode->right;
+    midNode->left = midNode->right = nullptr;
     if (prev)
         prev->right = nullptr;
+    if (forw)
+        forw->left = nullptr;
 
     Node *leftHead = prev ? head : nullptr;
     Node *rigtHead = forw;

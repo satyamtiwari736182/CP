@@ -1,3 +1,8 @@
+// 1. You are given two strings s1 and s2 containing lowercase english alphabets.
+// 2. You have to find the smallest substring of s1 that contains all the characters of s2.
+// 3. If no such substring exists, print blank string("").
+
+
 #include "../header.h"
 
 string solution(string str1, string str2)

@@ -1,3 +1,15 @@
+// 1. You are given two integers N and M, and an array(arr) of numbers with length M.
+// 2. N represents the total number of tasks assigned to a group of 5 students.
+// 3. Out of these five students, three students completed M number of tasks of their choices and left the group.
+// 4. Tasks completed by these students are represented by the given array.
+// 5. Now, the remaining two students(s1 and s2) have to complete all the remaining tasks.
+// 6. They decided to complete the remaining tasks in an alternate way -
+//    First of the remaining tasks will be completed by s1
+//    Second of the remaining tasks will be completed by s2
+//    Third of the remaining tasks will be completed by s1.. and so on.    
+// 7. You have to find the tasks that s1 and s2 have to complete.
+
+
 #include "../header.h"
 
 vector<vi> solve(vi &arr, int n)

@@ -1,3 +1,7 @@
+// 1. You are given an array(arr) of integers with even length N.
+// 2. You have to tell if it is possible to re-order the given array such that for every i in range [0,N/2)
+//    arr[2*i + 1] = 2 * arr[2*i], this condition holds true.
+
 #include "../header.h"
 
 bool solve(vi &arr)

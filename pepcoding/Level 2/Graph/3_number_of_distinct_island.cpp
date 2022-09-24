@@ -1,56 +1,10 @@
-#include <bits/stdc++.h>
-using namespace std;
+//! 475591
+// Given an m*n binary matrix mat, return the number of distinct island.
 
-#define REP(a, b) for (int i = a; i <= b; i++)
-#define REP2(i, a, b) for (i = a; i <= b; i++)
+// An island is considered to be the same as another if and only if one island can be translated (and not rotated or reflected) to equal the other.
 
-#define rarr(arr, l, r)         \
-    for (int i = l; i < r; i++) \
-        cin >> arr[i];
 
-#define parr(arr, n)            \
-    for (int i = 0; i < n; i++) \
-        cout << arr[i] << " ";
-
-#define rmatrix(arr, n, m)          \
-    for (int i = 0; i < n; i++)     \
-        for (int j = 0; j < m; j++) \
-            cin >> arr[i][j];
-
-#define rvmatrix(arr, n, m)         \
-    for (int i = 0; i < n; i++)     \
-    {                               \
-        vi vec;                     \
-        for (int j = 0; j < m; j++) \
-        {                           \
-            int x;                  \
-            cin >> x;               \
-            vec.pb(x);              \
-        }                           \
-        arr.pb(vec);                \
-    }
-
-#define pmatrix(arr, n, m)            \
-    for (int i = 0; i < n; i++)       \
-    {                                 \
-        for (int j = 0; j < m; j++)   \
-            cout << arr[i][j] << " "; \
-        cout << endl;                 \
-    }
-
-#define vi vector<int>
-#define all(x) x.begin(), x.end()
-#define pi pair<int, int>
-#define ll long long
-#define fs first
-#define se second
-#define pb push_back
-#define mp make_pair
-#define endl '\n'
-#define mod 1000000007
-const int INF = 1e9 + 7;
-const double PI = 3.141592653589793238;
-const int M = 100, N = 100;
+#include "../header.h"
 
 // int dirs[][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 string psf;

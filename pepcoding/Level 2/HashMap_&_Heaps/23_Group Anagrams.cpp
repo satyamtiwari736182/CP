@@ -1,3 +1,8 @@
+// 1. You are given an array of strings.
+// 2. You have to group anagrams together.
+
+// Note -> Every string consists of lower-case English letters only.
+
 #include "../header.h"
 
 void group_Anagrams(vs &arr)

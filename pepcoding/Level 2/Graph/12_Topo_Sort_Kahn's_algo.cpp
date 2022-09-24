@@ -1,3 +1,11 @@
+// Pepcoding offers total of n courses labelled from 0 to n-1.
+
+// Some courses may have prerequisites. you have been given m pairs ai,bi. where 1 pair means you must take the course bi before the course ai.
+
+// Given the total number of courses numCourses and a list of the prerequisite pairs, return the ordering of courses you should take to finish all courses. If it is impossible to finish all courses print -1.
+
+
+
 #include "../header.h"
 
 void display(vector<vector<int>> &graph)
