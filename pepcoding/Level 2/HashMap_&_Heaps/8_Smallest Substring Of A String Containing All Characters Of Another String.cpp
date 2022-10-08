@@ -29,7 +29,7 @@ string solution(string str1, string str2)
         // acquire
         while (i < int(str1.size()) && match_cnt < dmct)
         {
-            f1 = true;
+            f1 = true; 
             i++;
             char ch = str1[i];
             hashmap1[ch]++;

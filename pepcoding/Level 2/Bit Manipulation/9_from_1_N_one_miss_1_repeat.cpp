@@ -4,7 +4,6 @@
 
 #include "../header.h"
 
-
 int main()
 {
     cout << "\nHello world!" << endl;
@@ -29,22 +28,29 @@ int main()
             rmbit_grp_xor ^= arr[i];
         else
             non_rmbit_grp_xor ^= arr[i];
+
+        if ((i + 1) & rmbit)
+            rmbit_grp_xor ^= (i + 1);
+        else
+            non_rmbit_grp_xor ^= (i + 1);
     }
-    
+
     //--------------------------------------------
     int a = xor_two ^ rmbit_grp_xor;
     int b = xor_two ^ non_rmbit_grp_xor;
-
-    if (find(arr, arr + n, b) == (arr + n))
-        a = xor_two ^ b;
+    int mis = 0, rep = 0;
+    
+    if (*find(arr, arr + n, b) == b)
+        mis = a, rep = b;
     else
-    {
-        b = a;
-        a = xor_two ^ b;
-    }
+        mis = b, rep = a;
+    // {
+    //     b = a;
+    //     a = xor_two ^ b;
+    // }
     //--------------------------------------------
 
-    cout << a << "\t" << b << endl;
+    cout << mis << "\t" << rep << endl;
 
     cout << "\n========================================\n";
     return 0;

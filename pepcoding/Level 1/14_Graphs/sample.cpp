@@ -1,105 +1,110 @@
+// Pepcoding offers total of n courses labelled from 0 to n-1.
+
+// Some courses may have prerequisites. you have been given m pairs ai,bi. where 1 pair means you must take the course bi before the course ai.
+
+// Given the total number of courses numCourses and a list of the prerequisite pairs, return the ordering of courses you should take to finish all courses. If it is impossible to finish all courses print -1.
+
+
+
 #include "../header.h"
 
-class Edge
+void display(vector<vector<int>> &graph)
 {
-public:
-    int src, nbr, wt;
-    Edge(int src, int nbr, int wt)
-    {
-        this->src = src;
-        this->nbr = nbr;
-        this->wt = wt;
-    }
-};
-
-void makeGraph(vector<Edge> grph[], int e)
-{
-    for (int i = 0; i < e; i++)
-    {
-        int sr, nb, wt;
-        cin >> sr >> nb >> wt;
-        grph[sr].pb(Edge(sr, nb, wt));
-        // grph[nb].pb(Edge(nb, sr, wt));
-    }
-}
-
-void display(vector<Edge> grph[], int n)
-{
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < graph.size(); i++)
     {
         cout << i << " -> ";
-        for (auto edge : grph[i])
-            cout << edge.src << " " << edge.nbr << " " << edge.wt << ", ";
+        for (auto node : graph[i])
+            cout << node << ", ";
         cout << endl;
     }
 }
 
-//*===========================================================================
-//?===========================================================================
-
-void dfs(vector<Edge> grph[], int src, int *visited, stack<int> &stk)
+void TopoSort_kahn(vector<vi> &graph)
 {
-    visited[src] = true;
-    for (auto edge : grph[src])
-        if (visited[edge.nbr] == false)
-            dfs(grph, edge.nbr, visited, stk);
-    stk.push(src);
-}
-
-void topologicalSort(vector<Edge> grph[], int n)
-{
-    int visited[100] = {0};
-    stack<int> stk;
+    int n = graph.size();
+    int indegree[n], ans[n];
+    memset(indegree, 0, sizeof(indegree));
 
     for (int i = 0; i < n; i++)
-        if (visited[i] == false)
-            dfs(grph, i, visited, stk);
+        for (int node : graph[i])
+            indegree[node]++;
 
-    vi arr(n);
+    // for (int i = 0; i < n; i++)
+    //     cout << indegree[i] << " ";
 
-    int idx = n - 1;
-    while (!stk.empty())
-        arr[idx--] = stk.top(), stk.pop();
+    queue<int> que;
 
-    cout << "TopicalSort order: ";
-    parr(arr, n);
-    cout << endl;
-    cout << "Order of task completion: ";
-    for (int i = n - 1; i >= 0; i--)
-        cout << arr[i] << " ";
-}
-void solve()
-{
-    int n, e;
-    cin >> n >> e;
-    vector<Edge> grph[100];
-    makeGraph(grph, e);
-    cout << "\n*******\n";
-    display(grph, n);
-    cout << "\n*******\n";
-    
-    topologicalSort(grph, n);
+    for (int i = 0; i < n; i++)
+        if (indegree[i] == 0)
+            que.push(i);
+
+    int idx = 0;
+
+    while (!que.empty())
+    {
+        int temp = que.front();
+        que.pop();
+
+        ans[idx] = temp;
+        idx++;
+        for (int node : graph[temp])
+        {
+            indegree[node]--;
+
+            if (indegree[node] == 0)
+                que.push(node);
+        }
+    }
+
+    if (idx == n)
+    {
+        parr(ans, n);
+    }
+
+    else
+        cout << "\n"
+             << idx << "\t" << n;
 }
 
 int main()
 {
-    int t = 1;
-    // cin>>t;
-    test(t)
-        solve();
+    cout << "\nHello world!" << endl;
+
+    int n, e;
+    cin >> n >> e;
+    vector<vector<int>> graph;
+    graph.resize(n+1);
+
+    while (e--)
+    {
+        int u, v;
+        cin >> u >> v;
+        graph[u].pb(v);
+        // graph[v].pb(u); // adding a reverse edge with weight 1.
+    }
+    cout << "\n----------------------------\n";
+    display(graph);
+    cout << "\n----------------------------\n";
+    TopoSort_kahn(graph);
+    cout << "\n----------------------------\n";
+
     return 0;
 }
 
 /*
-7
-7
-0 1 10
-1 2 10
-2 3 10
-0 3 10
-4 5 10
-5 6 10
-4 6 10
-
-
+6 6
+1 3 
+2 3 
+3 4 
+3 5 
+4 6 
+5 6 
 */
+
+// 6 6
+// 0 2
+// 0 3
+// 1 2
+// 1 5
+// 3 4
+// 4 5

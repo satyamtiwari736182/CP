@@ -1,6 +1,5 @@
-// Given a Directed Graph, find a Mother Vertex in the Graph (if present). 
+// Given a Directed Graph, find a Mother Vertex in the Graph (if present).
 // A Mother Vertex is a vertex through which we can reach all the other vertices of the Graph.
-
 
 #include "../header.h"
 
@@ -37,8 +36,20 @@ int main()
         if (vis[i] == false)
             dfs1(graph, i, vis, stk);
     //---------------------------------------------
+    int mother_vtx = stk.top();
+    stack<int> st;
+    memset(vis, 0, sizeof(vis));
+
+    // parr(vis, n + 1);
     cout << "\n==========================================\n";
-    cout << stk.top();
+    dfs1(graph, mother_vtx, vis, st);
+    for (int i = 0; i < n; i++)
+        if (vis[i] == false)
+        {
+            mother_vtx = -1;
+            break;
+        }
+    cout << mother_vtx;
     cout << "\n==========================================\n";
     return 0;
 }

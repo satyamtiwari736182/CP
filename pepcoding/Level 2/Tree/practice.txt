@@ -1,0 +1,125 @@
+Node *sumToLeaf(Node *root, int asf, int tar)
+{
+    if (!root)
+        return nullptr;
+
+    if (root->left == nullptr && root->right == nullptr)
+    {
+        asf += root->data;
+        cout << "upto " << root->data << " -> " << asf << endl;
+        if (asf < tar) 
+            return nullptr;
+        return root;
+    }
+
+    root->left = sumToLeaf(root->left, asf + root->data, tar);
+    root->right = sumToLeaf(root->right, asf + root->data, tar);
+    return root;
+}
+//=========================================================
+
+void sumToLeaf(Node *root, int asf, int tar)
+{
+    if (!root)
+        return;
+
+    if (root->left == nullptr && root->right == nullptr)
+    {
+        asf += root->data;
+        cout << "upto " << root->data << " -> " << asf << endl;
+        if(asf<tar)return nullptr;
+        return;
+    }
+
+    sumToLeaf(root->left, asf + root->data, tar);
+    sumToLeaf(root->right, asf + root->data, tar);
+}
+//============================================================
+
+int leafToRootPath(Node *root, string asf)
+{
+    if (!root)
+        return 0;
+    if (!root->left && !root->right)
+    {
+        asf = to_string(root->data) + " " + asf;
+        cout << asf << endl;
+        return root->data;
+    }
+    int leftSum = leafToRootPath(root->left, to_string(root->data) + " " + asf);
+    int rightSum = leafToRootPath(root->right, to_string(root->data) + " " + asf);
+    int sum = root->data + leftSum + rightSum;
+    root->data = leftSum + rightSum;
+    return sum;
+}
+//==============================================================
+string NodeToRootPath(Node *root, int node)
+{
+
+    if (!root)
+        return "";
+
+    if (root->data == node)
+        return to_string(root->data);
+
+    string leftPath = NodeToRootPath(root->left, node);
+    if (leftPath.length() > 0)
+        return leftPath + " " + to_string(root->data);
+
+    string rightPath = NodeToRootPath(root->right, node);
+    if (rightPath.length() > 0)
+        return rightPath + " " + to_string(root->data);
+
+    return "";
+}
+//================================================================
+
+string NodeToNodePath(Node *root, int node1, int node2)
+{
+
+    if (!root)
+        return "";
+
+    if (root->data == node1 || root->data == node2)
+        return to_string(root->data);
+
+    string path = "";
+
+    string leftPath = NodeToNodePath(root->left, node1, node2);
+    string rightPath = NodeToNodePath(root->right, node1, node2);
+
+    if (leftPath.length() && rightPath.length())
+        path = leftPath + " " + to_string(root->data) + " " + rightPath + " ";
+
+    else if (leftPath.length() || rightPath.length())
+        path = leftPath + " " + rightPath + " " + to_string(root->data) + " ";
+
+    return path;
+}
+
+//=======================================================================
+
+Node *BSTtoDLL(Node *root)
+{
+    if (!root)
+        return root;
+
+    Node *leftList = BSTtoDLL(root->left);
+    Node *rightList = BSTtoDLL(root->right);
+
+    if (leftList)
+    {
+        while (leftList->right)
+            leftList = leftList->right;
+        leftList->right = root;
+        root->left = leftList;
+    }
+
+    if (rightList)
+        rightList->left = root, root->right = rightList;
+
+    Node *temp = root;
+    while (temp->left)
+        temp = temp->left;
+    return temp;
+}

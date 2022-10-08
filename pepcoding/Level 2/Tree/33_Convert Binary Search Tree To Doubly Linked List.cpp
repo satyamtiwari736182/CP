@@ -34,7 +34,6 @@ Node *BSTtoDLL(Node *root)
     return head;
 }
 
-
 //*******************************************
 //! Method II
 Node *prev = nullptr;
@@ -93,3 +92,61 @@ int main()
 19
 50 25 12 -1 -1 37 30 -1 -1 -1 75 62 -1 70 -1 -1 87 -1 -1
 */
+
+//*******************************************
+
+//? Inplace conversion of Binary tree to DLL
+Node *BSTtoDLL_1(Node *root)
+{
+    if (!root)
+        return root;
+
+    Node *leftList = BSTtoDLL_1(root->left);
+    Node *rightList = BSTtoDLL_1(root->right);
+
+    if (leftList)
+    {
+        while (leftList->right)
+            leftList = leftList->right;
+        leftList->right = root;
+        root->left = leftList;
+    }
+
+    if (rightList)
+        rightList->left = root, root->right = rightList;
+
+    Node *temp = root;
+    while (temp->left)
+        temp = temp->left;
+    return temp;
+}
+
+//*******************************************
+
+typedef pair<Node *, Node *> type;
+type BSTtoDLL_2(Node *root)
+{
+    if (!root)
+        return {nullptr, nullptr};
+
+    type leftList = BSTtoDLL_2(root->left);
+    type rightList = BSTtoDLL_2(root->right);
+    Node *starts = root, *ends = root;
+
+    if (leftList.se)
+    {
+        leftList.se->right = root;
+        root->left = leftList.se;
+        starts = leftList.fs;
+    }
+
+    if (rightList.fs)
+    {
+        rightList.fs->left = root;
+        root->right = rightList.fs;
+        ends = rightList.se;
+    }
+
+    return {starts, ends};
+}
+//*******************************************

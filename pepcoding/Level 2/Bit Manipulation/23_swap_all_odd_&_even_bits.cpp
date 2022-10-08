@@ -14,12 +14,16 @@ int main()
     int even_bits = n & even_mask;
     int odd_bits = n & odd_mask;
     int swaped_bits = (even_bits >> 1) | (odd_bits << 1);
-    bitset<32> val(n);
+    bitset<8> val(n);
     cout << val << endl;
     val = swaped_bits;
     cout << val << endl;
-    cout << swaped_bits;
+    cout << swaped_bits << endl;
 
     cout << "\n========================================\n";
+    val = even_bits;
+    cout << val << endl;
+    val = odd_bits;
+    cout << val;
     return 0;
 }

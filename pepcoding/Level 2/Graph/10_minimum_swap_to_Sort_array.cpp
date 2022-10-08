@@ -1,6 +1,5 @@
 // Given an array of n distinct elements, find the minimum number of swaps required to sort the array.
 
-
 #include "../header.h"
 
 class Pair
@@ -69,6 +68,7 @@ int main()
     return 0;
 }
 
-// 2 3
-// 4 1 2
-// 5 0 3
+/*
+8
+6 4 2 14 8 10 12 16
+*/

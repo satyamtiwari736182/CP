@@ -51,13 +51,13 @@ void solve()
         char ch = pr.fs;
         if (freq % 2 == 1)
             odd = ch, odds++;
-        fmap[ch] = freq / 2, len = freq / 2;
+        fmap[ch] = freq / 2, len += freq / 2;
     }
 
     if (odds > 1)
         cout << "-1" << endl;
     else
-        generateAllPalinWord(0, len, fmap, odd, "");
+        generateAllPalinWord(1, len, fmap, odd, "");
 }
 
 int main()

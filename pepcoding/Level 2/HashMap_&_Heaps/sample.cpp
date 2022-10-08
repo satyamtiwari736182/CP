@@ -1,105 +1,76 @@
+// 1. You are given an array(arr) of integers. Values may be duplicated.
+// 2. You have to find the length of the largest subarray with contiguous elements.
+
+// Note -> The contiguous elements can be in any order(not necessarily in increasing order).
+
 #include "../header.h"
 
-// typedef vector<string> vs;
-
-// typedef vector<int> vi;
-int sample(vi &arr)
+int solution(vi &arr)
 {
-    // int m = 1e9 + 7;
-    int cnt = 0;
-    sort(arr.begin(), arr.end(), [=](int a, int b)
-         { return b < a; });
-    if (arr[0] > 0)
-        cnt++;
-    for (int i = 1; i < arr.size(); i++)
+    int cnt = 0, rangeCnt = 0;
+    for (int i = 0; i < arr.size(); i++)
     {
-        arr[i] = (arr[i] % mod + arr[i - 1] % mod + mod) % mod;
-        if (arr[i] > 0)
-            cnt++;
-    }
-    return cnt;
-}
-// -3 0 2 1
-// 2 1 0 -3
-// 2 3 3 0
+        int minimum = arr[i];
+        int maximum = arr[i];
 
-int fun(vs &word)
-{
-    unordered_map<string, int> hashmap;
-    for (string str : word)
-    {
-        set<char> hashset;
-        for (char ch : str)
-            hashset.insert(ch);
-        string str2 = "";
-        for (char ch : hashset)
-            str2 += ch;
-        hashmap[str2]++;
-    }
-    int cnt = 0;
-    for (auto pr : hashmap)
-        if (pr.second >= 2)
-            cnt++;
+        set<int> distinct_ele;
+        distinct_ele.insert(arr[i]);
 
-    return cnt;
-}
-
-int group_Anagrams(vs &arr)
-{
-    map<map<char, int>, vs> hashmap_B;
-    for (string str : arr)
-    {
-        map<char, int> hashmap;
-        for (char ch : str)
-            hashmap[ch]++;
-        hashmap_B[hashmap].pb(str);
-    }
-
-    int cnt = 0;
-    for (auto pr : hashmap_B)
-        if (pr.second.size() > 0)
+        for (int j = i + 1; j < arr.size(); j++)
         {
+            if (distinct_ele.find(arr[j]) != distinct_ele.end())
+                break;
 
-            cout << pr.second.size() << " ";
-            cnt++;
+            distinct_ele.insert(arr[j]);
+
+            minimum = min(minimum, arr[j]);
+            maximum = max(maximum, arr[j]);
+
+            if (maximum - minimum == j - i)
+                rangeCnt++, cnt = max(cnt, j - i + 1);
         }
-    cout << endl;
+        
+    }
+
+    cout << "$$ " << rangeCnt << endl;
+
     return cnt;
 }
 
 int main()
 {
-    cout << "\nHello world!" << endl;
 
+    cout << "\nHello world!" << endl;
     int t = 1;
     // cin >> t;
     test(t)
     {
         int n;
         cin >> n;
-        vs arr(n);
-        for (int i = 0; i < n; i++)
-            cin >> arr[i];
+        vi arr;
+        rvarr(arr, 0, n);
 
         cout << "\n============================================\n";
-        // cout << group_Anagrams(arr);
-        cout << fun(arr);
+
+        cout << solution(arr);
 
         cout << "\n============================================\n";
     }
-
     return 0;
 }
 
-// 1
-// 5
-// pepcoding codingpep pepper rapper repepp
+// 2
+
+// 3
+// 10 12 11
+
+// 15
+// 9 2 7 5 6 23 24 22 23 19 17 16 18 39 0
 
 /*
-1
-3
-xyz of foo
+6
+0 1 2 6 9 10
 
-4
-aba abaca baab cba
+7
+0 2 3 4 6 8 9
 */

@@ -1,92 +1,33 @@
+
 #include "../header.h"
 
-void soleSudoku(vector<vi> &board, vi &rows, vi &cols, vector<vi> &grid, int i, int j)
+int solve(int n)
 {
-    if (i == board.size())
+    int cnt = 0;
+    while (n != 1)
     {
-        pmatrix(board, 9, 9);
-        return;
+        if (n % 2 == 0)
+            n /= 2;
+        else if (n == 3)
+            n -= 1;
+        else if (n % 4 == 1)
+            n -= 1;
+        else if (n % 4 == 3)
+            n += 1;
+        cnt++;
     }
-
-    if (board[i][j] > 0)
-    {
-        int ni = j == board[0].size() - 1 ? i + 1 : i;
-        int nj = j == board[0].size() - 1 ? 0 : j + 1;
-
-        soleSudoku(board, rows, cols, grid, ni, nj);
-    }
-
-    else
-    {
-        for (int num = 1; num <= 9; num++)
-        {
-            if ((rows[i] & (1 << num)) == 0 &&
-                (cols[j] & (1 << num)) == 0 &&
-                (grid[i / 3][j / 3] & (1 << num)) == 0)
-            {
-                board[i][j] = num;
-                rows[i] ^= (1 << num);
-                cols[j] ^= (1 << num);
-                grid[i / 3][j / 3] ^= (1 << num);
-                // soleSudoku(board, rows, cols, grid, j == board[0].size() - 1 ? i + 1 : i, j == board[0].size() - 1 ? 0 : j + 1);
-                int ni = j == board[0].size() - 1 ? i + 1 : i;
-                int nj = j == board[0].size() - 1 ? 0 : j + 1;
-
-                soleSudoku(board, rows, cols, grid, ni, nj);
-
-                // backtracking
-                board[i][j] = 0;
-                rows[i] ^= (1 << num);
-                cols[j] ^= (1 << num);
-                grid[i / 3][j / 3] ^= (1 << num);
-            }
-        }
-    }
+    return cnt;
 }
 
 int main()
 {
     cout << "\nHello world!" << endl;
-
-    vector<vi> board, grid;
-
-    vi rows, cols;
-
-    rows.resize(9);
-    cols.resize(9);
-    grid.resize(3);
-    board.resize(9);
-
-    for (auto &grd : grid)
-        grd.resize(3);
-    for (auto &row : board)
-        row.resize(9);
-
-    for (int i = 0; i < 9; i++)
-        for (int j = 0; j < 9; j++)
-        {
-            int digit;
-            cin >> digit;
-            board[i][j] = digit;
-            rows[i] |= (1 << digit);
-            cols[j] |= (1 << digit);
-            grid[i / 3][j / 3] |= (1 << digit);
-        }
+    int n;
+    cin >> n;
 
     cout << "\n========================================\n";
-    soleSudoku(board, rows, cols, grid, 0, 0);
-    // pmatrix(board, 9, 9);
-    // parr(rows, 9);
+    cout << solve(n);
     cout << "\n========================================\n";
+
     return 0;
 }
-
-// 3 0 6 5 0 8 4 0 0
-// 5 2 0 0 0 0 0 0 0
-// 0 8 7 0 0 0 0 3 1
-// 0 0 3 0 1 0 0 8 0
-// 9 0 0 8 6 3 0 0 5
-// 0 5 0 0 9 0 6 0 0
-// 1 3 0 0 0 0 2 5 0
-// 0 0 0 0 0 0 0 7 4
-// 0 0 5 2 0 6 3 0 0

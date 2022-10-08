@@ -1,45 +1,33 @@
+// 1. Convert a Binary Search Tree to a sorted Circular Doubly-Linked List in place.
+// 2. The left and right pointers in nodes are to be used as previous and next pointers respectively in converted DLL.
+// 3. The order of nodes in DLL must be the same as in Inorder for the given Binary Search Tree. The first node of Inorder traversal (leftmost node in BST) must be the head node of the DLL.
 
 #include "makeTree.h"
 
-//------------------------------------------------------------
-
-void Itaraversal(Node *root)
+//*******************************************
+void IpostOrder(Node *root)
 {
-    stack<pair<Node *, int>> stk; //(Node,state)
-    stk.push({root, 1});
-    string pre = "", inord = "", post = "";
+    stack<Node *> stk, postStack;
+    stk.push(root);
     while (!stk.empty())
     {
-        Node *node = stk.top().fs;
-        int state = stk.top().se;
+        Node *node = stk.top();
+        stk.pop();
 
-        if (state == 1) // inord,state++,left
-        {
-            pre += to_string(node->data) + " ";
-            stk.top().se++;
-            if (node->left)
-                stk.push({node->left, 1});
-        }
+        if (node->left)
+            stk.push(node->left);
 
-        else if (state == 2) // inord, state++,right
-        {
-            inord += to_string(node->data) + " ";
-            stk.top().se++;
-            if (node->right)
-                stk.push({node->right, 1});
-        }
+        if (node->right)
+            stk.push(node->right);
 
-        else if (state == 3) // post,pop
-        {
-            post += to_string(node->data) + " ";
-            stk.pop();
-        }
+        postStack.push(node);
     }
 
-    cout << pre << "\n"
-         << inord << "\n"
-         << post;
+    while (!postStack.empty())
+        cout << postStack.top()->data << " ", postStack.pop();
 }
+
+//*******************************************
 
 int main()
 {
@@ -52,22 +40,19 @@ int main()
         cin >> arr[i];
     Node *root = myTree(arr);
     cout << "\n-------------------------------------\n";
-    Itaraversal(root);
+    IpostOrder(root);
+
     cout << "\n-------------------------------------\n";
-    preOrder(root);
-    cout << endl;
-    inOrder(root);
-    cout << endl;
-    postOrder(root);
+    // preOrder(root);
+    // cout << endl;
+    // inOrder(root);
 
     return 0;
 }
 
+// 9
+// 50 25 75 12 37 62 87 30 70
 /*
 19
-10 20 30 -1 -1 37 30 -1 -1 -1 25 15 -1 10 -1 -1 25 -1 -1
-
-19
 50 25 12 -1 -1 37 30 -1 -1 -1 75 62 -1 70 -1 -1 87 -1 -1
-
 */

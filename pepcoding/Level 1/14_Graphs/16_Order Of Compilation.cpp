@@ -66,16 +66,15 @@ void topologicalSort(vector<Edge> grph[], int n)
 
     vi arr(n);
 
-    int idx = n - 1;
+    int idx = 0;
     while (!stk.empty())
-        arr[idx--] = stk.top(), stk.pop();
+        arr[idx++] = stk.top(), stk.pop();
 
     cout << "TopicalSort order: ";
     parr(arr, n);
     cout << endl;
     cout << "Order of task completion: ";
-    for (int i = n - 1; i >= 0; i--)
-        cout << arr[i] << " ";
+    parr(arr, n);
 }
 void solve()
 {
@@ -110,5 +109,12 @@ int main()
 5 6 10
 4 6 10
 
-
+//*******************
+6 6
+1 3 10
+2 3 10
+3 4 10
+3 5 10
+4 6 10
+5 6 10
 */

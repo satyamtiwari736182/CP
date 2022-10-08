@@ -1,31 +1,44 @@
+// 1. You are given n space separated strings, which represents a dictionary of words.
+// 2. You are given another string which represents a sentence.
+// 3. You have to print all possible sentences from the string, such that words of the sentence are
+//      present in dictionary.
+
+// Note -> Check out the question video and write the recursive code as it is intended without
+//                changing signature. The judge can't force you but intends you to teach a concept.
+
 #include "../header.h"
 
-string maximum;
-void findMaximum(string str, int k)
+void wordBreak(string str, string res, unordered_set<string> &dict)
 {
-    if (stoi(str) > stoi(maximum))
-        maximum = str;
-    if (k == 0)
+    if (str.length() == 0)
+    {
+        cout << res << endl;
         return;
-    for (int i = 0; i <= str.length() - 2; i++)
-        for (int j = i + 1; j < str.length(); j++)
-            if (str[j] > str[i])
-            {
-                swap(str[i], str[j]);
-                findMaximum(str, k - 1);
-                swap(str[i], str[j]);
-            }
+    }
+    for (int i = 0; i < str.length(); i++)
+    {
+        string left = Substr(str, 0, i + 1);
+        if (dict.count(left))
+        {
+            string right = str.substr(i + 1);
+            wordBreak(right, res + left + " ", dict);
+        }
+    }
 }
-
 void solve()
 {
-    string str;
-    cin >> str;
-    int k;
-    cin >> k;
-    maximum = str;
-    findMaximum(str, k);
-    cout << maximum << endl;
+    int n;
+    cin >> n;
+    unordered_set<string> dict;
+    for (int i = 0; i < n; i++)
+    {
+        string str;
+        cin >> str;
+        dict.insert(str);
+    }
+    string sent;
+    cin >> sent;
+    wordBreak(sent, "", dict);
 }
 
 int main()
@@ -40,6 +53,9 @@ int main()
 }
 
 /*
-1234567
-2
+
+11
+i like pep coding pepper eating mango man go in pepcoding
+ilikepeppereatingmangoinpepcoding
+
 */

@@ -15,13 +15,13 @@ bool checkPair(vi &arr, int k)
     for (int val : arr)
     {
         int rem = val % k;
-        if (rem == 0)
+        if (rem == 0) // for rem => 0
         {
             int fq = hashmap[rem];
             if (fq % 2 == 1)
                 return false;
         }
-        else if (2 * rem == k)
+        else if (2 * rem == k) // for rem => k/2
         {
             int fq = hashmap[rem];
             if (fq % 2 == 1)
@@ -59,7 +59,7 @@ int main()
     }
     return 0;
 }
-// 3           
+// 3
 
 // 4
 // 9 7 5 3
