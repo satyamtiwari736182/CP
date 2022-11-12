@@ -23,13 +23,13 @@ int main()
                 dp[e][f] = f;
             else
             {
-                int minV = INT_MAX;
-                for (int rf1 = f - 1, rf2 = 0; rf1 > 0; rf1--, rf2++) // rf1 => reverse floor
+                int minAttempt = INT_MAX;
+                for (int r = 1; r < f; r++) // r th => floor
                 {
-                    int val = max(dp[e][rf1], dp[e - 1][rf2]);
-                    minV = min(val, minV);
+                    int val = max(dp[e][f - r], dp[e - 1][r - 1]);
+                    minAttempt = min(val, minAttempt);
                 }
-                dp[e][f] = minV + 1;
+                dp[e][f] = minAttempt + 1;
             }
         }
     }

@@ -1,44 +1,57 @@
-// 1. You are given n space separated strings, which represents a dictionary of words.
-// 2. You are given another string which represents a sentence.
-// 3. You have to print all possible sentences from the string, such that words of the sentence are
-//      present in dictionary.
+// 1. You are given two integers n and k, where n represents number of elements and k represents 
+//      number of subsets.
+// 2. You have to partition n elements in k subsets and print all such configurations.
 
-// Note -> Check out the question video and write the recursive code as it is intended without
+// Note -> Check out the question video and write the recursive code as it is intended without 
 //                changing signature. The judge can't force you but intends you to teach a concept.
 
 #include "../header.h"
 
-void wordBreak(string str, string res, unordered_set<string> &dict)
+int counter = 0;
+void solution(int i, int n, int k, int nos, vvi &res)
 {
-    if (str.length() == 0)
+    if (i > n)
     {
-        cout << res << endl;
+        if (nos == k) // no. of set
+        {
+            counter++;
+            cout << counter << ". ";
+            for (auto Set : res)
+            {
+                cout << "[";
+                for (int j = 0; j < Set.size(); j++)
+                    cout << Set[j] << (j != Set.size() - 1 ? "," : "");
+                cout << "] ";
+            }
+            cout << endl;
+        }
         return;
     }
-    for (int i = 0; i < str.length(); i++)
+    for (int Set = 0; Set < res.size(); Set++)
     {
-        string left = Substr(str, 0, i + 1);
-        if (dict.count(left))
+        if (res[Set].size() > 0)
         {
-            string right = str.substr(i + 1);
-            wordBreak(right, res + left + " ", dict);
+            res[Set].pb(i);
+            solution(i + 1, n, k, nos, res);
+            res[Set].pop_back();
+        }
+
+        else
+        {
+            res[Set].pb(i);
+            solution(i + 1, n, k, nos + 1, res);
+            res[Set].pop_back();
+            break;
         }
     }
 }
+
 void solve()
 {
-    int n;
-    cin >> n;
-    unordered_set<string> dict;
-    for (int i = 0; i < n; i++)
-    {
-        string str;
-        cin >> str;
-        dict.insert(str);
-    }
-    string sent;
-    cin >> sent;
-    wordBreak(sent, "", dict);
+    int n, k;
+    cin >> n >> k;
+    vvi res(k);
+    solution(1, n, k, 0, res);
 }
 
 int main()
@@ -53,9 +66,5 @@ int main()
 }
 
 /*
-
-11
-i like pep coding pepper eating mango man go in pepcoding
-ilikepeppereatingmangoinpepcoding
-
+3 2
 */

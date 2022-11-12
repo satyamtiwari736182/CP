@@ -48,7 +48,7 @@ pi findRedundantConnection(vvi &edges)
         else
         {
             blkListEdge1 = i;
-            blkListEdge1 = indegree[v];
+            blkListEdge2 = indegree[v];
             break;
         }
     }

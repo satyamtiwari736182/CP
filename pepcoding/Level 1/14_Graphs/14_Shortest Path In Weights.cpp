@@ -71,7 +71,28 @@ void dijkstra(vector<Edge> grph[], int node, int *visited)
                 que.push(Pair(edge.nbr, temp.wsf + edge.wt, temp.psf + " " + to_string(edge.nbr)));
     }
 }
+//*******************************
+    vi dijkstra(vector<vp> &adjList,int k){
+        vi dist(adjList.size(), 1e9),visit(adjList.size());
+        dist[k] = 0;
+        priority_queue<pair<int,int>, vector<pair<int,int>> , greater<pair<int,int>>> q;
+        
+        q.push({0,k});
+        while(!q.empty()){
+            pi temp = q.top();
+            q.pop();
+            int u = temp.second;
+            visit[u] = true;
+            for(int i=0;i<adjList[u].size();i++){
+                int v = adjList[u][i].first, weight = adjList[u][i].second;
 
+                if(visit[v]==false && dist[v] > dist[u] + weight)
+                    dist[v] = dist[u] + weight,q.push({dist[v], v});
+            }
+        }
+        
+        return dist;
+    }
 void solve()
 {
     int n, e;

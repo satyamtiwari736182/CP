@@ -59,6 +59,29 @@ bool isCyclic(vector<Edge> grph[], int n, int src)
     return false;
 }
 
+//*********************************************************************
+//! for directed Graph
+bool hasCycle(vector<vi> &adj, int node, vi &visited, vi &dfsvis)
+{
+    visited[node] = true;
+    dfsvis[node] = true;
+
+    for (auto child : adj[node])
+    {
+        if (visited[child] == false)
+        {
+            if (hasCycle(adj, child, visited, dfsvis))
+                return true;
+        }
+
+        else if (dfsvis[child])
+            return true;
+    }
+
+    dfsvis[node] = false;
+    return false;
+}
+//-----------------------------------------------------------------
 void solve()
 {
     int n, e;

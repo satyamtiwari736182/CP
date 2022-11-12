@@ -108,6 +108,7 @@ using namespace std;
 #define vs vector<string>
 #define all(x) x.begin(), x.end()
 #define pi pair<int, int>
+typedef vector<pi> vp;
 #define vii vector<pi>
 #define vvi vector<vi>
 #define ll long long int

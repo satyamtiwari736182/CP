@@ -113,6 +113,23 @@ select * from customer right join account on customer.accno = account.accno;
 select count(*)  from branch;
 
 
+use practice;
+show databases;
+show tables;
+select *from emp;
+-- 123456
+-- satyam
+
+create table chktab as
+select  *from emp where job="sde";
+
+
+select *from chk;
+select *from chktab where hiredate="20080705";
+insert into EMP values(810,'LuRARIA','SDE',7760,str_to_date('03-03-2010', '%m-%d-%Y'),3500,455,30,29,450);
+select *from emp where hiredate< date_add(sysdate(),interval -16 year);
+
+select dayname(day(hiredate)) as "month" from emp;
 
 
 

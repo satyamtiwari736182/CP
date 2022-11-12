@@ -94,6 +94,7 @@ bool bipartite(vector<pair<int, int>> adj[], int u, bool *visited, int *color, i
     return true;
 }
 
+//! for undirected Graph
 bool hasCycle(vector<pair<int, int>> adj[], int node, int par, bool *visited)
 {
     visited[node] = 1;
@@ -112,6 +113,28 @@ bool hasCycle(vector<pair<int, int>> adj[], int node, int par, bool *visited)
                 return true;
         }
     }
+    return false;
+}
+
+//! for directed Graph
+bool hasCycle(vector<vi> &adj, int node, vi &visited, vi &dfsvis)
+{
+    visited[node] = true;
+    dfsvis[node] = true;
+
+    for (auto child : adj[node])
+    {
+        if (visited[child] == false)
+        {
+            if (hasCycle(adj, child, visited, dfsvis))
+                return true;
+        }
+
+        else if (dfsvis[child])
+            return true;
+    }
+
+    dfsvis[node] = false;
     return false;
 }
 
