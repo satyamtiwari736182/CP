@@ -1,3 +1,12 @@
+/*
+1. You are given two strings S1 and S2. S1 represents a text and S2 represents a pattern.
+2. You have to print 'true' if the pattern is matched with the given text, otherwise print 'false'.
+
+The pattern can include the characters '.' and '*'
+'.' - matches any single character
+'*' - matches zero or more of the preceding character
+*/
+
 #include "../header.h"
 
 int main()

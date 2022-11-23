@@ -1,3 +1,10 @@
+/*
+1. You are given an array(arr1) of integers and an integer k.
+2. Another array(arr2) is formed by concatenating K copies of arr1.
+   For example, if arr1 = {1,2} and k = 3, then arr2 = {1,2,1,2,1,2}.
+3. You have to find the maximum subarray sum in arr2.
+*/
+
 #include "../header.h"
 
 int main()

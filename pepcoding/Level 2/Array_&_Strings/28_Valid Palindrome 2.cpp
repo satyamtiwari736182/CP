@@ -5,13 +5,14 @@
 
 bool isPlaindrome(string str, int i, int j)
 {
-    while (i < j)
+    while (i <= j)
     {
         if (str[i] == str[j])
             i++, j--;
         else
             return false;
     }
+    return true;
 }
 
 void solve()
@@ -19,18 +20,18 @@ void solve()
     string str;
     cin >> str;
     int i = 0, j = str.length() - 1, flag = 1;
-    while (i < j)
+    while (i <= j)
     {
         if (str[i] == str[j])
             i++, j--;
 
         else
         {
-            flag = isPlaindrome(str, i + 1, j) || isPlaindrome(str, i + 1, j);
+            flag = isPlaindrome(str, i + 1, j) || isPlaindrome(str, i, j - 1);
+            cout << (flag ? "true" : "false") << endl;
             break;
         }
     }
-    cout << (flag ? "true" : "false") << endl;
 }
 
 int main()

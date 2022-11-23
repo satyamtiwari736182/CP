@@ -1,3 +1,9 @@
+/*
+1. You are given a string str.
+2. You have to find the length of longest subsequence which is appearing twice in the string.
+3. Every ith character in both the subsequences must have different indices in the original string.
+*/
+
 #include "../header.h"
 int main()
 {

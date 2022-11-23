@@ -1,3 +1,10 @@
+/*
+1. You are given two strings S1, S2, and two numbers x and y.
+2. The cost of deleting a character from S1 is x and the cost of deleting a character from S2 is y.
+3. You can delete characters from both the strings.
+4. You have to find the minimum cost required to make the given two strings identical.
+*/
+
 #include "../header.h"
 
 int main()

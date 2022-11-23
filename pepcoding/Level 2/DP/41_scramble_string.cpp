@@ -1,3 +1,10 @@
+/*
+1. You are given two strings s1 and s2.
+2. A string can be represented as a binary tree by partitioning it to two non-empty substrings recursively.
+3. If you choose any non-leaf node and swap its two children, then the string formed is the scramble of the original string.
+4. You have to determine if s2 is a scrambled string of s1.
+*/
+
 #include "../header.h"
 
 bool isScramble(string str1, string str2)

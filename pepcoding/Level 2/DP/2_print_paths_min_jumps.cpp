@@ -15,6 +15,23 @@ public:
     }
 };
 
+void solve(int *arr, int *dp, int idx, int jmp, int sze, string psf)
+{
+    if (sze == 0)
+    {
+        cout << psf << "." << endl;
+        return;
+    }
+    int val = INT_MAX;
+    for (int i = 1; i <= jmp; i++)
+        if (dp[idx + i] != -1)
+            val = min(val, dp[idx + i]);
+
+    for (int i = 1; i <= jmp; i++)
+        if (dp[idx + i] == val)
+            solve(arr, dp, idx + i, arr[idx + i], sze - 1, psf + "-> " + to_string(idx + i));
+}
+
 int main()
 {
     int n;

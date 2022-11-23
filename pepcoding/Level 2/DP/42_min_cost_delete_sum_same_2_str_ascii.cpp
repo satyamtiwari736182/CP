@@ -1,3 +1,10 @@
+/*
+1. You are given two strings S1 and S2.
+2. You have to make these two strings equal by deleting characters. You can delete characters from any of the two strings.
+3. The cost of deleting a character from any string is the ASCII value of that character.
+4. You have to find the minimum ASCII sum of deleted characters.
+*/
+
 #include "../header.h"
 
 int main()

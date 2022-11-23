@@ -1,3 +1,12 @@
+/*
+1. You are given two strings s1 and s2.
+2. You have to find the minimum number of operations needed to convert s1 to s2.
+   Operations allowed are -
+   Insert - You can insert any character in s1.
+   Remove - You can remove any character in s1.
+   Replace - You can replace any character in s1 with any other character.
+*/
+
 #include "../header.h"
 
 int sol(string str1, string str2, int i, int j)
