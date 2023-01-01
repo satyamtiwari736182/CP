@@ -1,33 +1,45 @@
-// 1. Convert a Binary Search Tree to a sorted Circular Doubly-Linked List in place.
-// 2. The left and right pointers in nodes are to be used as previous and next pointers respectively in converted DLL.
-// 3. The order of nodes in DLL must be the same as in Inorder for the given Binary Search Tree. The first node of Inorder traversal (leftmost node in BST) must be the head node of the DLL.
+// 1. Given a Binary Tree, print Diagonal order sum of it.
+// 2. For more Information watch given video link below.
 
 #include "makeTree.h"
 
-//*******************************************
-void IpostOrder(Node *root)
+void width(Node *root, int hd, int *ans)
 {
-    stack<Node *> stk, postStack;
-    stk.push(root);
-    while (!stk.empty())
-    {
-        Node *node = stk.top();
-        stk.pop();
-
-        if (node->left)
-            stk.push(node->left);
-
-        if (node->right)
-            stk.push(node->right);
-
-        postStack.push(node);
-    }
-
-    while (!postStack.empty())
-        cout << postStack.top()->data << " ", postStack.pop();
+    if (!root)
+        return;
+    ans[0] = min(ans[0], hd);
+    ans[1] = max(ans[1], hd);
+    if (root->left)
+        width(root->left, hd - 1, ans);
+    if (root->right)
+        width(root->right, hd + 1, ans);
 }
 
-//*******************************************
+void diagnolOrderSum(Node *root, int hd, vi &ans)
+{
+    if (!root)
+        return;
+
+    if (ans.size() > hd)
+        ans[hd] += root->data;
+    else
+        ans.pb(root->data);
+
+    diagnolOrderSum(root->left, hd + 1, ans);
+    diagnolOrderSum(root->right, hd, ans);
+}
+void diagnolOrderSum(Node *root)
+{
+    if (!root)
+        return;
+    int minMax[2] = {0};
+    width(root, 0, minMax);
+    vi dSum;
+    ;
+    diagnolOrderSum(root, 0, dSum);
+    for (int val : dSum)
+        cout << val << " ";
+}
 
 int main()
 {
@@ -36,23 +48,24 @@ int main()
     cin >> n;
 
     int *arr = new int[n];
+
     for (int i = 0; i < n; i++)
         cin >> arr[i];
-    Node *root = myTree(arr);
-    cout << "\n-------------------------------------\n";
-    IpostOrder(root);
 
+    Node *root = myTree(arr);
+    diagnolOrderSum(root);
     cout << "\n-------------------------------------\n";
-    // preOrder(root);
-    // cout << endl;
-    // inOrder(root);
+    preOrder(root);
+    cout << endl;
+    inOrder(root);
 
     return 0;
 }
-
-// 9
-// 50 25 75 12 37 62 87 30 70
 /*
+9
+50 25 75 12 37 62 87 30 70
+
 19
 50 25 12 -1 -1 37 30 -1 -1 -1 75 62 -1 70 -1 -1 87 -1 -1
+
 */

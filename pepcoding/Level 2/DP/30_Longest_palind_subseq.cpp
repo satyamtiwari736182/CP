@@ -29,3 +29,24 @@ int main()
 }
 
 // abkccbc
+
+/*
+    string str1="",str2="";
+
+    int dp[1001][1001];
+
+    int solve(int i,int j){
+        if(i==str1.length() || j==str1.length()) return 0;
+        if(dp[i][j]!=-1) return dp[i][j];
+        if(str1[i]==str2[j]) return dp[i][j]=1+solve(i+1,j+1);
+        return dp[i][j]=max(solve(i+1,j),solve(i,j+1));
+    }
+
+    int longestPalindromeSubseq(string s) {
+        str1=s;
+        reverse(begin(s),end(s));
+        str2=s;
+        memset(dp,-1,sizeof(dp));
+        return solve(0,0);
+    }
+*/

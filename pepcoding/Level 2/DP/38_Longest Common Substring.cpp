@@ -44,3 +44,25 @@ int main()
 
 // abcdgh
 // acdghr
+
+/*
+? Recursive solution
+
+    string X="",Y="";
+    int lcs(int i, int j, int count)
+    {
+        if (i == X.size() || j == Y.size())
+            return count;
+
+        int same=count;
+
+        if (X[i] == Y[j])
+            same = lcs(i + 1, j + 1, count + 1);
+
+        int diff1=lcs(i, j + 1, 0);
+        int diff2=lcs(i + 1, j, 0);
+        int res = max({same, diff1,diff2});
+
+        return res;
+    }
+*/
