@@ -1,4 +1,4 @@
-// 1: You are given a string s that consists of lower case English letters and brackets. 
+// 1: You are given a string s that consists of lower case English letters and brackets.
 // 2: Reverse the strings in each pair of matching parentheses, starting from the innermost one.
 // 3: Your result should not contain any brackets.
 
@@ -6,8 +6,6 @@
 // (abcd) -> dcba
 // (u(love)i) -> iloveu
 // (gni(pc(do))ep) -> pepcoding
-        
-
 
 #include "../header.h"
 

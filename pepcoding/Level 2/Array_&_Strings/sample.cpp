@@ -1,51 +1,48 @@
-// 1. Given a string s.
-// 2. Return true if the s can be palindrome after deleting at most one character from it.
+// Given a list of Integers(array) & a number K.
+// Task is to "Find MAXIMUM AVERAGE of Contiguous subarray of size k."
+
+// Example 1 :
+//     Nums : [-10,5,-6,8,-7,2,-4,8,-6,7] , K : 3
+//     Output : 3.0
+//     Explanation : average of 8,-6,7 is maximum
+
+// Example 2 :
+//     Nums : [1,2,-3,-4,5,-6] , K = 2
+//     Output : 1.5
 
 #include "../header.h"
-
-bool isPlaindrome(string str, int i, int j)
+double solve(vi &arr, int k)
 {
-    while (i <= j)
+    int i = 0, sum = 0, n = arr.size(), ans = INT_MIN;
+    while (i < k)
+        sum += arr[i++];
+    ans = sum;
+    for (; i < n; i++)
     {
-        if (str[i] == str[j])
-            i++, j--;
-        else
-            return false;
+        sum = sum - arr[i - k] + arr[i];
+        ans = max(ans, sum);
     }
-    return true;
+    cout << ans << endl;
+    return ans * 1.0 / k;
 }
-
-void solve()
-{
-    string str;
-    cin >> str;
-    int i = 0, j = str.length() - 1, flag = 1;
-    while (i <= j)
-    {
-        if (str[i] == str[j])
-            i++, j--;
-
-        else
-        {
-            flag = isPlaindrome(str, i + 1, j) || isPlaindrome(str, i, j - 1);
-            cout << (flag ? "true" : "false") << endl;
-            break;
-        }
-    }
-}
-
 int main()
 {
-    cout << "\nHello world\n";
-    int t = 1;
-    // cin >> t;
-    test(t)
-        solve();
-
-    return 0;
+    cout << "hello world!\n";
+    int n, k;
+    cin >> n;
+    vi arr(n);
+    rarr(arr, 0, n);
+    cin >> k;
+    cout << solve(arr, k) << endl;
 }
 
 /*
-abca
+10
+-10 5 -6 8 -7 2 -4 8 -6 7
+3
 
+**
+6
+1 2 -3 -4 5 -6
+2
 */

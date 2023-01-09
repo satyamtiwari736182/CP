@@ -18,7 +18,7 @@ int largestRectangleArea(vi &heights)
         while (stk.top() != -1 && heights[stk.top()] >= val)
         {
             int rightMin = i;
-            int height = heights[stk.top()];
+            int height = heights[stk.top()]; // checking area with this histogram using it's height.
             stk.pop();
             int leftMin = stk.top();
             maxArea = max(maxArea, (rightMin - leftMin - 1) * height);

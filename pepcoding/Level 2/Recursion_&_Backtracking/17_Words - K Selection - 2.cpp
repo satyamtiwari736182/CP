@@ -1,17 +1,16 @@
 // 1. You are given a word (may have one character repeat more than once).
 // 2. You are given an integer k.
-// 2. You are required to generate and print all ways you can select k distinct characters out of the 
+// 2. You are required to generate and print all ways you can select k distinct characters out of the
 //      word.
- 
-// Note -> Use the code snippet and follow the algorithm discussed in question video. The judge can't 
+
+// Note -> Use the code snippet and follow the algorithm discussed in question video. The judge can't
 //                force you but the intention is to teach a concept. Play in spirit of the question.
 
-
 #include "../header.h"
-
-void getWordSelection(int cc, string ustr, int lc_idx, int ts, string asf)
+//! Permutation method
+void getWordSelection(int cs, string ustr, int lc_idx, int ts, string asf)
 {
-    if (cc > ts)
+    if (cs > ts)
     {
         cout << asf << endl;
         return;
@@ -20,7 +19,7 @@ void getWordSelection(int cc, string ustr, int lc_idx, int ts, string asf)
     for (int idx = lc_idx + 1; idx < ustr.length(); idx++)
     {
         char ch = ustr[idx];
-        getWordSelection(cc + 1, ustr, idx, ts, asf + ch);
+        getWordSelection(cs + 1, ustr, idx, ts, asf + ch);
     }
 }
 

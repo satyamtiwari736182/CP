@@ -4,12 +4,11 @@
 
 // Note -> Use the code snippet and follow the algorithm discussed in question video. The judge can't force you but the intention is to teach a concept. Play in spirit of the question.
 
-
 #include "../header.h"
-
-void getWords(int cc, string ustr, int ts, map<char, int> hashMap, string asf)
+//! Combination method
+void getWords(int cs, string ustr, int ts, map<char, int> hashMap, string asf)
 {
-    if (cc > ts)
+    if (cs > ts)
     {
         cout << asf << endl;
         return;
@@ -20,7 +19,7 @@ void getWords(int cc, string ustr, int ts, map<char, int> hashMap, string asf)
         if (hashMap[ch] > 0)
         {
             hashMap[ch]--;
-            getWords(cc + 1, ustr, ts, hashMap, asf + ch);
+            getWords(cs + 1, ustr, ts, hashMap, asf + ch);
             hashMap[ch]++;
         }
     }
@@ -32,7 +31,7 @@ void solve()
     int k;
     cin >> str >> k;
     map<char, int> hashMap;
- 
+
     for (char ch : str)
     {
         if (hashMap.count(ch) == 0)

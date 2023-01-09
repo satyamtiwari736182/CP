@@ -1,76 +1,79 @@
-// 1. You are given an array(arr) of integers. Values may be duplicated.
-// 2. You have to find the length of the largest subarray with contiguous elements.
-
-// Note -> The contiguous elements can be in any order(not necessarily in increasing order).
+/*
+1. You are given number N and 2*N number of strings that contains mapping of the employee and his manager.
+2. An employee directly reports to only one manager.
+3. All managers are employees but the reverse is not true.
+4. An employee reporting to himself is the CEO of the company.
+5. You have to find the number of employees under each manager in the hierarchy not just their direct reports.
+*/
 
 #include "../header.h"
-
-int solution(vi &arr)
+int getSize(map<string, set<string>> &tree, string node, map<string, int> &result)
 {
-    int cnt = 0, rangeCnt = 0;
-    for (int i = 0; i < arr.size(); i++)
+    if (tree.find(node) == tree.end())
     {
-        int minimum = arr[i];
-        int maximum = arr[i];
-
-        set<int> distinct_ele;
-        distinct_ele.insert(arr[i]);
-
-        for (int j = i + 1; j < arr.size(); j++)
-        {
-            if (distinct_ele.find(arr[j]) != distinct_ele.end())
-                break;
-
-            distinct_ele.insert(arr[j]);
-
-            minimum = min(minimum, arr[j]);
-            maximum = max(maximum, arr[j]);
-
-            if (maximum - minimum == j - i)
-                rangeCnt++, cnt = max(cnt, j - i + 1);
-        }
-        
+        result[node] = 0;
+        return 1;
     }
 
-    cout << "$$ " << rangeCnt << endl;
+    int cnt = 0;
+    for (string chld : tree[node])
+        cnt += getSize(tree, chld, result);
 
-    return cnt;
+    result[node] = cnt;
+    return cnt + 1;
+}
+void findCount(map<string, string> &hashmap)
+{
+    map<string, set<string>> tree;
+    string ceo = "";
+    for (auto emps : hashmap)
+    {
+        string emp = emps.fs;
+        string mgr = hashmap[emp];
+        if (emp == mgr)
+            ceo = mgr;
+        else
+            tree[mgr].insert(emp);
+    }
+    map<string, int> count_result;
+    getSize(tree, ceo, count_result);
+
+    // for (auto lst : tree)
+    // {
+    //     cout << lst.first << " -> ";
+    //     for (auto st : lst.second)
+    //         cout << st << ", ";
+    //     cout << endl;
+    // }
+
+    for (auto emp_cnt : count_result)
+        cout << emp_cnt.fs << " -> " << emp_cnt.se << endl;
+    // cout << ceo;
 }
 
 int main()
 {
 
     cout << "\nHello world!" << endl;
-    int t = 1;
-    // cin >> t;
-    test(t)
+    int n;
+    cin >> n;
+    map<string, string> hashmap;
+    for (int i = 0; i < n; i++)
     {
-        int n;
-        cin >> n;
-        vi arr;
-        rvarr(arr, 0, n);
-
-        cout << "\n============================================\n";
-
-        cout << solution(arr);
-
-        cout << "\n============================================\n";
+        string emp, mgr;
+        cin >> emp >> mgr;
+        hashmap.insert({emp, mgr});
     }
+    cout << "\n============================================\n";
+    findCount(hashmap);
+    cout << "\n============================================\n";
     return 0;
 }
 
-// 2
-
-// 3
-// 10 12 11
-
-// 15
-// 9 2 7 5 6 23 24 22 23 19 17 16 18 39 0
-
-/*
-6
-0 1 2 6 9 10
-
-7
-0 2 3 4 6 8 9
-*/
+// 6
+// A C
+// B C
+// C F
+// D E
+// E F
+// F F

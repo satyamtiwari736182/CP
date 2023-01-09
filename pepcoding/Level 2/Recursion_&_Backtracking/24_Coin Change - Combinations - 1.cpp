@@ -7,8 +7,8 @@
 // Note -> Use the code snippet and follow the algorithm discussed in question video. The judge can't
 //                force you but the intention is to teach a concept. Play in spirit of the question.
 
-
 #include "../header.h"
+//! Combination method
 void coinChange(int cc, vi &coins, int amtsf, int tar, string asf)
 {
     if (cc == coins.size())
@@ -27,7 +27,7 @@ void solve()
     vi arr(n);
     rarr(arr, 0, n);
     cin >> tar;
-    cout<<endl;
+    cout << endl;
     coinChange(0, arr, 0, tar, "");
 }
 

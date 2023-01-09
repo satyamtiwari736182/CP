@@ -17,9 +17,9 @@ pi binarySearch(int val, vi &arr)
             break;
         }
         else if (val > arr[mid])
-            pr.se = arr[mid], low = mid + 1;
+            pr.fs = arr[mid], low = mid + 1;
         else
-            pr.fs = arr[mid], high = mid - 1;
+            pr.se = arr[mid], high = mid - 1;
     }
     return pr;
 }

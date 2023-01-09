@@ -36,32 +36,24 @@ void solveSudoku(int board[9][9], int i, int j)
         pmatrix(board, 9, 9);
         return;
     }
+    
     int row = 0, col = 0;
     if (j == 8)
-    {
-        row = i + 1;
-        col = 0;
-    }
+        row = i + 1, col = 0;
     else
-    {
-        row = i;
-        col = j + 1;
-    }
+        row = i, col = j + 1;
 
     if (board[i][j] != 0)
         solveSudoku(board, row, col);
+
     else
-    {
         for (int po = 1; po <= 9; po++)
-        {
             if (isValid(board, i, j, po) == true)
             {
                 board[i][j] = po;
                 solveSudoku(board, row, col);
                 board[i][j] = 0;
             }
-        }
-    }
 }
 
 void solve()

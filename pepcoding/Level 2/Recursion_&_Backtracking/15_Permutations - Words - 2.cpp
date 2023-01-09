@@ -4,9 +4,9 @@
 // Note -> Use the code snippet and follow the algorithm discussed in question video. The judge can't
 //                force you but the intention is to teach a concept. Play in spirit of the question.
 
-
 #include "../header.h"
-
+//! Permutation Method.
+// todo: last_occurence of a char not allows the same character to get permute among themselves.
 void getWordPermutation(int cc, string str, char *spots, map<char, int> &last_occurence)
 {
 
@@ -58,6 +58,5 @@ int main()
 
     return 0;
 }
-
 
 // aabb

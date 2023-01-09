@@ -22,7 +22,57 @@
 //     list_2 : [[2,4] [5,7] [9,13]]
 //     Output : [[2,3] [5,7] [9,10] [12,13]]
 
-// 1
+#include "../header.h"
+
+vvi solve(vvi &lst1, vvi &lst2)
+{
+    vvi res;
+    sort(all(lst1)), sort(all(lst2));
+    int i = 0, j = 0, n1 = lst1.size(), n2 = lst2.size();
+    while (i < n1 && j < n2)
+    {
+        int sc = max(lst1[i][0], lst2[j][0]), ec = min(lst1[i][1], lst2[j][1]);
+        if (sc <= ec)
+            res.pb({sc, ec});
+            
+        if (lst1[i][1] < lst2[j][1])
+            i++;
+        else
+            j++;
+    }
+    return res;
+}
+
+int main()
+{
+    cout << "hello world!\n";
+    int n;
+    cin >> n;
+    vvi lst1(n);
+    for (int i = 0; i < n; i++)
+    {
+        int s, e;
+        cin >> s >> e;
+        lst1[i] = {s, e};
+    }
+    vvi lst2(n);
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        int s, e;
+        cin >> s >> e;
+        lst2[i] = {s, e};
+    }
+    cout << endl;
+    vvi res = solve(lst1, lst2);
+    pmatrix(res, res.size(), 2);
+}
+
+// 3
+// 5 10
 // 1 3
-// 1
-// 2 5
+// 12 17
+// 3
+// 9 13
+// 5 7
+// 2 4

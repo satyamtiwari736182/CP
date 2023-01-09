@@ -1,3 +1,4 @@
+//? permutation nature
 // 1. You are given a word (may have one character repeat more than once).
 // 2. You are given an integer k.
 // 3. You are required to generate and print all k length words (of distinct chars) by using chars of the 
@@ -6,10 +7,8 @@
 // Note -> Use the code snippet and follow the algorithm discussed in question video. The judge can't 
 //                force you but the intention is to teach a concept. Play in spirit of the question.
 
-
-
 #include "../header.h"
-
+//! Permutation method
 void getWordSelection(int cc, string ustr, int ssf, int ts, vector<char> &spots)
 {
     if (cc == ustr.length())

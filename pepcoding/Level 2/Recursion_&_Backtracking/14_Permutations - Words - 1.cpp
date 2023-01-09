@@ -1,13 +1,13 @@
 // 1. You are given a word (may have one character repeat more than once).
-// 2. You are required to generate and print all arrangements of these characters. 
+// 2. You are required to generate and print all arrangements of these characters.
 
-// Note -> Use the code snippet and follow the algorithm discussed in question video. The judge can't 
+// Note -> Use the code snippet and follow the algorithm discussed in question video. The judge can't
 //                force you but the intention is to teach a concept. Play in spirit of the question.
 
-
-
 #include "../header.h"
-
+//! Combination Method.
+// NOTE: No place can be left empty as //*ALL thee character will required for permutation.
+// todo: Freq_map helps to remove permutation of same char among themselves.
 void getWordPermutation(int cs, int ts, map<char, int> &freq_map, string asf)
 {
     if (cs > ts)
@@ -31,7 +31,7 @@ void solve()
 {
     string str;
     cin >> str;
-     cout<<endl;
+    cout << endl;
     map<char, int> freq_map;
     for (char ch : str)
         freq_map[ch]++;
@@ -48,6 +48,5 @@ int main()
 
     return 0;
 }
-
 
 // aabb

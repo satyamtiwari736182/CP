@@ -1,17 +1,17 @@
+//? permutation nature
 // 1. You are given a word (may have one character repeat more than once).
 // 2. You are given an integer k.
-// 3. You are required to generate and print all k length words (of distinct chars) by using chars of the 
+// 3. You are required to generate and print all k length words (of distinct chars) by using chars of the
 //      word.
 
-// Note -> Use the code snippet and follow the algorithm discussed in question video. The judge can't 
+// Note -> Use the code snippet and follow the algorithm discussed in question video. The judge can't
 //                force you but the intention is to teach a concept. Play in spirit of the question.
 
-
 #include "../header.h"
-
-void getWordSelection(int cc, string ustr, int ts, set<char> &usedChar, string asf)
+//! Combination method
+void getWordSelection(int cs, string ustr, int ts, set<char> &usedChar, string asf)
 {
-    if (cc > ts)
+    if (cs > ts)
     {
         cout << asf << endl;
         return;
@@ -22,7 +22,7 @@ void getWordSelection(int cc, string ustr, int ts, set<char> &usedChar, string a
         if (usedChar.count(ch) == false)
         {
             usedChar.insert(ch);
-            getWordSelection(cc + 1, ustr, ts, usedChar, asf + ch);
+            getWordSelection(cs + 1, ustr, ts, usedChar, asf + ch);
             usedChar.erase(ch);
         }
     }
