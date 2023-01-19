@@ -31,6 +31,7 @@ int main()
 
     //---------------------------------------------
     // Bellman's ford algorith for single source shortest parth algorithm.
+    //! Note: But when applied for every node it becomes [ALL Pair Shortest Path Algorithm]
     path[0] = 0;
     for (int i = 0; i < n - 1; i++)
     {
