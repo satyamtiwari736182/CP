@@ -22,3 +22,22 @@ SELECT sum(marks) from students_repo;
 
 DROP table students_repo
 
+//*********************************************************
+
+select salesman_id,cust_name as name from customer
+union all
+select salesman_id,name from salesman
+
+NOTE: 
+ The column names in both the select statements can be different but the
+ data type must be same.And in the result set the name of column used in the first
+ select statement will appear.
+
+//*********************************************************
+
+select *from customer c,salesman s where c.salesman_id=s.salesman_id;
+
+select *from customer c inner join salesman s on c.salesman_id=s.salesman_id;
+
+
+LEFT JOIN: This join returns all the rows of the table on the left side of the join and matches rows for the table on the right side of the join. For the rows for which there is no matching row on the right side, the result-set will contain null. LEFT JOIN is also known as LEFT OUTER JOIN.

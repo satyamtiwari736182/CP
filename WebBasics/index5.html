@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            height: 80px;
+            width: 100%;
+            background-color: aquamarine;
+            position: relative;
+        }
+
+        .div1 {
+            height: 100%;
+            width: 6%;
+            background-color: rgb(16, 200, 200);
+            border-radius: 40%;
+            transform: translatex(70rem) rotate(-360deg);
+            transition: all 5s ease-in-out 2s;
+        }
+
+        #div1:hover {
+            transform: translatex(70rem) rotate(-360deg);
+            transition: all 5s ease-in-out 1s;
+
+        }
+
+        /* ************************************************** */
+        .div2 {
+            position: absolute;
+            top: 0%;
+            left: 5%;
+            background-color: orange;
+            /* z-index: -1; */
+            animation: satyam 5s ease-in 1s infinite;
+            /* animation-name: satyam;
+            animation-duration: 3s;
+            animation-iteration-count: 4;
+            animation-delay: 1s; */
+        }
+
+        .div2:hover {
+
+            /* transform: translateX(500px);
+            transition: all 5s ease-in-out; */
+        }
+
+        @keyframes satyam {
+
+            0% {
+                width: 100px;
+                transform: translateX(20px);
+            }
+
+            50% {
+                width: 200px;
+                transform: translateX(600%) rotate(1080deg);
+            }
+
+            100% {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wapper">
+        <h1>Hello everyone</h1>
+        <div class="container">
+            <div class="div1" id="div1"></div>
+            <div class="div1 div2"></div>
+            <!-- <div class="div1"></div>
+            <div class="div1"></div> -->
+        </div>
+    </div>
+</body>
+
+</html>

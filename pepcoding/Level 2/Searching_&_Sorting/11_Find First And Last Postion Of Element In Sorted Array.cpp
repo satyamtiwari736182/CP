@@ -5,6 +5,11 @@
 #include "../header.h"
 pi solve(vi &arr, int target)
 {
+    //***************************************************
+    int s = lower_bound(all(arr), target) - begin(arr);     //? It return first occuring position of the target if present else it behave like upper_bound().
+    int e = upper_bound(all(arr), target) - begin(arr) - 1; //? It return value just grater than target.
+    cout << s << " " << e << endl;
+    //***************************************************
     int i = -1, j = -1, flag = 0;
     int low = 0, high = arr.size() - 1;
 
@@ -47,8 +52,8 @@ pi solve(vi &arr, int target)
 int main()
 {
     cout << "\nHello world!" << endl;
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while (t--)
     {
         int n, tar;

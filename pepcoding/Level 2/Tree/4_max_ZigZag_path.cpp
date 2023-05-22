@@ -1,3 +1,14 @@
+// 1. You are given a partially written function to solve.
+// 2. Given a binary tree root, a ZigZag path for a binary tree is defined as follow:
+//     a. Choose any node in the binary tree and a direction (right or left).
+//     b. If the current direction is right then move to the right child of the current node otherwise move to the left child.
+//     c. Change the direction from right to left or right to left.
+//     d. Repeat the second and third step until you can't move in the tree.
+
+// 3.Zigzag length is defined in terms of edges. (A single node has a length of 0).
+// 4. Return the longest ZigZag path contained in that tree.
+
+
 #include "makeTree.h"
 
 class Pairs

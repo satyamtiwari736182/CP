@@ -42,7 +42,7 @@ vvi solve(vvi &lst, vi interval)
             break;
     }
 
-    if (res.size() == 0 || interval[0] > lastInterval[1])
+    if (res.size() == 0 || lastInterval[1] < interval[0])
         res.pb(interval), lastInterval = interval;
     else
         res[res.size() - 1][1] = max(lastInterval[1], interval[1]);

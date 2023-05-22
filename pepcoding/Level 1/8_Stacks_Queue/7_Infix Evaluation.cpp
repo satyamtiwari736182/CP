@@ -46,7 +46,7 @@ void solve()
             optor.push(ch);
 
         else if (isdigit(ch))
-            oprnd.push(ch - '0');
+            oprnd.push(ch - '0'); //! use loop to get a number >= 10.
 
         else if (ch == ')')
         {

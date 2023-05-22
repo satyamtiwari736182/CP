@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 20;
+            padding: 10;
+        }
+
+        section>div>p {
+            color: red;
+        }
+
+        h1 {
+            /* background-color: aqua; */
+            /* display: inline-block; */
+
+            margin: 20px;
+            padding: 10px;
+            height: 60px;
+            width: 300px;
+            border: 3px solid olive;
+            background-color: salmon;
+            color: yellow;
+        }
+
+        h2 {
+
+            margin: 20px;
+            padding: 10px;
+            height: 60px;
+            width: 300px;
+            border: 3px solid olive;
+            background-color: salmon;
+            color: yellow;
+            box-sizing: border-box;
+            /* Content size is reduced*/
+
+
+        }
+
+        h1:hover {
+            background-color: rgb(7, 97, 97);
+            transition: 0.7s ease-in-out;
+        }
+
+
+
+        tr {
+            border: 1px solid black;
+        }
+
+        table,
+        tr {
+            border: 1px solid black;
+            /* padding: 5px; */
+        }
+
+        table {
+            margin: 20px;
+            padding: 20px;
+            border: 20px solid olive;
+            background-color: salmon;
+        }
+
+        /* *********************************** */
+        #sec2 {
+            display: flex;
+            justify-content: space-between;
+            height: 500px;
+            width: 600px;
+            font-size: 10px;
+            background-color: olivedrab;
+        }
+
+        #sec2 #div1 {
+            height: 20%;
+            width: 100%;
+        }
+
+        #div1 {
+            background-color: orange;
+        }
+
+        #div2 {
+            height: 40%;
+            width: 100%;
+            padding-left: 25px;
+            font-size: 5em;
+            background-color: rgb(130, 87, 8);
+        }
+    </style>
+    </style>
+</head>
+
+<body>
+    <h1>Satyam Tiwari</h1>
+    <section>
+        <h2>Details</h2>
+        <table>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <tr>
+                <td>Satyam</td>
+                <td>Jaigaon</td>
+                <td>456789</td>
+            </tr>
+
+            <tr>
+                <td>Satyam</td>
+                <td>Jaigaon</td>
+                <td>456789</td>
+            </tr>
+
+            <tr>
+                <td>Satyam</td>
+                <td>Jaigaon</td>
+                <td>456789</td>
+            </tr>
+
+        </table>
+        <div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique quae deleniti maiores recusandae eum
+                culpa velit eius consequuntur, praesentium distinctio illum, eaque hic quisquam, quo aliquid autem amet
+                consequatur ad.</p>
+        </div>
+    </section>
+
+    <section id="sec2">
+
+        <div id="div1">sample1</div>
+        <div id="div2">sample2</div>
+
+    </section>
+</body>
+
+</html>

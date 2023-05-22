@@ -46,5 +46,4 @@ int main()
     return 0;
 }
 
-// 8
-// 1 5 8 9 10 17 17 20
+// abccbc

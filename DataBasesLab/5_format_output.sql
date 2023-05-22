@@ -43,3 +43,11 @@ FROM orders
 GROUP BY ord_date 
 ORDER BY ord_date;
 
+select city, count(*) as "No. of salesman" from salesman group by city
+order by "No. of salesman"
+
+select count(*) as total ,count(distinct(emp_lname))as unq from emp_details
+
+select emp_lname,emp_dept, count(*) as cnt from emp_details group by emp_dept,emp_lname having count(*)<>1
+
+select city, count(*),sum(commission) from salesman group by city order by sum desc limit 1 offset 2

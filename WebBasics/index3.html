@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #div1 {
+            /*
+            container level properties
+            * Flex-direction -> changes main-axis
+            * Flex-wrap -> keeps the width of flex-item intact(fixed)
+            * Flex-Flow -> short-hand notaion for above two property.
+            * Justify-content -> across main-axis
+            * align-items -> across cross-axis
+            * Align-content -> manages gaps/space between two rows
+            */
+            margin: 20px;
+            padding: 10px;
+            height: 200px;
+            width: 400px;
+            border: 2px solid olive;
+            display: flex;
+            justify-content: space-evenly;
+            align-content: center;
+            gap: 4px;
+            /* flex-flow: column-reverse; */
+            flex-flow: row-reverse;
+        }
+
+        #div1 div {
+            /*
+            flex-item level properties
+            * Order -> where items will be positioned. by default value is 0
+            * Flex-grow -> rate at which items grow. default value: 1
+            * flex-shrink -> rate at which items shrink. default value: 1
+            * flex-basis -> provide with of item with overflow content visibility
+            * flex -> short-hand notaion
+            * Align-self -> vertically positioning any particular item
+            * justify-self -> horizontal positioning any particular item
+            */
+
+            /* margin: 20px;
+            padding: 10px;
+            height: 200px;
+            width: 400px; */
+            border: 2px solid rgb(93, 238, 53);
+            gap: 4px;
+        }
+
+        #div12 {
+            height: 60px;
+        }
+
+        #div14 {
+            height: 90px;
+            align-self: center;
+        }
+
+        #div11 {
+            height: 120px;
+        }
+
+        /*******************************************************/
+        .div2 {
+            margin: 20px;
+            padding: 10px;
+            height: 400px;
+            /* width: 600px; */
+            border: 2px solid olive;
+            display: grid;
+            grid-template-columns: 100px repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr) 2fr 1fr;
+            gap: 4px;
+        }
+
+        .div2 div {
+            border: 2px solid orangered;
+        }
+
+        #div22 {
+            grid-column-start: 2;
+            grid-column-end: 4;
+            padding-top: 22px;
+            text-align: center;
+        }
+
+        #div24 {
+            grid-column-start: 3;
+            grid-column-end: 5;
+        }
+
+        #div25 {
+            grid-column-start: 2;
+            grid-column-end: 4;
+            grid-row-start: 4;
+        }
+
+        /*******************************************************/
+        .div3 {
+            height: 600px;
+            width: 500px;
+            border: 2px solid black;
+            padding: 10px;
+            margin: 10px;
+            display: grid;
+            grid-gap: 5px;
+            grid-template-rows: 50px repeat(3, 1fr) 10px;
+            grid-template-columns: repeat(5, 1fr);
+            background-color: rgb(239, 208, 151);
+        }
+
+        .div3 div {
+            border: 2px solid rgb(248, 76, 76);
+            padding: 10px;
+        }
+
+        #div31 {
+            grid-column-start: 1;
+            grid-column-end: 6;
+            /* height: 30px; */
+        }
+
+        #div32 {
+
+            grid-row-start: 2;
+            grid-row-end: 6;
+            grid-column-start: 1;
+            grid-column-end: 3;
+        }
+
+        #div33 {
+
+            grid-row-start: 2;
+            grid-row-end: 6;
+            grid-column-start: 3;
+            grid-column-end: 6;
+        }
+
+        #div34 {
+            grid-column-start: 1;
+            grid-column-end: 6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="div3">
+        <div id="div31">Block-1</div>
+        <div id="div32">Block-2</div>
+        <div id="div33">Block-3</div>
+        <div id="div34">Block-4</div>
+    </div>
+    <div id="div1">
+        <div id="div11">div-1</div>
+        <div id="div12">div-2</div>
+        <div id="div13">div-3</div>
+        <div id="div14">div-4</div>
+    </div>
+    <h1>Hello everyone</h1>
+    <div class="div2">
+        <div id="div21">block-1</div>
+        <div id="div22">block-2</div>
+        <div id="div23">block-3</div>
+        <div id="div24">block-4</div>
+        <div id="div25">block-5</div>
+    </div>
+</body>
+
+</html>

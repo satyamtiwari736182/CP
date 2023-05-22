@@ -23,14 +23,12 @@ int solve(vi &arr, int h)
     while (low <= high)
     {
         int mid = ceil((low + high) / 2.0);
-        if (check(arr, mid, h) == 1)
-        {
-            k = mid;
-            high = mid - 1;
-        }
+        if (check(arr, mid, h) == 1) //? Minimizing the maximum
+            k = mid, high = mid - 1;
         else
             low = mid + 1;
     }
+
     cout << endl;
     return k;
 }

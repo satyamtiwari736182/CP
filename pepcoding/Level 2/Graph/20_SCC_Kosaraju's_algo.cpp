@@ -34,7 +34,7 @@ int main()
         graph[u].pb(v);
     }
 
-    bool *vis=new bool[n + 1];
+    bool *vis = new bool[n + 1];
     memset(vis, 0, sizeof(vis));
 
     //---------------------------------------------
@@ -43,7 +43,7 @@ int main()
     stack<int> stk;
     for (int i = 0; i < n; i++)
         if (vis[i] == false)
-            dfs1(graph, i, vis, stk);
+            dfs1(graph, i, vis, stk); //! getting topological order.
 
     // step 2
     vector<vi> revGraph;
@@ -63,7 +63,7 @@ int main()
         if (vis[temp] == false)
         {
             count++;
-            dfs2(revGraph, temp, vis);
+            dfs2(revGraph, temp, vis); //! just dfs traversal
         }
     }
 
