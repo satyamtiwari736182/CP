@@ -13,14 +13,12 @@ int main()
         {
             if (g == 0)
                 dp[i][j] = 1;
-            else if (g == 1)
-                dp[i][j] = str[i] == str[j] ? 3 : 2;
             else
             {
                 if (str[i] == str[j])
                     dp[i][j] = dp[i][j - 1] + dp[i + 1][j] + 1;
                 else
-                    dp[i][j] = dp[i][j - 1] + dp[i + 1][j] - dp[i + 1][j - 1]; // f(c1M)+f(Mc2)+f(M)
+                    dp[i][j] = dp[i][j - 1] + dp[i + 1][j] - dp[i + 1][j - 1]; // f(c1M)+f(Mc2)-f(M)
             }
         }
     //-----------------------------------------------------

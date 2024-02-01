@@ -1,4 +1,4 @@
-#include "header.h"
+#include "./header.h"
 int solver(int e, int f)
 {
     if (f == 0 || f == 1)

@@ -45,10 +45,10 @@ int main()
 {
 
     cout << "\nHello world!" << endl;
-    int n;
+    int n,i;
     cin >> n;
     map<string, string> hashmap;
-    REP(0, n - 1)
+    REP(i,0, n - 1)
     {
         string src, dest; // ticket
         cin >> src >> dest;
