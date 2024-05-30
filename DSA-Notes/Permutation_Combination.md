@@ -2,7 +2,7 @@
 ># Permuation
 **There are two ways to do permutation**
 
-1. **taken an object/item and can be placed at any available empty position and so on for next item**.
+1. **taken an object/item, it can be placed at any available empty position and so on for next item**.
 
       ```cpp
         void permute(int item,string str,vector<char>&res,unordered_map<char,int>&lastIndex){

@@ -153,7 +153,7 @@ int diameter(Node *root)
 }
 ```
     
->b. **DP on Trees:** 
+>**b. DP on Trees:** 
 
     1. Build ans and store it and then return result the val for parent node to build ans, and so on.
 ```java

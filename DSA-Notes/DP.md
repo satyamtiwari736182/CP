@@ -214,3 +214,155 @@ int main(int n, int cap,int wt[],int prof[])
     return dp[n][cap];
 }
 ```
+
+
+# DP with bitmasking
+> **LeetCode - 464**
+
+    In the "100 game" two players take turns adding, to a running total, any integer from 1 to 10. The player who first causes the running total to reach or exceed 100 wins.Also the players cannot re-use integers. 
+    Given two integers maxChoosableInteger and desiredTotal, return true if the first player to move can force a win, otherwise, return false. Assume both players play optimally.
+>**1. DP Without Bitmasking** -> gives **TLE**
+```java
+class Solution {
+    boolean canIWinFrom(int maxChoosableInteger, int desiredTotal, boolean[] used,Map<String,Boolean>dp) {
+        if (desiredTotal <= 0) return false; 
+        String key=Arrays.toString(used);
+        if(dp.containsKey(key)) return dp.get(key);
+        for (int i = 1; i <= maxChoosableInteger; i++) {
+            if (used[i]) continue;
+            used[i] = true;
+            if (canIWinFrom(maxChoosableInteger, desiredTotal - i, used,dp)==false) {// current player's opponents fails so i won
+                used[i] = false;
+                dp.put(key,true);
+                return true;
+            }
+            used[i] = false;
+        }
+        dp.put(key,false);
+        return false;
+    }
+}
+```
+>**2. DP With Bitmasking**
+
+```java
+    boolean canIWinFrom(int maxChoosableInteger, int desiredTotal, int used,Boolean dp[]) {
+        if (desiredTotal <= 0) return false;
+        if(dp[used]!=null)return dp[used];
+        for (int i = 1; i <= maxChoosableInteger; i++) {
+            if ((used & (1<<i))!=0) continue;
+            used ^= (1<<i);
+            if (canIWinFrom(maxChoosableInteger, desiredTotal - i, used,dp)==false) {
+                used ^= (1<<i);
+                return dp[used]=true;
+            }
+            used ^= (1<<i);
+        }
+        return dp[used]=false;
+    }
+```
+
+> **LeetCode-847**
+
+    You have an undirected, connected graph of n nodes labeled from 0 to n - 1. You are given an array graph where graph[i] is a list of all the nodes connected with node i by an edge. Return the length of the shortest path that visits every node. You may start and stop at any node, you may revisit nodes multiple times, and you may reuse edges.
+```java
+    public int shortestPathLength(int[][] graph) {
+        int res=Integer.MAX_VALUE,allVisited=(1<<graph.length)-1;
+        Deque<int[]>que=new LinkedList<>();
+        Set<Integer> visitedState=new HashSet<>();
+        
+        for(int i=0;i<graph.length;i++){// Simultaneously BFS
+            que.addFirst(new int[]{1<<i,i,0});//visited node set,src,path(dist);
+            visitedState.add((1<<i)*16+i);
+        }
+        
+        while(!que.isEmpty()){
+            int temp[]=que.removeFirst();
+            if(temp[0]==allVisited) return temp[2];
+            for(int nbr:graph[temp[1]]){
+                int state=(temp[0] | (1<<nbr))*16+nbr;
+                if(!visitedState.contains(state)){
+                    que.addLast(new int[]{temp[0] | (1<<nbr),nbr,temp[2]+1});
+                    visitedState.add(state);
+                }
+            }
+        }
+        return -1;
+    }
+    
+```
+
+# Digit DP
+> In this solve problem from **left to right** i-e **MSB to LSB** on a given number;
+
+```md
+# LeetCode - 600. Non-negative Integers without Consecutive Ones
+```
+>1. Without digit dp simple dp fails -> TLE
+```java
+    public int findIntegers(int n,int len,int i,int prev,int asf) {
+        if(asf>n)return 0;
+        if(i>len) return asf<=n?1:0;
+        int res=0;
+        if(prev==1)res+=findIntegers(n,len,i+1,0,asf);
+        else res+=findIntegers(n,len,i+1,0,asf)+findIntegers(n,len,i+1,1,asf|(1<<i));
+        return res;
+    }
+    public int findIntegers(int n) {
+        int len=(int)(Math.log(n)/Math.log(2));
+        return findIntegers(n,len,0,0,0);
+    }
+```
+
+>2. With Digit DP
+```java
+    public int findIntegers(int n,int i,int tight,int prev,Integer dp[][][]) {
+        if(i==32) return 1;
+        int res=0,limit=tight==1?(n>>(31-i))&1:1;
+
+        if(dp[i][tight][prev]!=null) return dp[i][tight][prev];
+        for(int k=0;k<=limit;k++){
+            if(k==1 && prev==1)continue;
+            res+=findIntegers(n,i+1,(tight & (k==limit?1:0)),k==1?1:0,dp);
+        }
+        return dp[i][tight][prev]=res;
+    }
+    public int findIntegers(int n) {
+        Integer dp[][][]=new Integer[33][2][2];
+        return findIntegers(n,0,1,0,dp);
+    }
+```
+```md
+    So basically tight here determines if the particular bit is tight or not i-e is it the upper limit of the number that can be generated 
+    If the tight if false the it will be false always in the next calls as the number will always be smaller than the upper limit given 
+    If the upper limit is true then it is true again if the bit taken is again the upper limit at that position but if the bit taken at that 
+    positon is not the upper one then tight will become false....
+    Agar pichla banda upperlimit h to agalr banda tight hoga warna nahi hoga.....
+```
+### <hr>
+
+> Given an array of digits which is sorted in non-decreasing order. You can write numbers using each digits[i] as many times as we want. For example, if digits = ['1','3','5'], we may write numbers such as '13', '551', and '1351315'.
+ <br>Return the number of positive integers that can be generated that are less than or equal to a given integer n.
+
+```java
+    Integer dp[][];
+    public int atMostNGivenDigitSet(String[] digits, String num,int i,int tight) {
+        if(i==num.length())return 1;
+        int limit=tight==1?(int)(num.charAt(i)-'0'):10;
+        int res=0;
+        if(dp[i][tight]!=null) return dp[i][tight];
+        for(int k=0;k<digits.length && Integer.parseInt(digits[k])<=limit;k++)
+            res+=atMostNGivenDigitSet(digits,num,i+1,(tight==1 && Integer.parseInt(digits[k])==limit)?1:0 );
+        return dp[i][tight]=res;
+    }
+    public int atMostNGivenDigitSet(String[] digits, int n) {
+        dp=new Integer[12][2];
+        int res=atMostNGivenDigitSet(digits,n+"",0,1);
+        for(int i=1;i<(n+"").length();i++)
+            res+=atMostNGivenDigitSet(digits,n+"",i,0);
+        return res;
+    }
+```
+
+## Tips
+> 1. Set bits of Binary number from 0 to n can denotes all the possible subsets
