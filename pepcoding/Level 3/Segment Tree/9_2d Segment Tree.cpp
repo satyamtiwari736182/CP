@@ -6,6 +6,47 @@
 
 // Because indexing the array from zero is too obscure for friend, all indices start from 1.
 
+#include "../header.h";
+
+const int m=4;
+int t[4*m][4*m],a[m][m];
+void build_y(int vx, int lx, int rx, int vy, int ly, int ry) {
+    if (ly == ry) {
+        
+        if (lx == rx)
+            t[vx][vy] = a[lx][ly];
+        else //cout<<lx<<" "<<ly<<endl,
+            t[vx][vy] = t[vx*2][vy] + t[vx*2+1][vy];
+    } else {
+        int my = (ly + ry) / 2;
+        build_y(vx, lx, rx, vy*2, ly, my);
+        build_y(vx, lx, rx, vy*2+1, my+1, ry);
+        t[vx][vy] = t[vx][vy*2] + t[vx][vy*2+1];
+    }
+}
+
+void build_x(int vx, int lx, int rx) {
+    if (lx != rx) {
+        int mx = (lx + rx) / 2;
+        build_x(vx*2, lx, mx);
+        build_x(vx*2+1, mx+1, rx);
+    }
+    
+    build_y(vx, lx, rx, 1, 0, m-1);
+}
+int main(){
+    int val=1;
+    for(int i=0;i<m;i++)for(int j=0;j<m;j++)a[i][j]=val++;
+    build_x(1,0,m-1);
+    return 0;
+}
+
+
+
+
+
+
+
 
 // 3 3
 // 1 2 3 

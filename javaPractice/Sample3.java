@@ -13,18 +13,18 @@ public class Sample3 {
 
 
 
-        // Integer arr[]={1,34,56,6,7};
-        // List<Integer> lst=new ArrayList<>(Arrays.asList(arr));
-        // // for(int v:arr)lst.add(v);
-        // Integer[] arr2 = lst.toArray(new Integer[lst.size()]);
+        Integer arr[]={1,34,56,6,7};
+        List<Integer> lst=new ArrayList<>(Arrays.asList(arr));
+        // for(int v:arr)lst.add(v);
+        Integer[] arr2 = lst.toArray(new Integer[lst.size()]);
         
-        // int arr2[]=new int[lst.size()];
-        // for(int i=0;i<lst.size();i++)arr2[i]=lst.get(i);
+        int arr2[]=new int[lst.size()];
+        for(int i=0;i<lst.size();i++)arr2[i]=lst.get(i);
         //=========================== Immutable 
-        // List<Integer> lst=Arrays.stream(arr).boxed().toList();
-        // int arr2[]=lst.stream().mapToInt(Integer::intValue).toArray();
-        // int arr2[]=lst.stream().mapToInt(Integer::intValue).toArray();
-        // for(int i:arr2)System.out.print(i+", ");
+        List<Integer> lst=Arrays.stream(arr).boxed().toList();
+        int arr2[]=lst.stream().mapToInt(Integer::intValue).toArray();
+        int arr2[]=lst.stream().mapToInt(Integer::intValue).toArray();
+        for(int i:arr2)System.out.print(i+", ");
         //===========================
         
         // int arr[][]={{1,34,56,6,7},{1,34,56,6,7}};
@@ -38,5 +38,9 @@ public class Sample3 {
         //     for(int v:a)System.out.print(v+" ");
         //     System.out.println();
         // }
+
+
+        // String str = "Satyam";
+        // System.out.println("Hello world!" + " " + str.matches("[a-zA-Z]*"));
     }
 }

@@ -81,8 +81,7 @@ void solve()
         sorted[i][1] = arr[i];
     }
 
-    sort(all(sorted), [&](auto a, auto b)
-         { return a[1] < b[1]; });
+    sort(all(sorted), [&](auto a, auto b){ return a[1] < b[1]; });
 
     int idxInTree[n];
     for (int i = 0; i < n; i++)

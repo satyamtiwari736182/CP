@@ -1,23 +1,46 @@
+# अभ्यास का मतलब है विषय के बारे में अपनी समझ को मजबूत करना 😇
+# ⭐️⭐️⭐️ लेकिन समस्या-समाधान और अभ्यास एक समान नहीं है। समस्या-समाधान का कौशल समय और अनुभव के साथ बेहतर होता है (यानी आपने कितनी अलग-अलग समस्याओं को हल किया है या हल करने की कोशिश की है)। साथ ही, आपने इसी तरह की समस्याओं का अभ्यास किया है या नहीं ।। ⭐️⭐️⭐️
+
+## 🙃🤩 अगर आपने पहले कभी ऐसी ही समस्या हल नहीं की है तो शायद आप इस समस्या को हल नहीं कर पाएँगे। इसलिए बस इस समस्या के समाधान के बारे में सोचें (इस समस्या को हल करने की पूरी कोशिश करें)। अंत में, समस्या और समाधान के हर पहलू की अस्पष्ट समझ रखते हुए समाधान देखें। 😇
+## 🤧🤧 इसलिए आप परेशान मत होइए, लेकिन लगातार कड़ी मेहनत करते राहिये ।। 🚩🚩🚩
+<br>
+<br>
 
 # Stack and mergeSort template
 ### Stack
-  	1. Next Greater of an Element to right
+```md
+# LeetCode - 503
+Given a circular integer array nums (i.e., the next element of nums[nums.length - 1] is nums[0]), return the next greater number for every element in nums.
+
+The next greater number of a number x is the first greater number to its traversing-order next in the array, which means you could search circularly to find its next greater number. If it doesn't exist, return -1 for this number.
+```
  ```cpp
- void nextGreatertoRight(vi &arr){
+vector<int> nextGreaterElements(vector<int>& nums) {
     stack<int>stk;
-    for(int i=arr.size()-1;i>=0;i--){
-      while(stk.empty()==false && arr[i]>=stk.top())stk.pop();
-      int greater=!stk.empty()?stk.top():-1;
-      stk.push(arr[i]),arr[i]=greater;
+    int n=nums.size();
+    
+    for (int i = n - 2; i >= 0; i--) {
+        while (!stk.empty() && nums[i] >= stk.top()) stk.pop();
+        stk.push(nums[i]);
     }
+
+    for(int i=n-1;i>=0;i--){
+        while(stk.empty()==false && nums[i]>=stk.top())stk.pop();
+        int greater=!stk.empty()?stk.top():-1;
+        stk.push(nums[i]),nums[i]=greater;
+    }
+    return nums;
 }
  ```
+---
 ### MergeSort template [O(n log n)]
-	1. Given an integer array nums, return an integer array counts where counts[i] is the number of smaller elements to the right of nums[i].
 >**CPP**<br>
 **merge(l1.begin(), l1.end(), l2.begin(), l2.end(), result.begin())** which stores the merged array in result <br>
 **inplace_merge(l.begin(), l.middle, l.end())** where array [begin, middle) is merged with array [middle, end)
-
+```md
+# LeetCode - 315
+Given an integer array nums, return an integer array counts where counts[i] is the number of smaller elements to the right of nums[i].
+```
  ```cpp
  #define iterator vector<vector<int>>::iterator
 void sort_count(iterator left, iterator right, vector<int>& count) {
@@ -44,6 +67,7 @@ vector<int> countSmaller(vector<int>& nums) {
     return count;
 }
 ```
+---
 ```md
 > Merge Sort is suitable for problems which look for some pairs i, j. such that i < j, and nums[i], nums[j] satisfy some constraints.
 We can find such pairs during merge sort. In each recursion, before we merge two sorted subarrays, the i is in the left sorted subarray, and the j is in the right sorted subarray. So, we can just go through both sorted subarray to find the valid i and j pairs. As long as this step is O(n), then total time complexity would be O(n log n).
@@ -52,7 +76,7 @@ We can find such pairs during merge sort. In each recursion, before we merge two
 Now you don't need to take care of the indexes for above type of problems.
 # Focus only on countPair()
 ```
-
+---
 ```md
 # LeetCode - 493
 Given an integer array nums, return the number of reverse pairs in the array.
@@ -93,6 +117,7 @@ public int reversePairs(int[] nums) {
     return mergeSort(nums,0,nums.length-1);
 }
 ```
+---
 ```md
 # LeetCode - 1512
 Given an array of integers nums, return the number of good pairs.
@@ -118,7 +143,7 @@ int countPair(int nums[],int l,int m,int r){
 >_But when decisions *[ Paths ]* becomes the solution then the problem is of **Backtracking Nature**_.
 
 ```java
-void floodfill(int arr[][], boolean visited[][], int i, int j,vString ans)
+void floodfill(int arr[][], boolean visited[][], int i, int j,String ans)
 {
 
     if (i < 0 || j < 0 || i >= arr.length || j >= arr[0].length || arr[i][j] == 1 || visited[i][j] == 1) return;
@@ -172,7 +197,16 @@ int knapSack(int capacity, int weight[], int profit[], int n)
 # Two-pointer approach
 
  ### 1. Sorted array.  
- 	1. Bag of Tokens
+```md
+# LeetCode - 948
+You start with an initial power of power, an initial score of 0, and a bag of tokens given as an integer array tokens, where each tokens[i] denotes the value of tokeni.
+
+Your goal is to maximize the total score by strategically playing these tokens. In one move, you can play an unplayed token in one of the two ways (but not both for the same token):
+
+Face-up: If your current power is at least tokens[i], you may play tokeni, losing tokens[i] power and gaining 1 score.
+Face-down: If your current score is at least 1, you may play tokeni, gaining tokens[i] power and losing 1 score.
+Return the maximum possible score you can achieve after playing any number of tokens
+```
 ```cpp
 int bagOfTokensScore(vector<int>& tokens, int power) {
     int l=0,r=tokens.size()-1,score=0,res=0;
@@ -186,6 +220,7 @@ int bagOfTokensScore(vector<int>& tokens, int power) {
     return res;
 }
 ```
+---
  ### 2. Unsorted array
  	1. Container with maximum water
 ```cpp
@@ -223,8 +258,8 @@ long maximumSumSubarray(vector<int> &arr , int k){
     return max(res,sum);
 }
 ```
-
- ### 2. Variable sized window 
+--
+### 2. Variable sized window 
  	1. longest subarray with sum equals to target
 	2. smallest subarray having all distinct char of string str
   	3. Hashmap -> **count** of subarray having all distinct char of string str.
@@ -268,7 +303,7 @@ public int lengthOfLongestSubstring(String s) {
     return res;
 }
 ```
-
+---
 ```md
 # LeetCode - 1208
 You are given two strings s and t of the same length and an integer maxCost.
@@ -290,6 +325,7 @@ public int equalSubstring(String s, String t, int maxCost) {
     return res;
 }
 ```
+---
 ```md
 # LeetCode - 75
 Given two strings s and t of lengths m and n respectively, return the minimum window 
@@ -320,8 +356,13 @@ public String minWindow(String s, String t) {
 
 # Merge Interval vs prefixSum
 ### PrefixSum
+```md
+# LeetCode - 1094
+There is a car with capacity empty seats. The vehicle only drives east (i.e., it cannot turn around and drive west).
+You are given the integer capacity and an array trips where trips[i] = [numPassengersi, fromi, toi] indicates that the ith trip has numPassengersi passengers and the locations to pick them up and drop them off are fromi and toi respectively. The locations are given as the number of kilometers due east from the car's initial location.
 
- 	1. Car pooling
+Return true if it is possible to pick up and drop off all passengers for all the given trips, or false otherwise.
+```
 ```java
 public boolean carPooling(int[][] trips, int capacity) {
     int res[]=new int[1001];
@@ -338,7 +379,10 @@ public boolean carPooling(int[][] trips, int capacity) {
 }
 ```
 ### Merge Interval
- 	1. Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
+```md
+# LeetCode - 56
+Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
+```
 ```java
 public int[][] merge(int[][] intervals) {
     List<int []> res=new ArrayList<>();
@@ -361,6 +405,12 @@ public int[][] merge(int[][] intervals) {
 
 
 ## 132_pattern subsequence
+
+```md
+# LeetCode - 456
+Given an array of n integers nums, a 132 pattern is a subsequence of three integers nums[i], nums[j] and nums[k] such that i < j < k and nums[i] < nums[k] < nums[j].
+Return true if there is a 132 pattern in nums, otherwise, return false.
+```
 ```cpp
 bool find132pattern(vector<int>& nums) {
     int n=nums.size(),msf=INT_MAX;
@@ -372,6 +422,153 @@ bool find132pattern(vector<int>& nums) {
         stk.push(nums[i]);
     }
     return false;
+}
+```
+
+# Hashmap used to remeber some value ( for Sub-Array )
+```md
+# LeetCode - 974
+Given an integer array nums and an integer k, return the number of non-empty subarrays that have a sum divisible by k.
+A subarray is a contiguous part of an array.
+```
+```cpp
+int subarraysDivByK(vector<int>& nums, int k) {
+    unordered_map<int,int>map;map[0]=1;
+    int sum=0,cnt=0;
+    for(int num:nums){
+        sum+=num;
+        int rem = (sum % k + k) % k;
+        if(map[rem]>0)cnt+=map[rem];
+        map[rem]++;
+    }
+    return cnt;
+}
+```
+---
+```md
+# LeetCode - 523
+Given an integer array nums and an integer k, return true if nums has a good subarray or false otherwise.
+A good subarray is a subarray where:
+    its length is at least two, and
+    the sum of the elements of the subarray is a multiple of k.
+Note that:
+    A subarray is a contiguous part of the array.
+    An integer x is a multiple of k if there exists an integer n such that x = n * k. 0 is always a multiple of k.
+```
+```java
+public boolean checkSubarraySum(int[] nums, int k) {
+    int n=nums.length,sum=0;
+    Map<Integer,Integer> map=new HashMap<>();
+    map.put(0,-1);
+    for(int i=0;i<n;i++){
+        sum+=nums[i];
+        int rem=sum%k;
+        if(map.containsKey(rem)) {if(i-map.get(rem)>=2)return true;}
+        else map.put(rem,i);
+    }
+    return false;
+}
+```
+# Matrix based problem
+```md
+# LeetCode - 1277
+Given a m * n matrix of ones and zeros, return how many square submatrices have all ones.
+```
+```java
+public int countSquares(int[][] matrix) {
+    int m=matrix.length,n=matrix[0].length,dp[][]=new int[m+1][n+1],res=0;
+    for(int i=m-1;i>=0;i--)for(int j=n-1;j>=0;j--)if(matrix[i][j]==1){
+        dp[i][j]=1+Math.min(dp[i+1][j+1],Math.min(dp[i][j+1],dp[i+1][j]));
+        res+=dp[i][j];
+    }
+    return res;
+}
+```
+---
+```md
+# LeetCode - 1139
+Given a 2D grid of 0s and 1s, return the number of elements in the largest square subgrid that has all 1s on its border, or 0 if such a subgrid doesn't exist in the grid.
+```
+```java
+public int largest1BorderedSquare(int[][] grid) {
+    int m=grid.length, n=grid[0].length;
+    int right[][]=new int[m][n],down[][]=new int[m][n],up[][]=new int[m][n],left[][]=new int[m][n],res=0;
+    for(int i=0;i<m;i++){
+        Arrays.fill(right[i],1);
+        Arrays.fill(down[i],1);
+        Arrays.fill(up[i],1);
+        Arrays.fill(left[i],1);
+    }
+    for(int i=0;i<m;i++)for(int j=0;j<n;j++){
+        right[i][j]=grid[i][j];
+        down[i][j]=grid[i][j];
+        left[i][j]=grid[i][j];
+        up[i][j]=grid[i][j];
+        if(grid[i][j]==1)res=1;
+    }
+    
+    for(int j=1;j<n;j++)for(int i=0;i<m;i++){
+        if(left[i][j]==0)continue;
+        left[i][j]+=left[i][j-1];
+    }
+    for(int j=n-2;j>=0;j--)for(int i=0;i<m;i++){
+        if(right[i][j]==0)continue;
+        right[i][j]+=right[i][j+1];
+    }
+
+    for(int i=1;i<m;i++)for(int j=0;j<n;j++){
+        if(up[i][j]==0)continue;
+        up[i][j]+=up[i-1][j];
+    }
+    for(int i=m-2;i>=0;i--)for(int j=0;j<n;j++){
+        if(down[i][j]==0)continue;
+        down[i][j]+=down[i+1][j];
+    }
+    for(int i=0;i<m;i++)for(int j=0;j<n;j++)if(grid[i][j]==1){
+        int val=Math.min(down[i][j],right[i][j]),val2=Integer.MAX_VALUE;
+        for(int k=0;k<val;k++){
+            int ni=i+val-1-k,nj=j+val-1-k;
+            if(ni>0 && ni<m && nj>0 && nj<n && grid[ni][nj]==1) 
+                val2=Math.min(up[ni][nj],left[ni][nj]);
+            
+            if(val2!=Integer.MAX_VALUE && val2>=(val-k))
+                res=Math.max(res,val-k);
+        }
+    }
+    return res*res;
+}
+```
+---
+```md
+# LeetCode - 85
+Given a rows x cols binary matrix filled with 0's and 1's, find the largest rectangle containing only 1's and return its area.
+```
+```cpp
+int maximalRectangle(vector<int>&heights){
+    stack<int>stk;
+    int area=0;
+    for(int i=0;i<=heights.size();i++){
+        int val=i==heights.size()?0:heights[i];
+        while(!stk.empty()&& heights[stk.top()]>=val){
+            int rightMin=i,leftMin,height=heights[stk.top()];
+            stk.pop(),leftMin=stk.empty()?-1:stk.top();
+            area=max(area,height*(rightMin-leftMin-1));
+        }
+        stk.push(i);
+    }
+    return area;
+}
+
+int maximalRectangle(vector<vector<char>>& matrix) {
+    int area=0;
+    vector<int> heights(matrix[0].size(),0);
+    for(int i=0;i<matrix.size();i++){
+        for(int j=0;j<matrix[0].size();j++)
+            heights[j]=matrix[i][j]=='0'?0:heights[j]+1;
+        
+        area=max(area,maximalRectangle(heights));
+    }
+    return area;
 }
 ```
 
@@ -389,3 +586,6 @@ _loop **i 0 to n** step 1_
  **curr_row = cellNumber / col <br> curr_col = cellNumber % col**
 
 >**int rightmost_set_bit = n & -n;**
+
+> sumOfAllElements in **matrix** from left-top **cell-1(A,B)** to bottom-right **cell-2(a,b)**<br>
+**sumOfAllElements = f(A,B) - f(A,b+1) - f(B,a+1) + f(a+1,b+1)**, where **f -> suffixSumMatrix**

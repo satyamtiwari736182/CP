@@ -205,6 +205,20 @@ bool hasCycle(vector<vi> &adj, int node, vi &visited, vi &dfsvis)
     dfsvis[node] = false;
     return false;
 }
+
+bool hasCycle(vector<vi> &adj){
+    vector<int> indeg(adj.size());
+    for(int i=0;i<adj.size();i++)for(int j:adj[i])indeg[j]++;
+    queue<int>que;
+    for(int i=0;i<indeg.size();i++)if(indeg[i]==0)que.push(i);
+    int visCount=0;
+    while(!que.empty()){
+        int temp=que.front();que.pop();
+        visCount++;
+        for(int nbr:adj[temp])if(--indeg[nbr]==0)que.push(nbr);
+    }
+    return visCount<adj.size();
+}
 ```
 ### Bipartite Graph
 > **Graph Coloring** technique is used to mark nodes into two different sets A and B
@@ -382,55 +396,55 @@ Given a weighted undirected connected graph with n vertices numbered from 0 to n
 Find all the critical and pseudo-critical edges in the given graph's minimum spanning tree (MST). An MST edge whose deletion from the graph would cause the MST weight to increase is called a critical edge. On the other hand, a pseudo-critical edge is that which can appear in some MSTs but not all.
 ```
 ```cpp
-    int parent[],rank[],n=0;
-    int findParent(int x){
-        return parent[x]=parent[x]==x?x:findParent(parent[x]);
+int parent[],rank[],n=0;
+int findParent(int x){
+    return parent[x]=parent[x]==x?x:findParent(parent[x]);
+}
+boolean union(int x,int y){
+    int px=findParent(x),py=findParent(y);
+    if(px==py) return false;
+    if(rank[px]>rank[py])parent[px]=py;
+    else if(rank[py]>rank[px])parent[py]=px;
+    else{
+        parent[py]=px;
+        rank[px]++;
     }
-    boolean union(int x,int y){
-        int px=findParent(x),py=findParent(y);
-        if(px==py) return false;
-        if(rank[px]>rank[py])parent[px]=py;
-        else if(rank[py]>rank[px])parent[py]=px;
-        else{
-            parent[py]=px;
-            rank[px]++;
-        }
-        return true;
+    return true;
+}
+
+int kruskal(int[][] edges,int exclude,int include[]){
+    parent =new int[n]; rank=new int[n];
+    for(int i=0;i<n;i++){parent[i]=i;rank[i]=1;}
+    // Arrays.sort(edges,(a,b)->a[2]-b[2]);
+    int res=0;
+    if(include.length>0){
+        union(include[0],include[1]);
+        res+=include[2];
+    }
+    for(int i=0;i<edges.length;i++) if(edges[i][3]!=exclude && union(edges[i][0],edges[i][1])) res+=edges[i][2];
+    return res;
+}
+
+public List<List<Integer>> findCriticalAndPseudoCriticalEdges(int nn, int[][] edges) {
+    n=nn;
+    int grid[][]=new int [edges.length][3];
+    for(int i=0;i<edges.length;i++){
+        grid[i]=new int[]{edges[i][0],edges[i][1],edges[i][2]};
+        edges[i]=new int[]{edges[i][0],edges[i][1],edges[i][2],i};
     }
     
-    int kruskal(int[][] edges,int exclude,int include[]){
-        parent =new int[n]; rank=new int[n];
-        for(int i=0;i<n;i++){parent[i]=i;rank[i]=1;}
-        // Arrays.sort(edges,(a,b)->a[2]-b[2]);
-        int res=0;
-        if(include.length>0){
-            union(include[0],include[1]);
-            res+=include[2];
-        }
-        for(int i=0;i<edges.length;i++) if(edges[i][3]!=exclude && union(edges[i][0],edges[i][1])) res+=edges[i][2];
-        return res;
-    }
+    Arrays.sort(edges,(a,b)->a[2]-b[2]);
+    int mincost=kruskal(edges,-1,new int[]{});
+    System.out.print(mincost);
+    List<List<Integer>> res=new ArrayList<>();
+    res.add(new ArrayList<>());res.add(new ArrayList<>());
 
-    public List<List<Integer>> findCriticalAndPseudoCriticalEdges(int nn, int[][] edges) {
-        n=nn;
-        int grid[][]=new int [edges.length][3];
-        for(int i=0;i<edges.length;i++){
-            grid[i]=new int[]{edges[i][0],edges[i][1],edges[i][2]};
-            edges[i]=new int[]{edges[i][0],edges[i][1],edges[i][2],i};
-        }
-        
-        Arrays.sort(edges,(a,b)->a[2]-b[2]);
-        int mincost=kruskal(edges,-1,new int[]{});
-        System.out.print(mincost);
-        List<List<Integer>> res=new ArrayList<>();
-        res.add(new ArrayList<>());res.add(new ArrayList<>());
-
-        for(int i=0;i<grid.length;i++){
-            if(mincost != kruskal(edges,i,new int[]{}))res.get(0).add(i);
-            else if(mincost == kruskal(edges,-1,grid[i]))res.get(1).add(i);
-        }
-        return res;
+    for(int i=0;i<grid.length;i++){
+        if(mincost != kruskal(edges,i,new int[]{}))res.get(0).add(i);
+        else if(mincost == kruskal(edges,-1,grid[i]))res.get(1).add(i);
     }
+    return res;
+}
 ```
 ## DSU
 ```md
@@ -885,7 +899,7 @@ int main()
 ```
 
 
- ## DP on Graph:
+ ## DP on Graph [ Directed Acyclic Graph (DAG) ]
  > Is only applicable on Directed Acyclic Graph (DAG)
 
     - Besacuse in DP, we need to run base condition first, then the other DP values are calculated using it. So, order is important in DP as it ensures that the repeated subproblems get solved first.
@@ -894,10 +908,216 @@ int main()
 >**Also Almost every DP problem can be represented as DAG**. where <br>
 Each node would be a state<br>
 And arrows are transition
+```md
+# LeetCode - 1494
+You are given an integer n, which indicates that there are n courses labeled from 1 to n. You are also given an array relations where relations[i] = [prevCoursei, nextCoursei], representing a prerequisite relationship between course prevCoursei and course nextCoursei: course prevCoursei has to be taken before course nextCoursei. Also, you are given the integer k.
 
-## Tips
+In one semester, you can take at most k courses as long as you have taken all the prerequisites in the previous semesters for the courses you are taking.
+
+Return the minimum number of semesters needed to take all courses. The testcases will be generated such that it is possible to take every course.
+```
+#### 1. Strenthening the understing of bitmasking 😁
+```cpp
+int count_setbit(int mask) {
+    if (mask == 0) return 0;
+    return 1 + count_setbit(mask & (mask - 1));
+}
+int minNumberOfSemesters(int n, vector<vector<int>>& dependencies, int k) {
+    // dependency[i]: dependency mask of course i, the set bits is dependent
+    vector<int> dependency(n, 0);
+    for (size_t i = 0; i < dependencies.size(); ++i) {
+        int course = dependencies[i][1] - 1,prerequisite = dependencies[i][0] - 1; // converting into 0-indexed.
+        dependency[course] |= 1 << prerequisite;
+    }
+
+    // prerequisites[i]: prerequisites mask of mask i, the set bits is prerequisites
+    vector<int> prerequisites(1 << n, 0);
+    // iterate all mask and generate prerequisites mask of each mask
+    for (int i = 0; i < (1 << n); ++i) for (int j = 0; j < n; ++j) 
+            if (i & (1 << j))  prerequisites[i] |= dependency[j];
+
+    // dp[i]: minimum number of semesters of mask i, the set bits are courses that have not been taken
+    vector<int> dp(1 << n, n + 1);
+    dp[0] = 0;
+    for (int i = 1; i < (1 << n); ++i) {
+        // iterate all submask of mask i, and this mask is the mask of last semester
+        // see: https://cp-algorithms.com/algebra/all-submasks.html
+        for (int j = i; j; j = (j - 1) & i) {
+            if (count_setbit(j) > k) continue;
+
+            int already_taken = i ^ ((1 << n) - 1);
+            if ((already_taken & prerequisites[j]) == prerequisites[j]) 
+                dp[i] = min(dp[i], dp[i ^ j] + 1); // dp[i^j] => sem. req. for remaining cources
+            
+        }
+    }
+
+    return dp[(1 << n) - 1];
+}
+```
+#### 2. Backtracking + DP gives TLE
+```java
+Integer dp[];
+int countSetBit(int n){
+    int res=0;
+    for(int i=n;i>0; i &= (i-1))res++;
+    return res;
+}
+int minNumberOfSemesters(List<Integer>graph[],int n,int k,int mask,int indeg[]) {
+    if(mask==0) return 0;
+    if(dp[mask]!=null) return dp[mask];
+    int res=Integer.MAX_VALUE;
+    for(int i=mask;i>0;i = (i-1) & mask){
+        if(countSetBit(i)>k)continue;
+        int temp=0;
+        for(int j=0;j<n;j++) if((i & (1<<j))!=0) for(int nbr:graph[j]){
+            indeg[nbr]--;
+            if(indeg[nbr]==0) temp |= (1<<nbr);  
+        }
+        res=Math.min(res,1+minNumberOfSemesters(graph,n,k,(mask^i)|temp,indeg));
+        for(int j=0;j<n;j++) if((i & (1<<j))!=0)for(int nbr:graph[j])indeg[nbr]++;
+    }
+
+    return dp[mask]=res;
+}
+public int minNumberOfSemesters(int n, int[][] relations, int k) {
+    dp=new Integer[(1<<n)];
+    List<Integer>graph[]=new List[n];
+    for(int i=0;i<n;i++)graph[i]=new ArrayList<>();
+    int indeg[]=new int[n];
+    for(int relation[]:relations) {
+        graph[relation[0]-1].add(relation[1]-1);
+        indeg[relation[1]-1]++;
+    }
+    int mask=0;
+    for(int i=0;i<n;i++)if(indeg[i]==0)mask |=(1<<i);
+    return minNumberOfSemesters(graph,n,k,mask,indeg);
+}
+```
+#### 3. Optimised solution
+```java
+Integer dp[];
+int countSetBit(int n){
+    int res=0;
+    for(int i=n;i>0; i &= (i-1))res++;
+    return res;
+}
+int minNumberOfSemesters(List<Integer>graph[],int n,int k,int mask) {
+    if(mask==(1<<n)-1) return 0;
+    int res=Integer.MAX_VALUE,indeg[]=new int[n],temp=0;
+    
+    if(dp[mask]!=null) return dp[mask];
+    for(int i=0;i<n;i++){
+        if((mask & (1<<i))!=0) continue;
+        for(int j:graph[i]) indeg[j]++;
+    }
+    for(int i=0;i<n;i++) if(indeg[i]==0 && (mask & (1<<i))==0) temp |= (1<<i);
+
+    if(countSetBit(temp)>k)for(int i=temp;i>0;i = (i-1) & temp){
+        if(countSetBit(i)!=k) continue;
+        res=Math.min(res,1+minNumberOfSemesters(graph,n,k,mask|i));
+    }
+    else res=Math.min(res,1+minNumberOfSemesters(graph,n,k,mask|temp));
+
+    return dp[mask]=res;
+}
+public int minNumberOfSemesters(int n, int[][] relations, int k) {
+    dp=new Integer[(1<<n)];
+    List<Integer>graph[]=new List[n];
+    for(int i=0;i<n;i++)graph[i]=new ArrayList<>();
+    for(int relation[]:relations) graph[relation[0]-1].add(relation[1]-1);
+    
+    return minNumberOfSemesters(graph,n,k,0);
+}
+```
+---
+```md
+# LeetCode - 1857
+There is a directed graph of n colored nodes and m edges. The nodes are numbered from 0 to n - 1.
+You are given a string colors where colors[i] is a lowercase English letter representing the color of the ith node in this graph (0-indexed). You are also given a 2D array edges where edges[j] = [aj, bj] indicates that there is a directed edge from node aj to node bj.
+A valid path in the graph is a sequence of nodes x1 -> x2 -> x3 -> ... -> xk such that there is a directed edge from xi to xi+1 for every 1 <= i < k. The color value of the path is the number of nodes that are colored the most frequently occurring color along that path.
+Return the largest color value of any valid path in the given graph, or -1 if the graph contains a cycle.
+```
+```cpp
+int largestPathValue(string colors, vector<vector<int>>& edges) {
+    int n = colors.size(),ans=n>0,visCount=0;
+    vector<int> adj[n];
+    
+    unordered_map<int,int> indegree;
+    for(vector<int>&v : edges){
+        adj[v[0]].push_back(v[1]);
+        indegree[v[1]]++;
+    }
+    
+    queue<int> q;
+    vector<vector<int>> dp(n,vector<int> (26,0));
+    for(int i=0;i<n;i++)if(indegree[i] == 0) q.push(i), dp[i][colors[i] - 'a'] = 1;
+    
+    while(!q.empty()){
+        int node = q.front();q.pop();
+        visCount++;
+        for(int child : adj[node]){
+            for(int i=0;i<26;i++){
+                dp[child][i] = max(dp[child][i],dp[node][i] + (i == (colors[child] - 'a')));
+                ans=max(ans,dp[child][i]);
+            }
+            indegree[child]--;
+            if(indegree[child] == 0) q.push(child);              
+        }
+    }
+    
+    return visCount<n?-1:ans;
+}
+```
+---
+```md
+# LeetCode - 329
+Given an m x n integers matrix, return the length of the longest increasing path in matrix.
+From each cell, you can either move in four directions: left, right, up, or down. You may not move diagonally or move outside the boundary (i.e., wrap-around is not allowed).
+
+a cell in the matrix as a node,
+a directed edge from node x to node y if x and y are adjacent and x's value < y's value
+Then a graph is formed.
+
+No cycles can exist in the graph, i.e. a DAG is formed.
+
+The problem becomes to get the longest path in the DAG.
+```
+
+```java
+public int longestIncreasingPath(int[][] matrix) {
+    int res=0,m=matrix.length,n=matrix[0].length, dirs[]={0,1,0,-1,0},indegree[][]=new int[m][n];
+    for (int i = 0; i < m; i++) for (int j = 0; j < n; j++) for (int k=0;k<4;k++) {
+        int nx = i + dirs[k],ny = j + dirs[k+1];
+        if (nx<0 || nx>=m || ny<0 || ny>=n) continue; 
+        if (matrix[nx][ny] > matrix[i][j]) indegree[nx][ny]++;
+    }
+    Queue<int[]> queue = new LinkedList<>();
+    for (int i = 0; i < m; i++) for (int j = 0; j < n; j++)if (indegree[i][j] == 0) queue.add(new int[]{i, j});
+
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        while(size-->0) {
+            int cur[] = queue.poll(),x = cur[0],y = cur[1];
+            for (int k=0;k<4;k++) {
+                int nx = x + dirs[k],ny = y + dirs[k+1];
+                if (nx<0 || nx>=m || ny<0 || ny>=n) continue; 
+                if (matrix[x][y] < matrix[nx][ny] && --indegree[nx][ny] == 0) queue.offer(new int[]{nx, ny});
+            }
+        }
+        res++;
+    }
+    return res;
+}
+```
 ### Purning serach-space
-> Simple **BFS** gives TLE
+```md
+# LeetCode - 787
+There are n cities connected by some number of flights. You are given an array flights where flights[i] = [fromi, toi, pricei] indicates that there is a flight from city fromi to city toi with cost pricei.
+
+You are also given three integers src, dst, and k, return the cheapest price from src to dst with at most k stops. If there is no such route, return -1.
+```
+> 1. Simple **BFS** gives TLE
 ```java
 public int findCheapestPrice(List<List<int[]>>graph, int src, int desti, int k) {
     Deque<int[]>que=new LinkedList<>();
@@ -916,8 +1136,15 @@ public int findCheapestPrice(List<List<int[]>>graph, int src, int desti, int k) 
     }
     return res==Integer.MAX_VALUE?-1:res;
 }
+public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+    List<List<int[]>>graph=new ArrayList<>();
+    for(int i=0;i<n;i++)graph.add(new ArrayList<>());
+    for(int e[]:flights)graph.get(e[0]).add(new int[]{e[1],e[2]});
+
+    return findCheapestPrice(graph,src,dst,k);
+}
 ```
-> Using **BFS** and **Puring** technique.<br>This not _**DP**_
+> 2. Using **BFS** and **Puring** technique. This not _**DP**_
 ```java
 public int findCheapestPrice(List<List<int[]>>graph, int src, int desti, int k) {
     Deque<int[]>que=new LinkedList<>();
@@ -938,6 +1165,13 @@ public int findCheapestPrice(List<List<int[]>>graph, int src, int desti, int k) 
         }
     }
     return dp[desti]==Integer.MAX_VALUE?-1:dp[desti];
+}
+public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+    List<List<int[]>>graph=new ArrayList<>();
+    for(int i=0;i<n;i++)graph.add(new ArrayList<>());
+    for(int e[]:flights)graph.get(e[0]).add(new int[]{e[1],e[2]});
+
+    return findCheapestPrice(graph,src,dst,k);
 }
 ```
 ## Tries + Graph
@@ -987,5 +1221,38 @@ public List<String> findWords(char[][] board, String[] words) {
     boolean vis[][]=new boolean[board.length][board[0].length];
     for(int i=0;i<board.length;i++)for(int j=0;j<board[0].length;j++) search(board,root,i,j,vis,res);
     return res;
+}
+```
+
+### Important Questions
+
+#### 1. State based question
+```md
+# LeetCode - 847
+You have an undirected, connected graph of n nodes labeled from 0 to n - 1. You are given an array graph where graph[i] is a list of all the nodes connected with node i by an edge.
+
+Return the length of the shortest path that visits every node. You may start and stop at any node, you may revisit nodes multiple times, and you may reuse edges.
+```
+```java
+public int shortestPathLength(int[][] graph) {
+    int res=Integer.MAX_VALUE,allVisited=(1<<graph.length)-1;
+    Deque<int[]>que=new LinkedList<>();
+    Set<Integer> visitedState=new HashSet<>();
+    for(int i=0;i<graph.length;i++){
+        que.addFirst(new int[]{1<<i,i,0});//visited node set,src,path(dist);
+        visitedState.add((1<<i)*16+i);
+    }
+    while(!que.isEmpty()){
+        int temp[]=que.removeFirst();
+        if(temp[0]==allVisited) return temp[2];
+        for(int nbr:graph[temp[1]]){
+            int state=(temp[0] | (1<<nbr))*16+nbr;
+            if(!visitedState.contains(state)){
+                que.addLast(new int[]{temp[0] | (1<<nbr),nbr,temp[2]+1});
+                visitedState.add(state);
+            }
+        }
+    }
+    return -1;
 }
 ```

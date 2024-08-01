@@ -2,16 +2,6 @@
 
 #include "../header.h"
 
-//?Winning state: State in which winning chances is High
-//?Non-Winning state: State in which winning chances is LOW
-//**NimSum --> XOR of all values of the game stack-state.
-
-//*When game ends the game-stack is Empty thus
-//! NimSum = 0
-//? So winning state is NimSum=0 in the intermidiate state also.
-
-//! Both player want to reach winning-state.
-
 void solve()
 {
     ll nimSum = 0;

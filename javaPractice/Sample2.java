@@ -66,22 +66,19 @@ public class Sample2 {
         InnerClass innerClass1 = new InnerClass();
         InnerClass innerClass2 = new InnerClass();
         Thread t1=new Thread(innerClass1::solve);
-        Thread t2=new Thread(innerClass2::solve);
+        Thread t2=new Thread(innerClass1::solve);
         t1.start();
         t2.start();
         
         System.out.println("=========================================================");
         
         Thread t3=new Thread(innerClass1::solve);
-        Thread t4=new Thread(innerClass1::solve);
         t3.start();
-        t4.start();
         try {
                 // Thread.currentThread().sleep(15000);
                 t1.join();
                 t2.join();
                 t3.join();
-                t4.join();
             } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -92,11 +89,11 @@ public class Sample2 {
                     System.out.println("Fianlly Counter: "+innerClass1.counter+"--------------------------------");
                     
                     
-        //! =========================================================
     }
 }
 
 // NOTE:
     // MonitorLock is intrisically applied to synchronized method/block
-    // Also lock are applied on the instance of the SharedResources not on the class of the SharedResources;
+    // Also lock are applied on the instance of the SharedResources.
+    // And lock are applied also on the class level for static funcion of the SharedResources.
     // t1.join() makes the main thread to wait till t1 is done after that main thread starts it's own execution.

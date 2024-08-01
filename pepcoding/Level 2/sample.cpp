@@ -1,27 +1,35 @@
 #include "./header.h"
-// #define ONLINE_JUDGE cout << "Provide input pls!!\n"
+
+// #define ONLINE_JUDGE 
+struct pair_hash {
+    template <class T1, class T2>
+    std::size_t operator() (const std::pair<T1, T2>& p) const {
+        auto h1 = std::hash<T1>{}(p.first+p.second);
+        return h1;
+    }
+};
 void solve()
 {
-    // int x = 90;
-    // vi arr(7);
-    // rarr(arr, 0, 7);
-    // parr(arr, 7);
-    // _print(arr);
-    // cerr << "All done!!\n";
-    map<char, int> mp;
-    for (int i = 0; i < 4; i++)
-    {
-        int y;
-        char x;
-        cin >> x >> y;
-        mp.insert({x, y});
+    long t,n,x,y;
+    cin>>t;
+    while(t-->0){
+        long res=0,e;
+        cin>>n>>x>>y;
+        unordered_map<pair<long,long>,long,pair_hash>mp;
+        for(int i=0;i<n;i++){
+            cin>>e;
+            res+=mp[{(x-e%x)%x,e%y}];
+            mp[{e%x,e%y}]++;            
+        }
+        cout<<res<<endl;
     }
-    _print(mp);
 }
 
 int main()
 {
-    fastio();
+    ios_base::sync_with_stdio(false);                    
+    cout.tie(NULL);
+    cin.tie(NULL); 
 #ifndef ONLINE_JUDGE
     freopen("Input.txt", "r", stdin);
     freopen("Output.txt", "w", stdout);
