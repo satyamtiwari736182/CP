@@ -589,3 +589,24 @@ _loop **i 0 to n** step 1_
 
 > sumOfAllElements in **matrix** from left-top **cell-1(A,B)** to bottom-right **cell-2(a,b)**<br>
 **sumOfAllElements = f(A,B) - f(A,b+1) - f(B,a+1) + f(a+1,b+1)**, where **f -> suffixSumMatrix**
+
+
+
+
+# Sparse Table
+
+```md
+Any interval can be uniquely represented as a union of intervals with lengths that are decreasing powers of two. E.g.  [2, 14] = [2, 9] U [10, 13] U [14, 14], where the complete interval has length 13, and the individual intervals have the lengths 8, 4 and 1 respectively.
+```
+```cpp
+// 0/1-knapsack
+for (int i = 1; i <= n; i++)
+  for (int j = W; j >= w[i]; j--)
+    f[j] = max(f[j], f[j - w[i]] + v[i]);
+
+// Unbounded [0/1- Knapsack]
+for (int i = 1; i <= n; i++)
+  for (int j = w[i]; j <= W; j++)
+    f[j] = max(f[j], f[j - w[i]] + v[i]);
+
+```

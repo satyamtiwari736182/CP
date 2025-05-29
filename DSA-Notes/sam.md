@@ -49,4 +49,50 @@ Class Description:
     The IdleState, ReadyState, and DispenseState classes implement the VendingMachineState interface and define the specific behaviors for each state.
     The VendingMachine class is the main class that represents the vending machine. It follows the Singleton pattern to ensure only one instance of the vending machine exists.
     The VendingMachine class maintains the current state, selected product, total payment, and provides methods for state transitions and payment handling.
-    The VendingMachineDemo class demonstrates the usage of the vending machine by adding products to the inventory, selecting products, inserting coins and notes, dispensing products, and returning change.
+    The VendingMachineDemo class demonstrates the usage of the vending machine by adding products to the inventory, 
+    selecting products, inserting coins and notes, dispensing products, and returning change.
+
+```md
+# LeetCode - 187
+The DNA sequence is composed of a series of nucleotides abbreviated as 'A', 'C', 'G', and 'T'.
+
+For example, "ACGAATTCCG" is a DNA sequence.
+When studying DNA, it is useful to identify repeated sequences within the DNA.
+
+Given a string s that represents a DNA sequence, return all the 10-letter-long sequences (substrings) that occur more than once in a DNA molecule. You may return the answer in any order.
+```
+```python
+def polyHash(s: str):
+    p = 31
+    m = 10**10 + 7
+    prefixHash = [0] * (len(s) + 1)
+    pow_p = [1] * (len(s) + 1)
+    
+    for i in range(1, len(s) + 1):
+        pow_p[i] = (pow_p[i-1] * p) % m
+        prefixHash[i] = (prefixHash[i-1] + (ord(s[i-1]) - ord('A') + 1) * pow_p[i-1]) % m
+    
+    return prefixHash, pow_p
+
+def findRepeatedDnaSequences(s: str):
+    if len(s) < 10:
+        return []
+    
+    prefixHash, pow_p = polyHash(s)
+    mp = {}
+    res = set()
+    m = 10**10 + 7
+    
+    for i in range(len(s) - 9):
+        hash_val = (prefixHash[i+10] - prefixHash[i]) % m
+        hash_val = (hash_val * pow_p[len(s) - i]) % m  # Normalize
+        
+        substring = s[i:i+10]
+        if hash_val in mp:
+            res.add(substring)
+            mp[hash_val] += 1
+        else:
+            mp[hash_val] = 1
+    
+    return list(res)
+```

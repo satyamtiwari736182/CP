@@ -1,7 +1,7 @@
 import heapq as hq
 print("\nhello world!\n\n")
 
-num= {1,2,3}
+num= {1,2,3} #set
 num.add(49), num.add(9)
 
 temp=True
@@ -13,7 +13,7 @@ else:
 print('---------------------------')
 
 size=10
-arr2=[None]*size
+arr2=[None]*size  #list
 arr3=[1]*size
 
 arr4=arr2+arr3
@@ -56,7 +56,7 @@ print(num)
 
 
 str1="satyam"
-# str1[0]='Q'
+# str1[0]='Q' # string immutable
 print(str1.title())
 print(str1)
 
@@ -142,6 +142,7 @@ que.appendleft(30)
 
 print(que)
 print(que.pop())
+print(que.popleft())
 print('\n6.----------------\n')
 
 arr=[]
