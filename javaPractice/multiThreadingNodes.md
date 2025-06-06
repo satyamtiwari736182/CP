@@ -242,12 +242,12 @@ System.out.println("innerClass2 Fianlly Counter: "+innerClass2.counter+"--------
 * Daemon Threads
 ---
 
-### Thread Executor Framework
+## Thread Executor Framework
 
 <img src="./img1.png" height=300><br>
 
 
-#### 1. ThreadPoolExecutor
+### 1. ThreadPoolExecutor
 
 <img src="./img4.png" height=400>
 <img src="./img2.png" height=200>
@@ -261,7 +261,17 @@ System.out.println("innerClass2 Fianlly Counter: "+innerClass2.counter+"--------
      6. threadFactory the factory to use when the executor creates a new thread
      7. handler the handler to use when execution is blocked because the thread bounds and queue capacities are reached
 
+### Executors -> Utility Class
+
 ```java
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 class CustomThreadFactory implements ThreadFactory {
 
     @Override
@@ -269,33 +279,61 @@ class CustomThreadFactory implements ThreadFactory {
         return new Thread(r);
     }
 }
-class CustomRejectedHandler implements RejectedExecutionHandler{
+
+class CustomRejectedHandler implements RejectedExecutionHandler {
 
     @Override
     public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
-        System.out.println("Task denied: "+ r.toString());
+        System.out.println("Task denied: " + r.toString());
     }
-    
+
 }
-public class Main {
+
+public class Sample4 {
     public static void main(String[] args) {
-        ThreadPoolExecutor poolExecutor=new ThreadPoolExecutor(2, 5, 1, TimeUnit.HOURS, new ArrayBlockingQueue<>(10),new CustomThreadFactory(),new CustomRejectedHandler());
+        ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(2, 5, 1, TimeUnit.HOURS, new ArrayBlockingQueue<>(10),
+                new CustomThreadFactory(), new CustomRejectedHandler());
         poolExecutor.allowCoreThreadTimeOut(true);
         // submit task
-        for(int i=0;i<25;i++) poolExecutor.submit(()->{
-            try{
-                Thread.sleep(5000);
-                System.out.println("Thread Name: "+ Thread.currentThread().getName());
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
-        });
+        for (int i = 0; i < 25; i++)
+            poolExecutor.submit(() -> {
+                try {
+                    Thread.sleep(5000);
+                    System.out.println("Thread Name: " + Thread.currentThread().getName());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
         poolExecutor.shutdown();
+
+        ExecutorService executor = Executors.newScheduledThreadPool(2);
+
+        for (int i = 1; i <= 10; i++) {
+            final int taskNumber = i;
+            executor.submit(() -> {
+                System.out.println("Hello World!..: " + taskNumber + " ->" + Thread.currentThread().getName());
+                try {
+                    Thread.sleep(5000); // Simulate some work
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    System.err.println("Task interrupted: " + e.getMessage());
+                }
+            });
+        }
+
+        try {
+            if (!executor.awaitTermination(20, TimeUnit.SECONDS)) {
+                executor.shutdownNow(); // Force shutdown if timeout reached
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Main Thread Finished Execution");
     }
 }
+
 ```
-#### 2. Fork/Join Framework ( Parallel Programming )
+### 2. Fork/Join Framework ( Parallel Programming )
      
 <img src="./img5.png" height=400>
 
@@ -313,6 +351,7 @@ class SqrtTransform extends RecursiveAction {
     }
 
     // This is the method in which parallel computation will occur.
+    @Override
     protected void compute() {
         // If number of elements is below the sequential threshold, then process sequentially.
         if ((end - start) < seqThreshold) {
@@ -363,6 +402,7 @@ class Sum extends RecursiveTask<Double> {
     }
 
     // Find the summation of an array of doubles.
+    @Override
     protected Double compute() {
         double sum = 0;
         // If number of elements is below the sequential threshold, then process sequentially.
@@ -402,10 +442,154 @@ public class Main {
     }
 }
 ```
-#### 3. ScheduledThreadPoolExecutor
-* Callable and Future
+### 3. ScheduledThreadPoolExecutor
+```java
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
-* ThreadLocal in Multithreading
+public class Sample6 {
+    public static void main(String[] args) {
+        ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(2);
+        executor.submit(() -> {
+            System.out.println("Hello World! from ScheduledThreadPoolExecutor");
+            try {
+                Thread.sleep(5000); // Simulate some work
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println("Task interrupted: " + e.getMessage());
+            }
+        });
+
+        executor.scheduleAtFixedRate(() -> {
+            try {
+                System.out.println("Executing task at: " + System.currentTimeMillis());
+                // Simulate some work
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println("Task interrupted: " + e.getMessage());
+            }
+        }, 0, 2, java.util.concurrent.TimeUnit.SECONDS);
+
+        // Optional: Shutdown the executor after some time
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Shutting down executor...");
+            executor.shutdown();
+            try {
+                if (!executor.awaitTermination(5, java.util.concurrent.TimeUnit.SECONDS)) {
+                    System.err.println("Executor did not terminate in the specified time.");
+                    executor.shutdownNow();
+                }
+            } catch (InterruptedException e) {
+                System.err.println("Shutdown interrupted: " + e.getMessage());
+                executor.shutdownNow();
+            }
+        }));
+
+        // Keep the main thread alive to see the scheduled task execution
+        try {
+            Thread.sleep(20000); // Keep the main thread alive for 10 seconds
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.err.println("Main thread interrupted: " + e.getMessage());
+        }
+
+        try {
+            if (!executor.awaitTermination(10, TimeUnit.SECONDS)) {
+                executor.shutdownNow(); // Force shutdown if timeout reached
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Main thread finished execution.");
+
+    }
+
+}
+
+```
+### 4. Callable and Future
+Callable and Future are key interfaces in Java's concurrency framework that allow you to execute tasks asynchronously and retrieve results later.
+
+#### Callable Interface -> It is similar to Runnable but can return a result and throw checked exceptions.
+#### Future Interface -> It represents the result of an asynchronous computation
+```java
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
+public class Sample9 {
+    public static void main(String[] args) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Callable<Integer> task = () -> {
+            TimeUnit.SECONDS.sleep(2);
+            return 42; // Return a result
+        };
+        executor.submit(task);
+        // Submit Callable and get Future
+        Future<Integer> future = executor.submit(() -> {
+            TimeUnit.SECONDS.sleep(5);
+            return 123;
+        });
+
+        // Do other work while task is executing...
+
+        try {
+            System.out.println("Callable task result: " + task.call());
+
+            if (future.isDone()) {
+                System.out.println("Task is already done.");
+            } else {
+                System.out.println("Task is still running...");
+                // Integer result = future.get(2, TimeUnit.SECONDS);
+                // System.out.println("Result: " + result);
+                // future.cancel(false); // Attempt to cancel the task
+            }
+
+            // Get the result (blocks if not ready)
+            Integer result = future.get();
+            System.out.println("Result: " + result);
+        } catch (Exception e) {
+            System.err.println("Error occurred: " + e.getMessage());
+        } finally {
+            if (!future.isCancelled()) {
+                System.out.println("Task completed successfully.");
+            } else {
+                System.out.println("Task was cancelled.");
+            }
+            executor.shutdown();
+        }
+
+    }
+}
+```
+
+### 5. ThreadLocal in Multithreading
+```java
+public class Sample8 {
+    public static void main(String[] args) {
+        ThreadLocal<String> threadLocal = new ThreadLocal<>();
+        threadLocal.set("Hello, ThreadLocal!");
+        Thread thread = new Thread(() -> {
+            threadLocal.set("Hello from new thread!");
+            String value = threadLocal.get();
+            System.out.println("\nThreadLocal value in new thread: " + value);
+        });
+        thread.start();
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+
+        }
+        System.out.println("\nMain thread value: " + threadLocal.get());
+    }
+
+}
+
+```
 
 ---
 
