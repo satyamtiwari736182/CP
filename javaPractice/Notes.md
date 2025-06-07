@@ -339,6 +339,12 @@ public class Sample7 {
 
         List<Integer> lst = new ArrayList<>(List.of(10, 20, 30, 40, 20, 10, 30, 50)); // mutable
         lst.add(60);
+                int res = lst.stream()
+                .filter(i -> i > 20) // filter elements greater than 20
+                .distinct() // remove duplicates
+                .sorted() // sort the elements
+                .reduce((ans, item) -> ans + item).get();
+        System.out.println("Sum of all elements: " + res);
         List<String> lst2 = lst.stream().map(String::valueOf)
                 .collect(Collectors.toList()); // lst2 -> mutable
         lst2.add("70");
@@ -394,6 +400,20 @@ public class Sample7 {
                 .forEach(i -> System.out.print(i + ", "));
         System.out.println();
 
+        Map<String, Integer> hashMap1 = lst.stream().collect(Collectors.toSet()).stream().collect(
+                () -> new HashMap(), 
+                (hashMap, item) -> hashMap.put(item + "", item), 
+                (map1, map2) -> map1.putAll(map2) 
+        );
+
+        Map<String, Integer> hashMap2 = lst.stream().collect(Collectors.toSet()).stream().collect(
+                HashMap::new, // supplier
+                (hashMap, item) -> hashMap.put(item + "", item), // accumulator
+                Map::putAll // combiner
+        );
+        hashMap1.forEach((k, v) -> System.out.println(k + "->" + v + ", "));
+        System.out.println("\n\n");
+        hashMap2.forEach((k, v) -> System.out.println(k + "->" + v + ", "));
         
     }
 }

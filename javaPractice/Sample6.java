@@ -1,9 +1,19 @@
-import java.util.Optional;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class Sample6 {
     public static void main(String[] args) {
         ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(2);
+        executor.submit(() -> {
+            System.out.println("Hello World! from ScheduledThreadPoolExecutor");
+            try {
+                Thread.sleep(5000); // Simulate some work
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println("Task interrupted: " + e.getMessage());
+            }
+        });
+
         executor.scheduleAtFixedRate(() -> {
             try {
                 System.out.println("Executing task at: " + System.currentTimeMillis());
@@ -32,11 +42,20 @@ public class Sample6 {
 
         // Keep the main thread alive to see the scheduled task execution
         try {
-            Thread.sleep(10000); // Keep the main thread alive for 10 seconds
+            Thread.sleep(20000); // Keep the main thread alive for 10 seconds
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             System.err.println("Main thread interrupted: " + e.getMessage());
         }
+
+        try {
+            if (!executor.awaitTermination(10, TimeUnit.SECONDS)) {
+                executor.shutdownNow(); // Force shutdown if timeout reached
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         System.out.println("Main thread finished execution.");
 
     }

@@ -34,11 +34,15 @@ public class sam {
         queue.add("Second");
         queue.add("Third");
         queue.addFirst("Hello ji");
+        queue.addLast("World ji");
+        queue.removeFirst();
+        queue.removeLast();
+
         while (!queue.isEmpty()) {
             System.out.print(queue.poll() + ", ");
         }
 
-        Queue<int[]> que = new PriorityQueue<>();
+        Queue<int[]> que = new PriorityQueue<>((a, b) -> Integer.compare(a[0], b[0]));
         Stack<Integer> stack = new Stack<>();
         Set<Integer> set = Set.of(1, 2, 3, 4, 5);
         Set<Integer> set2 = new LinkedHashSet<>();
@@ -73,5 +77,6 @@ public class sam {
             System.out.println();
         }
         System.out.println("================================");
+
     }
 }

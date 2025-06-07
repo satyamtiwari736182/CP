@@ -1,59 +1,67 @@
-import java.util.*;
+// import java.util.*;
 
-import java.io.*;
+// import java.io.*;
 
 // class Cmpr implements Comparator<Pair> {
 
 //     public int compare(Pair p1, Pair p2) {
-//         return p1.b-p2.b;
+//         return p1.b - p2.b;
 //     }
 
 // }
-//  class Pair {
-//     int a,b;
+
+// class Pair {
+//     int a, b;
 //     public final int name;
+
 //     public Pair(int a, int b) {
 //         this.a = a;
 //         this.b = b;
-//         name=a;
+//         name = a;
 //     }
 
 //     @Override
 //     public String toString() {
 //         return "Pair [a=" + a + ", b=" + b + "]";
 //     }
+
 //     static class InnerSample {
-
-//         private int sh(){return 123;}
+//         private int sh() {
+//             return 123;
+//         }
 //     }
-//     public void disp(){
 
-//         InnerSample obj=new InnerSample();
+//     public void disp() {
+
+//         InnerSample obj = new InnerSample();
 //         System.out.println(obj.sh());
 //     }
-//     public void show(ISample iSample){
-//         System.out.println("I am Pair class " );
-//         iSample.show2();
-//     }
 
-//    public void show2(){
-//                 System.out.println("showing the interface....");
-//             }
+//     // public void show(ISample iSample) {
+//     // System.out.println("I am Pair class ");
+//     // iSample.show2();
+//     // }
+
+//     public void show2() {
+//         System.out.println("showing the interface from Pair....");
+//     }
 // }
 
-// public class Sample{
+// public class Sample {
 
 //     public static void main(String[] args) {
 
-// Pair arr[]={new Pair(10,23),new Pair(4,89),new Pair(12,38)};
-// Arrays.sort(arr,new Cmpr());
-// for(Pair pr:arr)System.out.println(pr);
+//         Pair arr[] = { new Pair(10, 23), new Pair(4, 89), new Pair(12, 38) };
+//         Arrays.sort(arr, new Cmpr());
+//         for (Pair pr : arr)
+//             System.out.println(pr);
 
-// Pair pr=new Pair(13,42);
+//         Pair pr = new Pair(13, 42);
 
-// ISample iSample=pr::show2;
-// // iSample.show2();
-// ISample obj=pr::show2;        
+//         ISample iSample = pr::show2;
+//         iSample.show23();
+//         ISample.show();
+
 //     }
 // }
 
@@ -62,14 +70,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.TreeSet;
-
-/**
- * Sample
- */
-
-/**
- * InnerSample
- */
 
 class Pair implements ISample, Comparable<Pair> {
     public final int val;
@@ -93,7 +93,9 @@ class Pair implements ISample, Comparable<Pair> {
         final int prime = 31;
         int result = 1;
         result = prime * result + val;
-        result = prime * result + ((name == null) ? 0 : (name + String.valueOf(Math.random())).hashCode());
+        result = prime * result + ((name == null) ? 0
+                : (name +
+                        String.valueOf(Math.random())).hashCode());
         return result;
     }
 
@@ -129,6 +131,12 @@ class Pair implements ISample, Comparable<Pair> {
     @Override
     public void show2() {
         System.out.println("i am Pair default overridden in nature");
+    }
+
+    @Override
+    public String show2(String str) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'show2'");
     }
 
 }
