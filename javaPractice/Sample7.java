@@ -109,5 +109,6 @@ public class Sample7 {
         hashMap1.forEach((k, v) -> System.out.println(k + "->" + v + ", "));
         System.out.println("\n\n");
         hashMap2.forEach((k, v) -> System.out.println(k + "->" + v + ", "));
+
     }
 }

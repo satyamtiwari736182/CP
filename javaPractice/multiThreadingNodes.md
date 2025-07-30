@@ -568,6 +568,11 @@ public class Sample9 {
 ```
 
 ### 5. ThreadLocal in Multithreading
+    * ThreadLocal class provide access to Threadd-Local variables.
+    * This 'Threadd-Local' variables holds the value for particular thread.
+    * Means each Thread has its own copy of Threadd-Local variables.
+    * We need only one object of ThreadLocal class and each thred can use it to set and get its own Threadd-Local variables
+    
 ```java
 public class Sample8 {
     public static void main(String[] args) {
@@ -588,7 +593,14 @@ public class Sample8 {
     }
 
 }
+```
+#### Virtual Thread vs Platform Thread
+```java
+Virtual Thread -> to get higher throughput not latency
+Thread thread = Thread.ofVirtual().start(RunnableTask);
 
+ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
+executor.submit(RunnableTask);
 ```
 
 ---
