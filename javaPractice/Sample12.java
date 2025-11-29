@@ -47,7 +47,7 @@ public class Sample12 {
         for (Field field1 : field) {
             System.out.println(field1.getName());
         }
-        class1.
+//        class1.
     }
 
     public static void main(String[] args) throws Exception {

@@ -4,68 +4,34 @@
 
 #include "../header.h"
 
-void solve()
-{
-    string num1, num2, num3 = "";
+string multiplyStrings(string num1, string num2) {
+    if (num1 == "0" || num2 == "0") return "0";
 
-    cin >> num1 >> num2;
-    int n1 = num1.length(), n2 = num2.length();
-    vi res(n1 + n2);
-    int i = n2 - 1, pf = 0;
+    int n1 = num1.size(), n2 = num2.size();
+    vector<int> result(n1 + n2, 0);
 
-    while (i >= 0)
-    {
-        int ival = num2[i] - '0';
-        i--;
-        int j = n1 - 1;
-        int k = res.size() - 1 - pf;
-        int carry = 0;
-
-        while (j >= 0 || carry != 0)
-        {
-            int jval = j >= 0 ? num1[j] - '0' : 0;
-            j--;
-
-            int prod = ival * jval + carry + res[k];
-            res[k] = prod % 10, carry = prod / 10;
-            k--;
+    // Multiply each digit and add to result
+    for (int i = n1 - 1; i >= 0; i--) {
+        for (int j = n2 - 1; j >= 0; j--) {
+            int mul = (num1[i]-'0') * (num2[j]-'0');
+            int sum = mul + result[i+j+1];
+            result[i+j+1] = sum % 10;
+            result[i+j] += sum / 10;
         }
-        pf++;
-    }
-    cout << endl;
-    parr(res, res.size());
-    cout << endl;
-    int flag = 0;
-    for (int val : res)
-    {
-        if (val == 0 && flag == false)
-            continue;
-        flag = true;
-        num3 = num3 + to_string(val);
     }
 
-    // for (int i = n2 - 1; i >= 0; i--)
-    // {
-    //     for (int j = n1 - 1; j >= 0; j--)
-    //     {
-    //         int res = (num1[j] - '0') * (num2[i] - '0') + carry;
-    //         int sum = res % 10, carry = res / 10;
+    // Convert result vector to string
+    string product = "";
+    int i = 0;
+    while (i < result.size() && result[i] == 0) i++; // Skip leading zeros
+    while (i < result.size()) product += to_string(result[i++]);
 
-    //     }
-    //     cout << endl;
-    // }
-
-    cout << num1 << " * " << num2 << " = " << num3 << endl;
+    return product;
 }
-
-int main()
-{
-    cout << "\nHello world\n";
-    int t = 1;
-    // cin >> t;
-    test(t)
-        solve();
-
+int main() {
+    string num1 = "123456789";
+    string num2 = "987654321";
+    cout << multiplyStrings(num1, num2) << endl;
     return 0;
 }
 

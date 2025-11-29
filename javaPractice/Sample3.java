@@ -30,15 +30,16 @@ public class Sample3 {
             System.out.print(i + ", ");
         // ===========================
 
-        // int arr[][]={{1,34,56,6,7},{1,34,56,6,7}};
+        // int arr[][] = { { 1, 34, 56, 6, 7 }, { 1, 34, 56, 6, 7 } };
 
-        // List<int[]> lst=new ArrayList<>(Arrays.asList(arr));
-        // // lst.add(new int[]{12,45,67});
-        // // lst.get(0)[0]=945;
-        // int arr2[][]=lst.toArray(new int[lst.size()][]);
+        // List<int[]> lst = new ArrayList<>(Arrays.asList(arr));
+        // lst.add(new int[] { 12, 45, 67 });
+        // lst.get(0)[0] = 945;
+        // int arr2[][] = lst.toArray(new int[lst.size()][]);
 
-        // for(int a[]:lst){
-        // for(int v:a)System.out.print(v+" ");
+        // for (int a[] : arr2) {
+        // for (int v : a)
+        // System.out.print(v + " ");
         // System.out.println();
         // }
 

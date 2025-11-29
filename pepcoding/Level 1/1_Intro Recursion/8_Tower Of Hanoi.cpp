@@ -22,7 +22,7 @@ void TOH(int n, char a, char b, char c)
 int main()
 {
     cout << "hello!" << endl;
-    TOH(3, 'A', 'C', 'B');
+    TOH(4, 'A', 'C', 'B');
     return 0;
 }
 

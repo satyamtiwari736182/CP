@@ -100,3 +100,23 @@ int main()
 
 // 1
 // aabcbcdbca 2
+int countAtMostK(string &s, int k) {
+    vector<int> freq(26, 0);
+    int i = 0, ans = 0, n = s.size(), distinctCnt = 0;
+    for (int j = 0; j < n; j++) {
+        if (freq[s[j] - 'a'] == 0) distinctCnt++;
+        freq[s[j] - 'a']++;
+        while (distinctCnt > k) {
+            freq[s[i] - 'a']--;
+            if (freq[s[i] - 'a'] == 0) distinctCnt--;
+            i++;
+        }
+        ans += (j - i + 1);
+    }
+    return ans;
+}
+
+int countExactlyK(string &s, int k) {
+    if (k == 0) return 0;
+    return countAtMostK(s, k) - countAtMostK(s, k - 1);
+}

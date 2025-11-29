@@ -80,3 +80,29 @@ int main()
 // aaaabbbbcabbaa
 
 // aabcbcdbca
+
+int lengthOfLongestSubstring(String s) {
+    int j=0,res=0,count[]=new int[206];
+    for(int i=0;i<s.length();i++){
+        count[s.charAt(i)]++;
+        while(count[s.charAt(i)]>1)count[s.charAt(j++)]--;
+        res=Math.max(res,i-j+1);
+    }
+    return res;
+}
+
+
+int lengthOfLongestSubstring(string s) {
+    vector<int> lastIndex(256, -1);
+    int maxLen = 0, start = 0;
+    for (int i = 0; i < s.length(); ++i) {
+        if (lastIndex[s[i]] >= start) {
+            start = lastIndex[s[i]] + 1;
+        }
+        lastIndex[s[i]] = i;
+        maxLen = max(maxLen, i - start + 1);
+    }
+    return maxLen;
+}
+
+

@@ -70,3 +70,27 @@ int main()
 // 1
 // cbaebabacd
 // abc
+vector<int> findAnagrams2(string s1, string s2) {
+    vector<int> result;
+    if (s2.size() > s1.size()) return result;
+    
+    vector<int> countS(26, 0), countP(26, 0);
+    int lenS = s1.size(), lenP = s2.size();
+    
+    for (int i = 0; i < lenP; i++) {
+        countP[s2[i] - 'a']++;
+        countS[s1[i] - 'a']++;
+    }
+    
+    for (int i = 0; i <= lenS - lenP; i++) {
+        if (countP == countS) {
+            result.push_back(i);
+        }
+        if (i + lenP < lenS) {
+            countS[s1[i] - 'a']--;
+            countS[s1[i + lenP] - 'a']++;
+        }
+    }
+    
+    return result;
+}

@@ -76,6 +76,7 @@ bool isScramble3(string str1, string str2, int s1i, int s2i, int len, int dp[N][
     dp[len][s1i][s2i] = false;
     return false;
 }
+
 int main()
 {
     string str1, str2; // convert str1 -> str2

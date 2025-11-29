@@ -14,9 +14,10 @@ int K_sum(vi &arr, int k)
         sum += arr[i];
         int sum_k = sum - k;
 
-        hashmap[sum]++;
         if (hashmap.count(sum_k) != 0)
             count += hashmap[sum_k];
+        
+            hashmap[sum]++;
     }
 
     return count;

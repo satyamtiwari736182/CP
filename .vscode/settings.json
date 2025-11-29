@@ -78,7 +78,16 @@
     "climits": "cpp",
     "xiosbase": "cpp",
     "ios": "cpp",
-    "xstddef": "cpp"
+    "xstddef": "cpp",
+    "__availability": "cpp",
+    "__config": "cpp",
+    "version": "cpp",
+    "__locale": "cpp",
+    "__verbose_abort": "cpp",
+    "filesystem": "cpp",
+    "format": "cpp",
+    "print": "cpp",
+    "string_view": "cpp"
   },
   "C_Cpp.errorSquiggles": "enabled"
 }
