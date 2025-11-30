@@ -1,4 +1,6 @@
 from abc import ABC,abstractmethod
+from dataclasses import dataclass,field
+import heapq as heap
 
 class AbstractSample(ABC):
     @abstractmethod
@@ -34,10 +36,20 @@ class Sample(AbstractSample):
     # @abstractmethod
     # def abstractMethod(self):
     #     print("This is a normal method, not abstract")
-
     
     def abstractMethodSample(self):
         print("This is an abstract method implementation in subclass")
+
+@dataclass
+class Student:
+    name:str
+    age:int
+    roll:int
+    def show(self)->int:
+        print("I am Student")
+        return 19
+    def __lt__(self,other): # overriding less than operator
+        return self.roll>other.roll
 
 
 if __name__ == "__main__":
@@ -53,5 +65,17 @@ if __name__ == "__main__":
 
     obj2 : AbstractSample = Sample("Rahul")
     print(obj2.greet())
-
     # obj2 = AbstractSample()  # This will raise a TypeError because we cannot instantiate an abstract class
+
+    print("2. ----------------------------\n")
+    student = [ Student('satyam',23,120),Student('atyam',23,100),Student('Asatyam',32,130) ]
+    heap.heapify(student)
+    top=heap.heappop(student);
+    print(top)
+    print((student[0]<student[1]))
+
+    print('\n3. ---------------------------\n')
+    student.sort(key=lambda x : x.roll,reverse=True)
+    print(student)
+    for s in student:
+        print(s.name)

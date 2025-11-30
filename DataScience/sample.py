@@ -107,30 +107,7 @@ print(lst,end='\n')
 # print(top)
 
 print('\n3.----------------\n')
-from dataclasses import dataclass,field
-@dataclass
-class Student:
-    name:str
-    age:int
-    roll:int
-    def show(self)->int:
-        print("I am Student")
-        return 19
-    def __lt__(self,other): # overriding less than operator
-        return self.roll<other.roll
 
-student = [ Student('satyam',23,-100),Student('atyam',23,-100),Student('Asatyam',32,-130) ]
-hq.heapify(student)
-top=hq.heappop(student);
-top.roll = -top.roll;
-print(top)
-print((student[0]<student[1]))
-
-print('\n4.----------------\n')
-student.sort(key=lambda x : x.roll,reverse=True)
-print(student)
-for s in student:
-    print(s.name)
 print('\n5.----------------\n')
 
 
