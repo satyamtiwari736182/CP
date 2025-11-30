@@ -1,3 +1,4 @@
+import sample3
 def sample(fun):
     print("wrap function executed")
     def wrapper():

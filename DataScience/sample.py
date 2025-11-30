@@ -45,7 +45,7 @@ address='jaigaon'
 amt=897.6745
 year=2025
 print()
-print(f"{1.:<20}hello{name} from {address:<20} with reward of Rs. {amt:^20.2f} {'':^20} year {year}")
+print(f"{1.:<20}hello{name} from {address:>20} with reward of {'':^20}Rs. {amt :.2f} {'':^20} year {year}") #! left-alignment, right-alignment, center-alignment, 2 decimal places
 print()
 print('---------------------------')
 
@@ -161,44 +161,11 @@ lst3.append(12)
 lst4=[1,3]
 print(len(lst3))
 print('\n8.----------------\n')
-
-def my_decorator(func):
-    def wrapper():
-        print("Before function execution")
-        func()  # Call the original function
-        print("After function execution")
-    return wrapper  # Return the modified function
-
-@my_decorator  # Applying decorator
-def say_hello():
-    print("Hello!")
-
-say_hello()
+# !================
 print('\n9.----------------\n')
 
-from abc import ABC,abstractmethod
+# !================
 
-class Bag(ABC):
-    arr=[1,20]
-    @staticmethod
-    def show():
-        print("I am static show func")
-    def __init__(self):
-        # self.arr=[]
-        self.data = []
-    # @abstractmethod
-    def add(self, x):
-        self.data.append(x)
-    def addtwice(self, x):
-        self.add(x)
-        self.add(x)
-bag=Bag()
-bag2=Bag()
-bag2.arr.append(34)
-bag.add(12)
-bag.addtwice(102)
-print(bag.arr)
-Bag.show()
 print('\n10.----------------\n')
 
 def display(name,*info,city='jaigaon',**score,):
@@ -228,3 +195,25 @@ for k,v in mp.items():
     print(k,v,sep='->')
 print('\n13.----------------\n')
 
+newStr="Satyam Tiwari"
+# newStr2=[12,34,56,'A','B','C']
+newStr2=list(newStr)
+for i in newStr2:
+    print(i,end=', ')
+
+newStr3 = "".join(newStr2)  # This will raise an error because newStr2 contains non-string elements;
+# newStr3 = "".join(str(i) for i in newStr2)  # Correct way to convert all elements to strings before joining
+# # newStr3="".join(map(str,newStr2))
+print('\n',newStr3)
+print('\n14.----------------\n')
+
+def chk(x):
+    return x**2
+newlist = [1,2,3,4,5,6,7,8,9]
+squared = list(map(chk, newlist))
+mergedStr="".join(map(lambda x: str(x)+" " if x%2==0 else "", squared))
+newlist3= [x for x in newlist if x%2==0]
+combinedList = newlist+newlist3+squared 
+zippedList = list(zip(newlist, squared,newlist3))
+print(f"newList -> {newlist}\nsquared -> {squared}\nMergedString -> {mergedStr}\nnewList3 -> {newlist3}\ncombinedList -> {combinedList}\nzippedList -> {zippedList}")
+print('\n15.----------------\n')
